@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Высшая Алгебра — Интерактивный Конспект</title>
+    <title>Высшая Алгебра — Полный Интерактивный Конспект</title>
     
-    <!-- Google Fonts: Outfit & Inter -->
+    <!-- Google Fonts for luxury typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- MathJax for rendering gorgeous LaTeX equations -->
+    <!-- MathJax for rendering gorgeous equations -->
     <script>
         window.MathJax = {
             tex: {
-                inlineMath: [['$', '$'], ['\\(', '\\)']],
-                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                inlineMath: [['$', '$'], ['\(', '\)']],
+                displayMath: [['$$', '$$'], ['\[', '\]']],
                 processEscapes: true
             },
             options: {
@@ -27,498 +27,332 @@
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
     <style>
-        /* CSS variables for Amethyst Violet theme */
         :root {
-            --bg-primary: #f7f4fa;
+            /* Amethyst Light Theme Design Tokens */
+            --bg-primary: #f8f6fc;
             --bg-secondary: #ffffff;
-            --bg-glass: rgba(255, 255, 255, 0.7);
-            --border-glass: rgba(114, 9, 183, 0.1);
-            --text-primary: #21153b;
-            --text-secondary: #6e5e8e;
-            --accent-primary: #7209b7;
-            --accent-glow: rgba(114, 9, 183, 0.15);
-            --accent-glow-rgb: 114, 9, 183;
-            --accent-hover: #560bad;
-            --card-def: #dec9e9;
-            --card-thm: #eae2f8;
-            --card-lem: #f3e8ff;
-            --shadow-premium: 0 8px 32px 0 rgba(114, 9, 183, 0.08);
-            --font-main: 'Inter', sans-serif;
-            --font-title: 'Outfit', sans-serif;
-            --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            --neon-shadow: 0 0 15px rgba(157, 78, 221, 0.2);
-            --color-success: #10b981;
-            --color-error: #ef4444;
+            --accent-primary: #8b5cf6;
+            --accent-secondary: #d946ef;
+            --accent-gradient: linear-gradient(135deg, #8b5cf6 0%, #d946ef 100%);
+            --text-primary: #1e1b4b;
+            --text-secondary: #4b4b7c;
+            --card-border: rgba(139, 92, 246, 0.12);
+            --shadow-color: rgba(139, 92, 246, 0.08);
+            
+            --def-bg: rgba(139, 92, 246, 0.04);
+            --def-border: #8b5cf6;
+            --lem-bg: rgba(217, 70, 239, 0.04);
+            --lem-border: #d946ef;
+            --thm-bg: rgba(236, 72, 153, 0.04);
+            --thm-border: #ec4899;
+            --proof-bg: #faf9fd;
+            --proof-border: #cbd5e1;
         }
 
         body.dark-mode {
-            --bg-primary: #0b0d19;
-            --bg-secondary: #131526;
-            --bg-glass: rgba(19, 21, 38, 0.7);
-            --border-glass: rgba(157, 78, 221, 0.15);
-            --text-primary: #f3f0fa;
-            --text-secondary: #9e97b8;
-            --accent-primary: #9d4edd;
-            --accent-glow: rgba(157, 78, 221, 0.2);
-            --accent-glow-rgb: 157, 78, 221;
-            --accent-hover: #c77dff;
-            --card-def: #2a164d;
-            --card-thm: #1b1633;
-            --card-lem: #21133f;
-            --shadow-premium: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
-            --neon-shadow: 0 0 25px rgba(157, 78, 221, 0.45);
+            /* Amethyst Dark Theme Design Tokens */
+            --bg-primary: #09070f;
+            --bg-secondary: #120e21;
+            --text-primary: #e0dcf5;
+            --text-secondary: #9c97b8;
+            --card-border: rgba(217, 70, 239, 0.2);
+            --shadow-color: rgba(0, 0, 0, 0.5);
+            
+            --def-bg: rgba(139, 92, 246, 0.12);
+            --def-border: #a78bfa;
+            --lem-bg: rgba(217, 70, 239, 0.12);
+            --lem-border: #f472b6;
+            --thm-bg: rgba(236, 72, 153, 0.12);
+            --thm-border: #f472b6;
+            --proof-bg: #181528;
+            --proof-border: #3b3554;
         }
 
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
 
         body {
             background-color: var(--bg-primary);
             color: var(--text-primary);
-            font-family: var(--font-main);
+            font-family: 'Inter', sans-serif;
             line-height: 1.6;
-            transition: var(--transition-smooth);
-            overflow-x: hidden;
+            transition: background-color 0.4s ease, color 0.4s ease;
         }
 
-        /* Ambient glowing background */
-        .ambient-glow {
-            position: fixed;
-            width: 500px;
-            height: 500px;
-            border-radius: 50%;
-            background: radial-gradient(circle, var(--accent-glow) 0%, rgba(0,0,0,0) 70%);
-            z-index: -1;
-            filter: blur(50px);
-            pointer-events: none;
-            transition: var(--transition-smooth);
+        h1, h2, h3, h4, h5 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
         }
 
-        .glow-top-right {
-            top: -200px;
-            right: -200px;
-        }
-
-        .glow-bottom-left {
-            bottom: -200px;
-            left: -200px;
-        }
-
-        /* Frosted glass header */
-        header {
-            position: sticky;
-            top: 0;
-            width: 100%;
-            background: var(--bg-glass);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border-glass);
-            z-index: 1000;
-            padding: 15px 40px;
+        /* Layout Structure */
+        .app-container {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: var(--shadow-premium);
-            transition: var(--transition-smooth);
+            min-height: 100vh;
         }
 
-        .header-logo {
-            font-family: var(--font-title);
-            font-size: 1.8rem;
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 320px;
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--card-border);
+            padding: 30px 20px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 100;
+            transition: all 0.4s ease;
+        }
+
+        .sidebar-header {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .sidebar-logo {
+            font-size: 1.6rem;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             font-weight: 800;
-            color: var(--text-primary);
-            text-decoration: none;
             display: flex;
             align-items: center;
             gap: 10px;
-            letter-spacing: -0.5px;
         }
 
-        .header-logo span {
-            background: linear-gradient(135deg, var(--accent-primary), #ff007f);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .sidebar-subtitle {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 5px;
         }
 
-        .header-nav {
-            display: flex;
-            align-items: center;
-            gap: 25px;
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 8px;
         }
 
         .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
             color: var(--text-secondary);
             text-decoration: none;
-            font-size: 0.95rem;
+            border-radius: 12px;
             font-weight: 500;
-            transition: var(--transition-smooth);
-            position: relative;
+            font-size: 0.92rem;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
         }
 
-        .nav-link:hover, .nav-link.active {
-            color: var(--text-primary);
+        .nav-link:hover {
+            color: var(--accent-primary);
+            background: var(--def-bg);
+            border-color: var(--card-border);
+            transform: translateX(5px);
         }
 
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--accent-primary);
-            transition: var(--transition-smooth);
+        .nav-link.active {
+            color: #ffffff;
+            background: var(--accent-gradient);
+            box-shadow: 0 4px 15px var(--shadow-color);
         }
 
-        .nav-link:hover::after, .nav-link.active::after {
-            width: 100%;
+        .nav-link .num {
+            margin-right: 10px;
+            font-weight: 700;
+            opacity: 0.8;
         }
 
-        /* Action buttons in header */
-        .header-actions {
+        /* Main Content Area */
+        .main-content {
+            margin-left: 320px;
+            flex-grow: 1;
+            padding: 40px 50px;
+            max-width: 1300px;
+        }
+
+        /* Top Header Buttons */
+        .top-nav {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 15px;
-        }
-
-        .theme-toggle-btn {
-            background: var(--bg-glass);
-            border: 1px solid var(--border-glass);
-            color: var(--text-primary);
-            font-size: 1.4rem;
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition-smooth);
-            box-shadow: var(--shadow-premium);
-        }
-
-        .theme-toggle-btn:hover {
-            transform: scale(1.1) rotate(15deg);
-            border-color: var(--accent-primary);
-            box-shadow: var(--neon-shadow);
+            margin-bottom: 40px;
         }
 
         .hub-btn {
-            background: linear-gradient(135deg, var(--accent-primary), #e60067);
-            color: #ffffff;
-            border: none;
-            padding: 10px 20px;
-            font-family: var(--font-title);
-            font-weight: 600;
-            border-radius: 30px;
-            text-decoration: none;
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            gap: 8px;
-            box-shadow: var(--shadow-premium);
-            transition: var(--transition-smooth);
+            gap: 10px;
+            padding: 12px 24px;
+            background: var(--bg-secondary);
+            border: 2px solid var(--card-border);
+            border-radius: 30px;
+            color: var(--text-primary);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px var(--shadow-color);
         }
 
         .hub-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--neon-shadow);
-            opacity: 0.95;
+            transform: translateY(-3px);
+            border-color: var(--accent-primary);
+            box-shadow: 0 6px 18px var(--shadow-color);
         }
 
-        /* Layout Main Workspace */
-        .workspace {
-            max-width: 1400px;
-            margin: 40px auto;
-            padding: 0 20px;
-            display: grid;
-            grid-template-columns: 280px 1fr;
-            gap: 40px;
+        .features-panel {
+            display: flex;
+            gap: 15px;
         }
 
-        /* Navigation Sidebar */
-        .sidebar {
-            position: sticky;
-            top: 100px;
-            height: calc(100vh - 140px);
-            overflow-y: auto;
-            background: var(--bg-glass);
-            border: 1px solid var(--border-glass);
-            border-radius: 20px;
-            padding: 25px 20px;
-            box-shadow: var(--shadow-premium);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            transition: var(--transition-smooth);
-        }
-
-        .sidebar::-webkit-scrollbar {
-            width: 4px;
-        }
-
-        .sidebar::-webkit-scrollbar-thumb {
-            background: var(--border-glass);
-            border-radius: 4px;
-        }
-
-        .sidebar-title {
-            font-family: var(--font-title);
-            font-size: 1.15rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid var(--border-glass);
+        .feature-btn {
+            background: var(--bg-secondary);
+            border: 2px solid var(--card-border);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            font-size: 1.4rem;
             display: flex;
             align-items: center;
-            gap: 8px;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 10px var(--shadow-color);
         }
 
-        .sidebar-menu {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
+        .feature-btn:hover {
+            transform: scale(1.1) rotate(10deg);
+            border-color: var(--accent-primary);
         }
 
-        .sidebar-item a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 12px;
-            border-radius: 10px;
-            transition: var(--transition-smooth);
-            border-left: 3px solid transparent;
-        }
-
-        .sidebar-item a:hover, .sidebar-item.active a {
-            color: var(--text-primary);
-            background: rgba(157, 78, 221, 0.08);
-            border-left-color: var(--accent-primary);
-        }
-
-        /* Content Area */
-        .content {
-            display: flex;
-            flex-direction: column;
-            gap: 40px;
-        }
-
-        /* Section Intro */
-        .hero {
-            background: linear-gradient(135deg, rgba(114, 9, 183, 0.05), rgba(230, 0, 103, 0.03));
-            border: 1px solid var(--border-glass);
-            border-radius: 24px;
-            padding: 50px 40px;
-            position: relative;
-            overflow: hidden;
-            box-shadow: var(--shadow-premium);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--accent-primary), #ff007f);
-        }
-
-        .hero-title {
-            font-family: var(--font-title);
-            font-size: 3rem;
-            font-weight: 800;
-            margin-bottom: 15px;
-            line-height: 1.2;
-            letter-spacing: -1px;
-        }
-
-        .hero-desc {
-            color: var(--text-secondary);
-            font-size: 1.15rem;
-            max-width: 800px;
-        }
-
-        /* Mathematical structured content */
+        /* Structured Math Cards & Blocks */
         .section-card {
-            background: var(--bg-glass);
-            border: 1px solid var(--border-glass);
+            background: var(--bg-secondary);
+            border: 1px solid var(--card-border);
             border-radius: 24px;
-            padding: 35px;
-            box-shadow: var(--shadow-premium);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            transition: var(--transition-smooth);
-            position: relative;
-        }
-
-        .section-card:hover {
-            border-color: rgba(157, 78, 221, 0.3);
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px var(--shadow-color);
         }
 
         .section-num {
-            font-family: var(--font-title);
-            font-size: 0.9rem;
+            display: inline-block;
+            padding: 6px 16px;
+            background: var(--accent-gradient);
+            color: white;
+            border-radius: 30px;
             font-weight: 700;
-            color: var(--accent-primary);
+            font-size: 0.85rem;
+            margin-bottom: 15px;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 10px;
-            display: block;
+            letter-spacing: 1px;
         }
 
         .section-title {
-            font-family: var(--font-title);
-            font-size: 1.8rem;
-            font-weight: 700;
+            font-size: 2.2rem;
             color: var(--text-primary);
             margin-bottom: 25px;
         }
 
-        /* Definition, Theorem, Lemma Blocks */
         .block {
-            border-radius: 16px;
-            padding: 24px;
-            margin: 25px 0;
-            position: relative;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
-            transition: var(--transition-smooth);
-            border-left: 5px solid transparent;
-        }
-
-        .block:hover {
-            transform: translateX(4px);
+            border-left: 5px solid;
+            border-radius: 0 16px 16px 0;
+            padding: 20px 25px;
+            margin-bottom: 25px;
+            background: var(--bg-primary);
         }
 
         .block.def {
-            background: rgba(114, 9, 183, 0.04);
-            border-left-color: #7209b7;
-            border: 1px solid rgba(114, 9, 183, 0.1);
-            border-left: 5px solid #7209b7;
-        }
-
-        .block.thm {
-            background: rgba(230, 0, 103, 0.04);
-            border-left-color: #e60067;
-            border: 1px solid rgba(230, 0, 103, 0.1);
-            border-left: 5px solid #e60067;
+            border-color: var(--def-border);
+            background: var(--def-bg);
         }
 
         .block.lem {
-            background: rgba(157, 78, 221, 0.04);
-            border-left-color: #9d4edd;
-            border: 1px solid rgba(157, 78, 221, 0.1);
-            border-left: 5px solid #9d4edd;
+            border-color: var(--lem-border);
+            background: var(--lem-bg);
         }
 
-        .block.cor {
-            background: rgba(76, 201, 240, 0.04);
-            border-left-color: #4cc9f0;
-            border: 1px solid rgba(76, 201, 240, 0.1);
-            border-left: 5px solid #4cc9f0;
-        }
-
-        .block.rem {
-            background: rgba(247, 184, 1, 0.04);
-            border-left-color: #f7b801;
-            border: 1px solid rgba(247, 184, 1, 0.1);
-            border-left: 5px solid #f7b801;
+        .block.thm {
+            border-color: var(--thm-border);
+            background: var(--thm-bg);
         }
 
         .block-header {
-            font-family: var(--font-title);
-            font-size: 1rem;
+            font-family: 'Outfit', sans-serif;
             font-weight: 700;
-            margin-bottom: 12px;
+            font-size: 1.15rem;
+            margin-bottom: 10px;
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        .block.def .block-header { color: #7209b7; }
-        .block.thm .block-header { color: #e60067; }
-        .block.lem .block-header { color: #9d4edd; }
-        .block.cor .block-header { color: #4cc9f0; }
-        .block.rem .block-header { color: #f7b801; }
+        .math-box {
+            background: var(--bg-primary);
+            padding: 15px;
+            border-radius: 12px;
+            margin: 15px 0;
+            overflow-x: auto;
+            border: 1px solid var(--card-border);
+        }
+
+        /* Collapsible proof style */
+        .proof-toggle {
+            background: none;
+            border: none;
+            color: var(--accent-primary);
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 10px;
+            font-size: 0.95rem;
+        }
+
+        .proof-toggle:hover {
+            text-decoration: underline;
+        }
 
         .proof {
-            margin-top: 15px;
-            padding-left: 20px;
-            border-left: 2px dashed var(--border-glass);
-            color: var(--text-secondary);
+            display: none;
+            background: var(--proof-bg);
+            border: 1px solid var(--proof-border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 10px;
             font-size: 0.95rem;
         }
 
         .proof-title {
-            font-family: var(--font-title);
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 8px;
-            font-size: 0.9rem;
-        }
-
-        .note-card {
-            background: rgba(157, 78, 221, 0.06) !important;
-            border: 1px solid rgba(157, 78, 221, 0.2) !important;
-            border-radius: 18px;
-        }
-
-        .note-title {
-            font-family: var(--font-title);
-            font-size: 1.1rem;
             font-weight: 700;
-            color: var(--accent-primary);
-            margin-bottom: 15px;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+            border-bottom: 1px solid var(--proof-border);
+            padding-bottom: 5px;
         }
 
-        .note-divider {
-            border: 0;
-            height: 1px;
-            background: var(--border-glass);
-            margin: 20px 0;
-        }
-
-        /* Formulas math box */
-        .math-box {
-            background: rgba(0, 0, 0, 0.03);
-            border-radius: 12px;
-            padding: 15px;
-            margin: 15px 0;
-            overflow-x: auto;
-            border: 1px solid var(--border-glass);
-            transition: var(--transition-smooth);
-        }
-
-        body.dark-mode .math-box {
-            background: rgba(0, 0, 0, 0.2);
-        }
-
-        /* Interactive 3D Flashcards */
+        /* 3D Flashcards */
         .flashcards-section {
-            background: var(--bg-glass);
-            border: 1px solid var(--border-glass);
+            background: var(--bg-secondary);
+            border: 1px solid var(--card-border);
             border-radius: 24px;
-            padding: 35px;
-            box-shadow: var(--shadow-premium);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            margin-top: 40px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px var(--shadow-color);
         }
 
         .flashcards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 20px;
-            margin-top: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
         }
 
         .flashcard-container {
@@ -532,12 +366,14 @@
             height: 100%;
             position: relative;
             transform-style: preserve-3d;
-            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: var(--shadow-premium);
-            border-radius: 16px;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .flashcard-container:hover .flashcard, .flashcard-container.flipped .flashcard {
+        .flashcard-container:hover .flashcard {
+            transform: rotateY(10deg);
+        }
+
+        .flashcard-container.flipped .flashcard {
             transform: rotateY(180deg);
         }
 
@@ -546,69 +382,57 @@
             width: 100%;
             height: 100%;
             backface-visibility: hidden;
-            border-radius: 16px;
-            padding: 20px;
+            border-radius: 20px;
+            border: 2px solid var(--card-border);
+            padding: 25px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            border: 1px solid var(--border-glass);
+            box-shadow: 0 8px 25px var(--shadow-color);
         }
 
         .flashcard-front {
-            background: linear-gradient(135deg, rgba(114, 9, 183, 0.08), rgba(230, 0, 103, 0.02));
-            color: var(--text-primary);
-        }
-
-        .flashcard-front h4 {
-            font-family: var(--font-title);
-            font-size: 1.15rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-
-        .flashcard-front .icon {
-            font-size: 2rem;
-            margin-bottom: 10px;
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+            background: var(--def-bg);
+            color: var(--def-border);
         }
 
         .flashcard-back {
-            background: linear-gradient(135deg, var(--accent-primary), #560bad);
-            color: #ffffff;
+            background: var(--lem-bg);
+            color: var(--text-primary);
             transform: rotateY(180deg);
+        }
+
+        .flashcard-face h4 {
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+
+        .flashcard-face p {
             font-size: 0.9rem;
         }
 
-        /* Dynamic Visual Sandbox Section */
+        /* Sandbox Grid transform styles */
         .sandbox-section {
-            background: var(--bg-glass);
-            border: 1px solid var(--border-glass);
+            background: var(--bg-secondary);
+            border: 1px solid var(--card-border);
             border-radius: 24px;
-            padding: 35px;
-            box-shadow: var(--shadow-premium);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            margin-top: 40px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px var(--shadow-color);
         }
 
         .sandbox-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 30px;
             margin-top: 25px;
         }
 
-        @media (max-width: 900px) {
-            .sandbox-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
         .matrix-calculator {
-            background: rgba(114, 9, 183, 0.02);
-            border: 1px solid var(--border-glass);
+            background: var(--bg-primary);
+            border: 1px solid var(--card-border);
             border-radius: 20px;
             padding: 25px;
         }
@@ -620,33 +444,34 @@
         }
 
         .matrix-size-btn {
-            background: var(--bg-glass);
-            border: 1px solid var(--border-glass);
-            color: var(--text-primary);
-            padding: 8px 16px;
-            border-radius: 8px;
+            flex: 1;
+            padding: 10px;
+            border: 1px solid var(--card-border);
+            background: var(--bg-secondary);
+            border-radius: 10px;
             cursor: pointer;
-            font-family: var(--font-title);
             font-weight: 600;
-            transition: var(--transition-smooth);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
         }
 
         .matrix-size-btn.active {
-            background: var(--accent-primary);
-            color: #ffffff;
-            border-color: var(--accent-primary);
+            background: var(--accent-gradient);
+            color: white;
+            border: none;
         }
 
         .matrix-inputs-container {
             display: flex;
-            justify-content: center;
             align-items: center;
-            margin: 25px 0;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
         }
 
         .matrix-bracket {
-            font-size: 6rem;
-            font-weight: 200;
+            font-size: 5rem;
+            font-weight: 300;
             color: var(--accent-primary);
             user-select: none;
         }
@@ -654,54 +479,45 @@
         .matrix-inputs {
             display: grid;
             gap: 10px;
-            padding: 0 15px;
+            max-width: 200px;
         }
 
         .matrix-inputs.size-2 {
-            grid-template-columns: repeat(2, 60px);
-            grid-template-rows: repeat(2, 60px);
+            grid-template-columns: repeat(2, 1fr);
         }
 
         .matrix-inputs.size-3 {
-            grid-template-columns: repeat(3, 50px);
-            grid-template-rows: repeat(3, 50px);
+            grid-template-columns: repeat(3, 1fr);
         }
 
         .matrix-input {
-            width: 100%;
-            height: 100%;
-            background: var(--bg-glass);
-            border: 1px solid var(--border-glass);
-            color: var(--text-primary);
+            width: 55px;
+            height: 55px;
             text-align: center;
             font-size: 1.1rem;
+            border: 2px solid var(--card-border);
+            border-radius: 12px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
             font-weight: 600;
-            border-radius: 8px;
-            transition: var(--transition-smooth);
         }
 
         .matrix-input:focus {
             border-color: var(--accent-primary);
-            box-shadow: var(--neon-shadow);
             outline: none;
         }
 
         .matrix-results {
             margin-top: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
+            border-top: 1px solid var(--card-border);
+            padding-top: 15px;
         }
 
         .result-item {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            padding: 12px 15px;
-            background: var(--bg-glass);
-            border: 1px solid var(--border-glass);
-            border-radius: 12px;
-            font-weight: 500;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
         }
 
         .result-value {
@@ -709,341 +525,443 @@
             color: var(--accent-primary);
         }
 
-        /* Matrix Transform Visualizer Canvas */
         .visualizer-container {
-            background: rgba(0, 0, 0, 0.02);
-            border: 1px solid var(--border-glass);
+            background: var(--bg-primary);
+            border: 1px solid var(--card-border);
             border-radius: 20px;
-            padding: 20px;
+            padding: 25px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            position: relative;
-        }
-
-        body.dark-mode .visualizer-container {
-            background: rgba(0, 0, 0, 0.2);
         }
 
         .canvas-canvas {
             background: var(--bg-secondary);
-            border: 1px solid var(--border-glass);
-            border-radius: 12px;
-            cursor: crosshair;
-            box-shadow: var(--shadow-premium);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            max-width: 100%;
         }
 
         .visualizer-controls {
-            margin-top: 15px;
             display: flex;
             gap: 10px;
+            margin-top: 15px;
             width: 100%;
-            justify-content: center;
         }
 
         .visualizer-btn {
-            background: var(--bg-glass);
-            border: 1px solid var(--border-glass);
+            flex: 1;
+            padding: 12px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--card-border);
             color: var(--text-primary);
-            padding: 8px 16px;
-            border-radius: 8px;
+            border-radius: 12px;
             cursor: pointer;
-            font-size: 0.85rem;
             font-weight: 600;
-            transition: var(--transition-smooth);
+            transition: all 0.3s ease;
         }
 
         .visualizer-btn:hover {
             border-color: var(--accent-primary);
-            box-shadow: var(--neon-shadow);
+            background: var(--def-bg);
         }
 
-        /* Detailed step by step gauss steps modal or container */
         .gauss-steps-container {
-            grid-column: 1 / -1;
-            background: rgba(157, 78, 221, 0.03);
-            border: 1px solid var(--border-glass);
+            grid-column: span 2;
+            background: var(--bg-primary);
+            border: 1px solid var(--card-border);
             border-radius: 20px;
             padding: 25px;
             display: none;
         }
 
         .gauss-step {
-            margin: 15px 0;
-            padding: 15px;
-            background: var(--bg-secondary);
-            border-radius: 12px;
-            border-left: 4px solid var(--accent-primary);
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed var(--card-border);
         }
 
-        /* Comprehensive Interactive Quiz */
+        /* Quiz Styles */
         .quiz-section {
-            background: var(--bg-glass);
-            border: 1px solid var(--border-glass);
+            background: var(--bg-secondary);
+            border: 1px solid var(--card-border);
             border-radius: 24px;
-            padding: 35px;
-            box-shadow: var(--shadow-premium);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            margin-top: 40px;
-            position: relative;
-        }
-
-        .quiz-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px var(--shadow-color);
         }
 
         .quiz-progress-bar {
-            height: 6px;
-            background: var(--border-glass);
-            border-radius: 3px;
             width: 100%;
-            margin-bottom: 25px;
+            height: 8px;
+            background: var(--bg-primary);
+            border-radius: 4px;
+            margin-bottom: 30px;
             overflow: hidden;
         }
 
         .quiz-progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, var(--accent-primary), #ff007f);
             width: 0%;
-            transition: width 0.3s ease;
+            background: var(--accent-gradient);
+            transition: width 0.4s ease;
         }
 
         .quiz-card {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-glass);
-            border-radius: 16px;
+            background: var(--bg-primary);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
             padding: 30px;
-            box-shadow: var(--shadow-premium);
         }
 
         .quiz-question-category {
-            font-size: 0.8rem;
-            font-weight: 700;
+            display: inline-block;
+            padding: 4px 10px;
+            background: var(--def-bg);
             color: var(--accent-primary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-size: 0.8rem;
+            border-radius: 6px;
+            font-weight: 700;
             margin-bottom: 10px;
-            display: block;
         }
 
         .quiz-question-text {
-            font-family: var(--font-title);
-            font-size: 1.3rem;
-            font-weight: 700;
+            font-size: 1.2rem;
+            font-weight: 600;
             margin-bottom: 20px;
-            line-height: 1.4;
         }
 
         .quiz-options {
-            display: flex;
-            flex-direction: column;
+            display: grid;
             gap: 12px;
         }
 
         .quiz-option {
-            background: var(--bg-primary);
-            border: 1px solid var(--border-glass);
+            background: var(--bg-secondary);
+            border: 1px solid var(--card-border);
             padding: 15px 20px;
             border-radius: 12px;
-            cursor: pointer;
-            font-weight: 500;
             text-align: left;
-            transition: var(--transition-smooth);
+            cursor: pointer;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            width: 100%;
         }
 
         .quiz-option:hover {
-            background: rgba(157, 78, 221, 0.06);
             border-color: var(--accent-primary);
-            transform: translateX(4px);
+            background: var(--def-bg);
+            transform: translateY(-2px);
         }
 
         .quiz-option.correct {
-            background: rgba(16, 185, 129, 0.1);
-            border-color: var(--color-success);
-            color: var(--color-success);
+            background: rgba(16, 185, 129, 0.15) !important;
+            border-color: #10b981 !important;
+            color: #10b981 !important;
+            font-weight: 700;
         }
 
         .quiz-option.incorrect {
-            background: rgba(239, 68, 68, 0.1);
-            border-color: var(--color-error);
-            color: var(--color-error);
+            background: rgba(239, 68, 68, 0.15) !important;
+            border-color: #ef4444 !important;
+            color: #ef4444 !important;
         }
 
         .quiz-feedback {
             margin-top: 20px;
             padding: 15px;
             border-radius: 12px;
-            background: rgba(157, 78, 221, 0.05);
+            background: var(--bg-secondary);
+            border-left: 4px solid var(--accent-primary);
             display: none;
         }
 
         .quiz-next-btn {
-            background: var(--accent-primary);
-            color: #ffffff;
+            margin-top: 25px;
+            padding: 12px 30px;
+            background: var(--accent-gradient);
+            color: white;
             border: none;
-            padding: 12px 24px;
-            font-family: var(--font-title);
+            border-radius: 12px;
             font-weight: 600;
-            border-radius: 30px;
             cursor: pointer;
-            margin-top: 20px;
             float: right;
-            transition: var(--transition-smooth);
+            transition: all 0.3s ease;
         }
 
         .quiz-next-btn:hover {
-            box-shadow: var(--neon-shadow);
-            transform: translateY(-1px);
-        }
-
-        .quiz-scoreboard {
-            text-align: center;
-            padding: 40px 20px;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px var(--shadow-color);
         }
 
         .quiz-score-num {
-            font-family: var(--font-title);
-            font-size: 4rem;
+            font-size: 3rem;
             font-weight: 800;
-            color: var(--accent-primary);
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 15px 0;
         }
 
         .quiz-restart-btn {
-            background: var(--bg-glass);
-            border: 1px solid var(--border-glass);
-            color: var(--text-primary);
-            padding: 12px 24px;
-            border-radius: 30px;
-            cursor: pointer;
-            margin-top: 25px;
-            font-family: var(--font-title);
+            padding: 12px 30px;
+            background: var(--accent-gradient);
+            color: white;
+            border: none;
+            border-radius: 12px;
             font-weight: 600;
-            transition: var(--transition-smooth);
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
 
-        .quiz-restart-btn:hover {
-            border-color: var(--accent-primary);
-            box-shadow: var(--neon-shadow);
-        }
-
-        /* Footer styling */
         footer {
-            background: var(--bg-glass);
-            border-top: 1px solid var(--border-glass);
-            padding: 30px 40px;
             text-align: center;
-            margin-top: 60px;
+            padding: 40px;
             color: var(--text-secondary);
-            font-size: 0.9rem;
+            border-top: 1px solid var(--card-border);
+            margin-top: 60px;
+        }
+
+        /* Responsive adaptation */
+        @media (max-width: 992px) {
+            .sidebar {
+                display: none;
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="ambient-glow glow-top-right"></div>
-    <div class="ambient-glow glow-bottom-left"></div>
 
-    <header>
-        <a href="#" class="header-logo">
-            <span>Высшая Алгебра</span> 🌌
-        </a>
-        <div class="header-nav">
-            <a href="#lectures" class="nav-link active">Лекции</a>
-            <a href="#flashcards" class="nav-link">Карточки</a>
-            <a href="#sandbox" class="nav-link">Песочница</a>
-            <a href="#quiz" class="nav-link">Квиз</a>
-        </div>
-        <div class="header-actions">
-            <button class="theme-toggle-btn" id="theme-toggle" title="Переключить тему">🌓</button>
-            <a href="index.html" class="hub-btn">
-                <span>Теория Графов</span> 🕸️
-            </a>
-        </div>
-    </header>
-
-    <div class="workspace">
+    <div class="app-container">
+        
+        <!-- Navigation Sidebar -->
         <aside class="sidebar">
-            <div class="sidebar-title">
-                📚 Навигация
+            <div class="sidebar-header">
+                <div class="sidebar-logo">Высшая Алгебра</div>
+                <div class="sidebar-subtitle">Полный курс и практический интерактив</div>
             </div>
-            <ul class="sidebar-menu">
-                <li class="sidebar-item active"><a href="#section-1">1. Группы, кольца и поля</a></li>
-                <li class="sidebar-item"><a href="#section-2">2. Корни многочленов</a></li>
-                <li class="sidebar-item"><a href="#section-3">3. Лин. пространства</a></li>
-                <li class="sidebar-item"><a href="#section-4">4. Изоморфизм и базисы</a></li>
-                <li class="sidebar-item"><a href="#section-5">5. Подпространства и ранги</a></li>
-                <li class="sidebar-item"><a href="#section-6">6. СЛАУ и ФСР</a></li>
-                <li class="sidebar-item"><a href="#section-7">7. Лин. операторы</a></li>
-                <li class="sidebar-item"><a href="#section-8">8. Канонические формы</a></li>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="#section-1" class="nav-link active"><span class="num">1</span> Группы, Кольца, Поля</a></li>
+                <li class="nav-item"><a href="#section-2" class="nav-link"><span class="num">2</span> Корни многочленов (Кронекер)</a></li>
+                <li class="nav-item"><a href="#section-3" class="nav-link"><span class="num">3</span> Лин. пространства</a></li>
+                <li class="nav-item"><a href="#section-4" class="nav-link"><span class="num">4</span> Леммы о лин. зависимости</a></li>
+                <li class="nav-item"><a href="#section-5" class="nav-link"><span class="num">5</span> Базы, размерность и дополнения</a></li>
+                <li class="nav-item"><a href="#section-6" class="nav-link"><span class="num">6</span> Изоморфизмы и координаты</a></li>
+                <li class="nav-item"><a href="#section-7" class="nav-link"><span class="num">7</span> Подпространства и прямые суммы</a></li>
+                <li class="nav-item"><a href="#section-8" class="nav-link"><span class="num">8</span> Ранг матрицы и преобразования</a></li>
+                <li class="nav-item"><a href="#section-9" class="nav-link"><span class="num">9</span> СЛАУ, Кронекер-Капелли и ФСР</a></li>
+                <li class="nav-item"><a href="#section-10" class="nav-link"><span class="num">10</span> Лин. преобразования и матрицы</a></li>
+                <li class="nav-item"><a href="#section-11" class="nav-link"><span class="num">11</span> Ядро, образ и инварианты</a></li>
+                <li class="nav-item"><a href="#section-12" class="nav-link"><span class="num">12</span> Собственные векторы и зн-я</a></li>
+                <li class="nav-item"><a href="#section-13" class="nav-link"><span class="num">13</span> λ-матрицы и Смитова форма</a></li>
+                <li class="nav-item"><a href="#flashcards" class="nav-link"><span class="num">★</span> 3D Карточки терминов</a></li>
+                <li class="nav-item"><a href="#sandbox" class="nav-link"><span class="num">★</span> Матричная Песочница</a></li>
+                <li class="nav-item"><a href="#quiz" class="nav-link"><span class="num">★</span> Алгебраический Квиз</a></li>
             </ul>
         </aside>
 
-        <main class="content">
-            <section class="hero">
-                <h1 class="hero-title">Высшая Алгебра</h1>
-                <p class="hero-desc">Премиальный интерактивный путеводитель по курсу высшей и линейной алгебры. Здесь собраны подробные лекционные доказательства, интерактивные визуализации деформаций векторных пространств и умные тесты для идеальной сдачи экзамена.</p>
-            </section>
+        <!-- Main Workspace -->
+        <main class="main-content">
+            
+            <div class="top-nav">
+                <a href="index.html" class="hub-btn"><span>Теория Графов</span> 🕸️</a>
+                <div class="features-panel">
+                    <button class="feature-btn" id="theme-toggle" title="Темная тема">🌙</button>
+                    <button class="feature-btn" id="print-mode" title="Шпаргалка (Печать)" onclick="window.print()">🖨️</button>
+                </div>
+            </div>
 
-            <div id="lectures">
+            <!-- Page Title -->
+            <div style="margin-bottom: 40px; text-align: center;">
+                <h1 style="font-size: 3.2rem; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 10px;">Интерактивный Курс Высшей Алгебры</h1>
+                <p style="color: var(--text-secondary); font-size: 1.2rem;">Все определения, теоремы и доказательства курса по лекциям</p>
+            </div>
+
+            <div id="lecture-sections">
+
                 <!-- Section 1 -->
-                <div class="section-card" id="section-1" style="margin-bottom: 30px;">
+                <div class="section-card" id="section-1">
                     <span class="section-num">Раздел 1</span>
-                    <h2 class="section-title">Группы, кольца и поля</h2>
+                    <h2 class="section-title">Группы, Кольца, Поля и Фактор-структуры</h2>
                     
                     <div class="block def">
-                        <div class="block-header">🔑 Определение: Смежные классы (Cosets)</div>
+                        <div class="block-header">🔑 Определение: Смежные классы</div>
                         Пусть $G$ — группа, $H$ — подгруппа в $G$ ($H \le G$).
-                        <br><strong>Левым смежным классом</strong> группы $G$ по подгруппе $H$, содержащим элемент $g \in G$, называется множество:
+                        <br>Для любого элемента $g \in G$ множество:
                         <div class="math-box">$$ gH = \{ gh \mid h \in H \} $$</div>
-                        Аналогично, <strong>правым смежным классом</strong> называется множество $Hg = \{ hg \mid h \in H \}$.
+                        называется <strong>левым смежным классом</strong> группы $G$ по подгруппе $H$, определяемым элементом $g$.
+                        <br>Аналогично, $Hg = \{ hg \mid h \in H \}$ называется <strong>правым смежным классом</strong>.
+                    </div>
+
+                    <div class="block lem">
+                        <div class="block-header">⚡ Свойства смежных классов (Лемма из лекций)</div>
+                        Пусть $H \le G$, $x, y \in G$. Тогда:
+                        <br>1. $x \in xH$;
+                        <br>2. $xH = yH \iff x^{-1}y \in H$;
+                        <br>3. Левые смежные классы либо не пересекаются, либо полностью совпадают:
+                        <div class="math-box">$$ xH \cap yH 
+e \emptyset \implies xH = yH $$</div>
+                        <button class="proof-toggle" onclick="toggleProof('proof-1-properties')">▶ Показать доказательство</button>
+                        <div class="proof" id="proof-1-properties">
+                            <div class="proof-title">Доказательство:</div>
+                            1. Так как $e \in H$, то $x = xe \in xH$.
+                            <br>2. Пусть $xH = yH$. Тогда $y = ye \in yH = xH \implies y = xh$ для некоторого $h \in H$. Умножив слева на $x^{-1}$, получим $x^{-1}y = h \in H$.
+                            <br>Обратно, пусть $x^{-1}y = h \in H \implies y = xh$. Для любого $y h_1 \in yH$ имеем $y h_1 = (xh) h_1 = x (hh_1) \in xH$, откуда $yH \subseteq xH$. Аналогично, из $x = yh^{-1}$ следует $xH \subseteq yH$, то есть $xH = yH$.
+                            <br>3. Пусть $z \in xH \cap yH$. Тогда $z = x h_1 = y h_2$ для $h_1, h_2 \in H$.
+                            <br>Отсюда $x = y h_2 h_1^{-1}$. Так как $h_2 h_1^{-1} \in H$, по пункту 2 получаем $xH = yH$. Лемма доказана.
+                        </div>
                     </div>
 
                     <div class="block thm">
                         <div class="block-header">🏆 Теорема Лагранжа</div>
-                        Порядок любой подгруппы $H$ конечной группы $G$ делит порядок самой группы $G$.
-                        <div class="math-box">$$ |G| = |H| \cdot [G : H] $$</div>
-                        где $[G : H]$ — индекс подгруппы (число различных смежных классов).
-                        <div class="proof">
-                            <div class="proof-title">Доказательство (через смежные классы):</div>
-                            1. Любые два левых смежных класса либо не пересекаются, либо полностью совпадают. Действительно, если $aH \cap bH 
-eq \emptyset$, существует $x \in aH \cap bH \Rightarrow x = ah_1 = bh_2 \Rightarrow a = bh_2 h_1^{-1} \in bH \Rightarrow aH \subseteq bH$. Симметрично $bH \subseteq aH \Rightarrow aH = bH$.
-                            <br>2. Все смежные классы содержат одинаковое количество элементов, равное $|H|$. Отображение $\phi: H \to gH$ ($\phi(h) = gh$) является биекцией в силу сократимости в группе.
-                            <br>3. Так как смежные классы образуют разбиение группы $G$, общее число элементов группы $|G|$ равно числу классов $[G:H]$, умноженному на мощность класса $|H|$. Значит, $|G| = |H| \cdot [G:H]$.
+                        Порядок любой подгруппы $H$ конечной группы $G$ делит порядок самой группы $G$, при этом:
+                        <div class="math-box">$$ |G| = |H| \cdot [G:H] $$</div>
+                        где $[G:H]$ (индекс подгруппы $H$ в $G$) — число различных левых смежных классов.
+                        <button class="proof-toggle" onclick="toggleProof('proof-lagrange')">▶ Показать доказательство</button>
+                        <div class="proof" id="proof-lagrange">
+                            <div class="proof-title">Доказательство:</div>
+                            Поскольку левые смежные классы образуют разбиение группы $G$ на непересекающиеся подмножества, мы можем представить $G$ в виде дизъюнктного объединения:
+                            $$ G = g_1 H \cup g_2 H \cup \dots \cup g_m H $$
+                            где $m = [G:H]$ — число классов. 
+                            <br>Покажем, что мощность каждого смежного класса равна мощности $H$. Отображение $\phi: H \to g_i H$, заданное как $\phi(h) = g_i h$, является биекцией (инъективность следует из закона сокращения: $g_i h_1 = g_i h_2 \implies h_1 = h_2$).
+                            <br>Следовательно, $|g_i H| = |H|$ для всех $i = 1, \dots, m$. 
+                            <br>Тогда общее число элементов в $G$ равно сумме элементов в смежных классах:
+                            $$ |G| = |g_1 H| + |g_2 H| + \dots + |g_m H| = m \cdot |H| = [G:H] \cdot |H| $$
+                            Теорема доказана.
+                        </div>
+                    </div>
+
+                    <div class="block lem">
+                        <div class="block-header">⚡ Следствие из Теоремы Лагранжа</div>
+                        Если порядок группы $G$ равен простому числу $p$, то группа $G$ является циклической, и любая её нетривиальная подгруппа совпадает с самой $G$.
+                        <button class="proof-toggle" onclick="toggleProof('proof-lagrange-cor')">▶ Показать доказательство</button>
+                        <div class="proof" id="proof-lagrange-cor">
+                            <div class="proof-title">Доказательство:</div>
+                            Пусть $x \in G$ и $x 
+e e$. Рассмотрим циклическую подгруппу $\langle x 
+angle$. По теореме Лагранжа порядок подгруппы $|\langle x 
+angle|$ должен делить порядок группы $p$. 
+                            <br>Поскольку $p$ — простое число, единственными делителями являются $1$ и $p$. Так как $x 
+e e$, порядок подгруппы $|\langle x 
+angle| > 1$, следовательно, он равен $p$. Тогда $\langle x 
+angle = G$, то есть группа $G$ циклическая и порождена элементом $x$.
+                        </div>
+                    </div>
+
+                    <div class="block thm">
+                        <div class="block-header">🏆 Теорема Силова (Частный случай)</div>
+                        Если $p$ — простое число и $p^k$ делит порядок группы $|G|$, то в группе $G$ существует подгруппа порядка $p^k$.
+                    </div>
+
+                    <div class="block def">
+                        <div class="block-header">🔑 Определение: Нормальная подгруппа</div>
+                        Подгруппа $H$ группы $G$ называется <strong>нормальной подгруппой</strong> (или нормальным делителем, обозначается $H 	riangleleft G$), если для любого $g \in G$ левый и правый смежные классы совпадают:
+                        <div class="math-box">$$ gH = Hg \iff g^{-1}Hg = H \quad \forall g \in G $$</div>
+                    </div>
+
+                    <div class="block thm">
+                        <div class="block-header">🏆 Теорема Галуа (О простоте альтернантных групп)</div>
+                        Знакопеременная группа $A_n$ (всех четных подстановок степени $n$) является простой (не содержит нетривиальных нормальных подгрупп) для всех $n \ge 5$.
+                    </div>
+
+                    <div class="block thm">
+                        <div class="block-header">🏆 Теорема о фактор-группе</div>
+                        Пусть $H 	riangleleft G$. Множество смежных классов $G/H = \{ gH \mid g \in G \}$ образует группу относительно операции:
+                        <div class="math-box">$$ (aH)(bH) = (ab)H $$</div>
+                        Эта группа называется <strong>фактор-группой</strong> группы $G$ по нормальной подгруппе $H$.
+                        <button class="proof-toggle" onclick="toggleProof('proof-factor-group')">▶ Показать доказательство</button>
+                        <div class="proof" id="proof-factor-group">
+                            <div class="proof-title">Доказательство:</div>
+                            1. <em>Корректность операции</em>: Пусть $a_1H = a_2H$ и $b_1H = b_2H$. Покажем, что $(a_1b_1)H = (a_2b_2)H$.
+                            <br>Имеем $a_2 = a_1 h_1$, $b_2 = b_1 h_2$ для $h_1, h_2 \in H$.
+                            <br>Тогда $a_2 b_2 = a_1 h_1 b_1 h_2 = a_1 b_1 (b_1^{-1} h_1 b_1) h_2$.
+                            <br>Так как $H 	riangleleft G$, элемент $h_3 = b_1^{-1} h_1 b_1 \in H$. Тогда $a_2 b_2 = a_1 b_1 (h_3 h_2) \in (a_1 b_1)H$. Из свойств смежных классов следует $(a_2b_2)H = (a_1b_1)H$. Операция корректна!
+                            <br>2. <em>Ассоциативность</em>: Наследуется из ассоциативности в $G$.
+                            <br>3. <em>Единица</em>: Класс $eH = H$ является нейтральным элементом: $ar{g}ar{e} = (gH)(eH) = (ge)H = gH = ar{g}$.
+                            <br>4. <em>Обратный</em>: Для класса $gH$ обратным является класс $g^{-1}H$. Теорема доказана.
                         </div>
                     </div>
 
                     <div class="block def">
-                        <div class="block-header">🔑 Определение: Фактор-группа</div>
-                        Пусть $H$ — нормальная подгруппа в $G$ ($H \trianglelefteq G$, т.е. $gH = Hg \quad \forall g \in G$).
-                        <br>Множество смежных классов $G/H$ образует группу относительно операции:
-                        <div class="math-box">$$ (aH)(bH) = (ab)H $$</div>
-                        Эта группа называется <strong>фактор-группой</strong> группы $G$ по нормальной подгруппе $H$.
+                        <div class="block-header">🔑 Определение: Идеал кольца</div>
+                        Подкольцо $I$ кольца $R$ называется <strong>идеалом</strong> (двусторонним), если для любого $x \in I$ и любого $r \in R$ произведения:
+                        <div class="math-box">$$ rx \in I \quad \text{и} \quad xr \in I $$</div>
                     </div>
 
-                    <div class="block def">
-                        <div class="block-header">🔑 Определение: Идеал кольца</div>
-                        Подкольцо $I$ кольца $R$ называется <strong>идеалом</strong> (двусторонним), если для любого $x \in I$ и любого $r \in R$ произведения $rx \in I$ и $xr \in I$.
+                    <div class="block thm">
+                        <div class="block-header">🏆 Теорема о фактор-кольце</div>
+                        Пусть $I$ — идеал кольца $R$. Тогда аддитивная фактор-группа $R/I$ с операцией умножения смежных классов $(a+I)(b+I) = ab + I$ является кольцом. Оно называется <strong>фактор-кольцом</strong> кольца $R$ по идеалу $I$.
+                        <button class="proof-toggle" onclick="toggleProof('proof-factor-ring')">▶ Показать доказательство</button>
+                        <div class="proof" id="proof-factor-ring">
+                            <div class="proof-title">Доказательство:</div>
+                            Поскольку $I$ является нормальной подгруппой аддитивной группы кольца $R$, аддитивная структура $R/I$ является абелевой группой.
+                            <br>Покажем корректность умножения. Пусть $a_1 + I = a_2 + I$ и $b_1 + I = b_2 + I$. Тогда $a_2 = a_1 + x$, $b_2 = b_1 + y$ для $x, y \in I$.
+                            <br>Имеем: $a_2 b_2 = (a_1 + x)(b_1 + y) = a_1 b_1 + a_1 y + x b_1 + x y$.
+                            <br>По определению идеала, так как $y \in I$, то $a_1 y \in I$. Так как $x \in I$, то $x b_1 \in I$. Так как $x, y \in I$, то $x y \in I$.
+                            <br>Следовательно, сумма $a_1 y + x b_1 + x y \in I$, что означает $a_2 b_2 + I = a_1 b_1 + I$. Дистрибутивность умножения относительно сложения доказывается аналогично. Теорема доказана.
+                        </div>
                     </div>
                 </div>
 
                 <!-- Section 2 -->
-                <div class="section-card" id="section-2" style="margin-bottom: 30px;">
+                <div class="section-card" id="section-2">
                     <span class="section-num">Раздел 2</span>
                     <h2 class="section-title">Корни многочленов в расширениях полей</h2>
                     
+                    <div class="block lem">
+                        <div class="block-header">⚡ Лемма о строении идеалов кольца $P[x]$</div>
+                        Всякий идеал кольца многочленов $P[x]$ над полем $P$ является главным идеалом, т.е. порождается одним многочленом:
+                        <div class="math-box">$$ I = (f) = \{ g(x)f(x) \mid g(x) \in P[x] \} $$</div>
+                        <button class="proof-toggle" onclick="toggleProof('proof-ideals-polynomials')">▶ Показать доказательство</button>
+                        <div class="proof" id="proof-ideals-polynomials">
+                            <div class="proof-title">Доказательство:</div>
+                            Если идеал $I = \{ 0 \}$, то он порожден нулевым многочленом. 
+                            <br>Пусть $I 
+e \{ 0 \}$. Выберем в $I$ ненулевой многочлен $f(x)$ минимальной степени. Покажем, что $I = (f)$.
+                            <br>Очевидно, что $(f) \subseteq I$, так как $f \in I$, и по свойству идеала произведение $f(x)g(x)$ лежит в $I$.
+                            <br>Обратно, возьмем произвольный многочлен $h(x) \in I$. Разделим его на $f(x)$ с остатком:
+                            $$ h(x) = f(x)q(x) + r(x), \quad \text{где } \deg r < \deg f \text{ или } r(x) = 0 $$
+                            Тогда $r(x) = h(x) - f(x)q(x)$. Так как $h \in I$ и $f(x)q(x) \in I$, их разность $r(x)$ также принадлежит $I$.
+                            <br>Но степень $r(x)$ меньше степени $f(x)$, который был выбран как ненулевой многочлен минимальной степени в $I$. Единственная возможность избежать противоречия — это $r(x) = 0$.
+                            <br>Следовательно, $h(x) = f(x)q(x) \in (f)$, то есть $I \subseteq (f)$, откуда $I = (f)$. Лемма доказана.
+                        </div>
+                    </div>
+
                     <div class="block thm">
-                        <div class="block-header">🏆 Теорема о существовании корня неприводимого многочлена</div>
-                        Пусть $P$ — произвольное поле, а $f(x) \in P[x]$ — неприводимый многочлен степени $d \ge 1$.
-                        <br>Тогда существует такое расширение $F$ поля $P$, в котором многочлен $f(x)$ имеет корень.
-                        <div class="proof">
-                            <div class="proof-title">Доказательство (конструкция Кронекера):</div>
-                            Рассмотрим фактор-кольцо $F = P[x] / (f)$, где $(f)$ — главный идеал, порожденный многочленом $f(x)$.
-                            <br>1. Так как многочлен $f(x)$ неприводим в $P[x]$, идеал $(f)$ является максимальным в кольце главных идеалов $P[x]$. Следовательно, фактор-кольцо $F$ является полем.
-                            <br>2. Отображение $a \mapsto a + (f)$ для $a \in P$ внедряет исходное поле $P$ в $F$ как подполе.
-                            <br>3. Обозначим элемент $\alpha = x + (f) \in F$. Вычислим значение многочлена $f$ на элементе $\alpha$:
+                        <div class="block-header">🏆 Теорема о фактор-поле по неприводимому многочлену</div>
+                        Фактор-кольцо $P[x] / (f)$ является полем тогда и только тогда, когда многочлен $f(x)$ неприводим над полем $P$.
+                        <button class="proof-toggle" onclick="toggleProof('proof-factor-field')">▶ Показать доказательство</button>
+                        <div class="proof" id="proof-factor-field">
+                            <div class="proof-title">Доказательство:</div>
+                            1. <em>Необходимость</em>: Пусть $P[x] / (f)$ — поле. Предположим, что $f(x) = g(x)h(x)$ — приводим, причем $0 < \deg g, \deg h < \deg f$.
+                            <br>Тогда в фактор-кольце классы $ar{g} = g + (f) 
+e 0$ и $ar{h} = h + (f) 
+e 0$, но их произведение $ar{g}ar{h} = gh + (f) = f + (f) = 0$.
+                            <br>В поле не может быть делителей нуля! Противоречие. Значит, $f(x)$ неприводим.
+                            <br>2. <em>Достаточность</em>: Пусть $f(x)$ неприводим. Покажем, что для любого ненулевого класса $ar{g} = g + (f)$ (где $g(x)$ не делится на $f(x)$) существует обратный.
+                            <br>Поскольку $f(x)$ неприводим и $g(x)$ не делится на него, их наибольший общий делитель $\text{НОД}(g, f) = 1$.
+                            <br>По алгоритму Евклида найдутся такие многочлены $u(x), v(x) \in P[x]$, что:
+                            $$ u(x)g(x) + v(x)f(x) = 1 $$
+                            Переходя к классам вычетов по модулю $(f)$, получаем:
+                            $$ ar{u}ar{g} + ar{v}ar{f} = ar{1} \implies ar{u}ar{g} + 0 = ar{1} \implies ar{u}ar{g} = ar{1} $$
+                            Следовательно, класс $ar{u} = u + (f)$ является обратным к $ar{g}$. Поле доказано!
+                        </div>
+                    </div>
+
+                    <div class="block thm">
+                        <div class="block-header">🏆 Теорема Кронекера (О существовании корня многочлена)</div>
+                        Для любого неприводимого многочлена $f(x) \in P[x]$ степени $d \ge 1$ существует расширение $F$ поля $P$, в котором многочлен $f(x)$ имеет корень.
+                        <button class="proof-toggle" onclick="toggleProof('proof-kron-exist')">▶ Показать доказательство</button>
+                        <div class="proof" id="proof-kron-exist">
+                            <div class="proof-title">Доказательство:</div>
+                            Рассмотрим фактор-кольцо $F = P[x] / (f)$. Так как многочлен $f(x)$ неприводим, по предыдущей теореме $F$ является полем.
+                            <br>Отображение $\phi: P \to F$, заданное как $\phi(a) = a + (f)$, внедряет поле $P$ в $F$ как подполе. 
+                            <br>Обозначим элемент $\alpha = x + (f) \in F$. Вычислим значение многочлена $f$ на элементе $\alpha$:
                             $$ f(\alpha) = f(x + (f)) = f(x) + (f) = 0 + (f) = 0_F $$
                             Следовательно, элемент $\alpha \in F$ является корнем многочлена $f(x)$. Теорема доказана.
                         </div>
@@ -1051,161 +969,634 @@ eq \emptyset$, существует $x \in aH \cap bH \Rightarrow x = ah_1 = bh_
                 </div>
 
                 <!-- Section 3 -->
-                <div class="section-card" id="section-3" style="margin-bottom: 30px;">
+                <div class="section-card" id="section-3">
                     <span class="section-num">Раздел 3</span>
-                    <h2 class="section-title">Линейные пространства и линейная зависимость</h2>
+                    <h2 class="section-title">Линейные пространства и свойства векторов</h2>
                     
                     <div class="block def">
-                        <div class="block-header">🔑 Определение: Линейное пространство</div>
-                        Непустое множество $V$ называется <strong>линейным (векторным) пространством</strong> над полем $P$, если на нем определены операции сложения векторов ($v_1 + v_2$) и умножения вектора на скаляр ($\lambda v$), удовлетворяющие 8 классическим аксиомам (коммутативность сложения, ассоциативность сложения, существование нуля и противоположного вектора, дистрибутивность скаляров и векторов, ассоциативность умножения скаляров и тождество единицы).
+                        <div class="block-header">🔑 Определение: Линейное векторное пространство</div>
+                        Непустое множество $V$ называется <strong>линейным пространством</strong> над полем $P$, если заданы операции сложения векторов ($u+v \in V$) и умножения вектора на скаляр ($\lambda v \in V$), удовлетворяющие 8 классическим аксиомам:
+                        <br>1. $u + v = v + u$;
+                        <br>2. $(u + v) + w = u + (v + w)$;
+                        <br>3. Существует нулевой вектор $\theta \in V$, такой что $u + \theta = u$;
+                        <br>4. Для любого $u \in V$ существует противоположный вектор $-u \in V$, такой что $u + (-u) = \theta$;
+                        <br>5. $(\lambda + eta)u = \lambda u + eta u$;
+                        <br>6. $\lambda(u + v) = \lambda u + \lambda v$;
+                        <br>7. $(\lambdaeta)u = \lambda(eta u)$;
+                        <br>8. $1 \cdot u = u$.
                     </div>
 
-                    <div class="block def">
-                        <div class="block-header">🔑 Определение: Линейная зависимость векторов</div>
-                        Система векторов $a_1, a_2, \dots, a_k \in V$ называется <strong>линейно зависимой</strong>, если существуют коэффициенты $\lambda_1, \lambda_2, \dots, \lambda_k \in P$, не все равные нулю ($\sum |\lambda_i| 
-eq 0$), такие что:
-                        <div class="math-box">$$ \lambda_1 a_1 + \lambda_2 a_2 + \dots + \lambda_k a_k = \theta $$</div>
-                        где $\theta$ — нулевой вектор. Если равенство выполняется только при $\lambda_1 = \lambda_2 = \dots = \lambda_k = 0$, система называется <strong>линейно независимой</strong>.
-                    </div>
-
-                    <div class="block lem">
-                        <div class="block-header">⚡ Лемма о линейной зависимости (Лемма 2 из лекций)</div>
-                        Если ненулевая система векторов $a_1, a_2, \dots, a_k$ линейно зависима, то по крайней мере один из векторов выражается линейно через предыдущие векторы этой системы.
-                        <div class="proof">
+                    <div class="block thm">
+                        <div class="block-header">🏆 Теорема о простейших свойствах линейного пространства</div>
+                        В любом линейном пространстве $V$ над полем $P$ выполняются свойства:
+                        <br>1. $0 \cdot a = \theta$ для любого $a \in V$;
+                        <br>2. $(-1) \cdot a = -a$ для любого $a \in V$;
+                        <br>3. $\lambda \cdot \theta = \theta$ для любого $\lambda \in P$;
+                        <br>4. $\lambda a = \theta \iff \lambda = 0$ или $a = \theta$.
+                        <button class="proof-toggle" onclick="toggleProof('proof-basic-properties-space')">▶ Показать доказательство</button>
+                        <div class="proof" id="proof-basic-properties-space">
                             <div class="proof-title">Доказательство:</div>
-                            В силу линейной зависимости существует нетривиальный набор $\lambda_i$, дающий ноль. Пусть $s$ — наибольший индекс, для которого $\lambda_s 
-eq 0$.
-                            <br>Тогда $\lambda_1 a_1 + \dots + \lambda_s a_s = \theta \Rightarrow \lambda_s a_s = -\lambda_1 a_1 - \dots - \lambda_{s-1} a_{s-1}$.
-                            <br>Разделив на $\lambda_s 
-eq 0$, получаем выражение вектора $a_s$ через предыдущие:
-                            $$ a_s = \sum_{i=1}^{s-1} \left( -\frac{\lambda_i}{\lambda_s} 
-ight) a_i $$
+                            1. Запишем: $0 \cdot a = (0 + 0) \cdot a = 0 \cdot a + 0 \cdot a$. Прибавляя к обеим частям противоположный вектор $-(0 \cdot a)$, получим $\theta = 0 \cdot a$.
+                            <br>2. Запишем: $(-1) \cdot a + 1 \cdot a = (-1 + 1) \cdot a = 0 \cdot a = \theta$. Так как $1 \cdot a = a$, то $(-1) \cdot a + a = \theta \implies (-1) \cdot a = -a$ в силу единственности противоположного вектора.
+                            <br>3. Запишем: $\lambda \cdot \theta = \lambda(\theta + \theta) = \lambda\theta + \lambda\theta$. Прибавляя к обеим частям $-(\lambda\theta)$, получаем $\theta = \lambda\theta$.
+                            <br>4. Докажем необходимость. Пусть $\lambda a = \theta$. Если $\lambda = 0$, то утверждение доказано. 
+                            <br>Если $\lambda 
+e 0$, то существует обратный элемент $\lambda^{-1} \in P$. Умножим равенство на него:
+                            $$ \lambda^{-1}(\lambda a) = \lambda^{-1} \theta \implies (1) a = \theta \implies a = \theta $$
+                            Теорема доказана.
                         </div>
                     </div>
                 </div>
 
                 <!-- Section 4 -->
-                <div class="section-card" id="section-4" style="margin-bottom: 30px;">
+                <div class="section-card" id="section-4">
                     <span class="section-num">Раздел 4</span>
-                    <h2 class="section-title">Изоморфизм и базисы пространств</h2>
+                    <h2 class="section-title">Линейная зависимость и три леммы</h2>
                     
                     <div class="block def">
-                        <div class="block-header">🔑 Определение: Координатная база и координаты</div>
-                        Пусть $\dim(V) = n$. Упорядоченный набор линейно независимых векторов $e_1, e_2, \dots, e_n$ называется <strong>базисом</strong> пространства $V$.
-                        <br>Любой вектор $x \in V$ можно представить единственным образом в виде:
-                        <div class="math-box">$$ x = x_1 e_1 + x_2 e_2 + \dots + x_n e_n $$</div>
-                        Числа $x_1, \dots, x_n$ называются <strong>координатами</strong> вектора $x$ в данном базисе.
+                        <div class="block-header">🔑 Определение: Линейная независимость векторов</div>
+                        Система векторов $a_1, \dots, a_k$ называется <strong>линейно независимой</strong>, если равенство:
+                        <div class="math-box">$$ \lambda_1 a_1 + \lambda_2 a_2 + \dots + \lambda_k a_k = \theta $$</div>
+                        выполняется тогда и только тогда, когда все коэффициенты $\lambda_1 = \lambda_2 = \dots = \lambda_k = 0$. 
+                        <br>В противном случае система называется <strong>линейно зависимой</strong>.
                     </div>
 
-                    <div class="block thm">
-                        <div class="block-header">🏆 Теорема об изоморфизме конечномерных пространств</div>
-                        Два конечномерных линейных пространства $V$ и $W$ над одним и тем же полем $P$ изоморфны тогда и только тогда, когда их размерности равны.
-                        <div class="proof">
+                    <div class="block lem">
+                        <div class="block-header">⚡ Лемма 1 (Критерий линейной зависимости)</div>
+                        Система векторов $a_1, \dots, a_n$ ($n > 1$) линейно зависима тогда и только тогда, когда хотя бы один из этих векторов является линейной комбинацией остальных.
+                        <button class="proof-toggle" onclick="toggleProof('proof-lemma-1')">▶ Показать доказательство</button>
+                        <div class="proof" id="proof-lemma-1">
                             <div class="proof-title">Доказательство:</div>
-                            1. <em>Необходимость</em>: Пусть $V \cong W$ и $\phi: V \to W$ — изоморфизм. Базис $e_1, \dots, e_n$ пространства $V$ под действием изоморфизма перейдет в линейно независимую полную систему векторов $\phi(e_1), \dots, \phi(e_n)$ в $W$, которая образует базис в $W$. Следовательно, $\dim(W) = n = \dim(V)$.
-                            <br>2. <em>Достаточность</em>: Пусть $\dim(V) = \dim(W) = n$. Выберем базис $e_1, \dots, e_n$ в $V$ и $f_1, \dots, f_n$ в $W$. Зададим отображение $\psi: V \to W$, которое вектору $x = \sum x_i e_i$ сопоставляет вектор $\psi(x) = \sum x_i f_i$. Это отображение биективно и линейно, следовательно, является изоморфизмом.
+                            1. <em>Необходимость</em>: Пусть система линейно зависима. По определению, существуют коэффициенты $\lambda_i$, не все равные нулю.
+                            <br>Предположим, что $\lambda_1 
+e 0$. Тогда:
+                            $$ \lambda_1 a_1 + \lambda_2 a_2 + \dots + \lambda_n a_n = \theta \implies \lambda_1 a_1 = -\lambda_2 a_2 - \dots - \lambda_n a_n $$
+                            Разделив на $\lambda_1$, получаем:
+                            $$ a_1 = -\frac{\lambda_2}{\lambda_1} a_2 - \dots - \frac{\lambda_n}{\lambda_1} a_n $$
+                            Вектор $a_1$ выразился линейно через остальные!
+                            <br>2. <em>Достаточность</em>: Пусть вектор $a_1$ является линейной комбинацией остальных: $a_1 = eta_2 a_2 + \dots + eta_n a_n$.
+                            <br>Тогда $1 \cdot a_1 - eta_2 a_2 - \dots - eta_n a_n = \theta$. 
+                            <br>Поскольку коэффициент перед $a_1$ равен $1 
+e 0$, мы получили нетривиальную линейную комбинацию, равную нулю. Система линейно зависима. Лемма доказана.
+                        </div>
+                    </div>
+
+                    <div class="block lem">
+                        <div class="block-header">⚡ Лемма 2 (Лемма о линейной зависимости в упорядоченном наборе)</div>
+                        Система ненулевых векторов $a_1, a_2, \dots, a_n$ линейно зависима тогда и только тогда, когда по крайней мере один из векторов выражается через предыдущие векторы этой системы.
+                        <button class="proof-toggle" onclick="toggleProof('proof-lemma-2')">▶ Показать доказательство</button>
+                        <div class="proof" id="proof-lemma-2">
+                            <div class="proof-title">Доказательство:</div>
+                            Пусть ненулевая система векторов $a_1, \dots, a_n$ линейно зависима. По определению существует нетривиальный набор $\lambda_i$, дающий ноль. 
+                            <br>Пусть $s$ — наибольший индекс, для которого $\lambda_s 
+e 0$. Заметим, что $s > 1$, так как при $s = 1$ мы имели бы $\lambda_1 a_1 = \theta \implies a_1 = \theta$ (что противоречит условию ненулевых векторов).
+                            <br>Тогда:
+                            $$ \lambda_1 a_1 + \dots + \lambda_s a_s + 0 \cdot a_{s+1} + \dots = \theta \implies \lambda_1 a_1 + \dots + \lambda_s a_s = \theta $$
+                            Отсюда выразим $\lambda_s a_s = -\lambda_1 a_1 - \dots - \lambda_{s-1} a_{s-1}$.
+                            <br>Разделив на $\lambda_s 
+e 0$, получаем выражение вектора $a_s$ через предыдущие:
+                            $$ a_s = \sum_{i=1}^{s-1} \left( -\frac{\lambda_i}{\lambda_s} 
+ight) a_i $$
+                            Лемма доказана.
+                        </div>
+                    </div>
+
+                    <div class="block lem">
+                        <div class="block-header">⚡ Лемма 3 (О сохранении линейной оболочки)</div>
+                        Если вектор $a_i$ из системы образующих $a_1, \dots, a_n$ пространства $V$ является линейной комбинацией остальных векторов, то при его удалении оставшаяся система векторов по-прежнему остается образующей системой пространства $V$.
+                        <button class="proof-toggle" onclick="toggleProof('proof-lemma-3')">▶ Показать доказательство</button>
+                        <div class="proof" id="proof-lemma-3">
+                            <div class="proof-title">Доказательство:</div>
+                            Пусть $v \in V$. Так как $a_1, \dots, a_n$ — система образующих, вектор $v$ выражается как:
+                            $$ v = \sum_{k=1}^n \lambda_k a_k $$
+                            Пусть для определенности $a_n$ выражается через остальные: $a_n = \sum_{j=1}^{n-1} eta_j a_j$.
+                            <br>Подставим выражение для $a_n$ в равенство для $v$:
+                            $$ v = \sum_{k=1}^{n-1} \lambda_k a_k + \lambda_n \left( \sum_{j=1}^{n-1} eta_j a_j 
+ight) = \sum_{k=1}^{n-1} (\lambda_k + \lambda_n eta_k) a_k $$
+                            Следовательно, вектор $v$ выразился линейно через систему без вектора $a_n$. Лемма доказана.
                         </div>
                     </div>
                 </div>
 
                 <!-- Section 5 -->
-                <div class="section-card" id="section-5" style="margin-bottom: 30px;">
+                <div class="section-card" id="section-5">
                     <span class="section-num">Раздел 5</span>
-                    <h2 class="section-title">Подпространства, ранги матриц и линейные оболочки</h2>
+                    <h2 class="section-title">Базы, размерность и дополняемость до базиса</h2>
                     
                     <div class="block def">
-                        <div class="block-header">🔑 Определение: Линейное подпространство</div>
-                        Непустое подмножество $W$ линейного пространства $V$ называется <strong>подпространством</strong> ($W \le V$), если оно замкнуто относительно сложения векторов и умножения на скаляры из поля $P$.
+                        <div class="block-header">🔑 Определение: База и Размерность</div>
+                        <strong>Базой (базисом)</strong> линейного пространства $V$ называется любая линейно независимая система образующих векторов этого пространства.
+                        <br>Если пространство $V$ обладает конечной базой, то число векторов в ней называется <strong>размерностью</strong> пространства $V$ (обозначается $\dim V$).
                     </div>
 
                     <div class="block thm">
-                        <div class="block-header">🏆 Теорема о ранге произведения двух матриц</div>
-                        Ранг произведения двух матриц $A$ и $B$ не превосходит ранга каждого из сомножителей:
-                        <div class="math-box">$$ \text{rg}(AB) \le \min(\text{rg}(A), \text{rg}(B)) $$</div>
-                        <div class="proof">
+                        <div class="block-header">🏆 Теорема 1 (О мощности линейно независимых систем)</div>
+                        Пусть в линейном пространстве $V$ система векторов $e_1, \dots, e_n$ является базой (или просто системой образующих). 
+                        <br>Тогда любая система векторов $x_1, \dots, x_{n+1}$, содержащая больше $n$ элементов, является линейно зависимой.
+                        <button class="proof-toggle" onclick="toggleProof('proof-thm-bases-size')">▶ Показать доказательство</button>
+                        <div class="proof" id="proof-thm-bases-size">
                             <div class="proof-title">Доказательство:</div>
-                            Пусть $C = AB$. Строки матрицы $C$ представляют собой линейные комбинации строк матрицы $B$. Следовательно, линейная оболочка строк матрицы $C$ содержится в линейной оболочке строк матрицы $B \Rightarrow \text{rg}(C) \le \text{rg}(B)$.
-                            <br>Аналогично, столбцы матрицы $C$ являются линейными комбинациями столбцов матрицы $A \Rightarrow \text{rg}(C) \le \text{rg}(A)$. Объединяя результаты, имеем $\text{rg}(AB) \le \min(\text{rg}(A), \text{rg}(B))$.
+                            Предположим, что система $x_1, \dots, x_{n+1}$ линейно независима. Так как $e_1, \dots, e_n$ — образующие, вектор $x_1$ выражается через них:
+                            $$ x_1 = \alpha_1 e_1 + \dots + \alpha_n e_n $$
+                            Поскольку $x_1 
+e \theta$, не все $\alpha_i = 0$. Пусть $\alpha_1 
+e 0$. Тогда выразим $e_1$ через $x_1, e_2, \dots, e_n$.
+                            <br>Тогда система $x_1, e_2, \dots, e_n$ по-прежнему остается образующей.
+                            <br>Повторяя эту процедуру замещения шагами индукции по лемме 2, мы сможем последовательно заменить все базисные векторы $e_i$ на векторы $x_i$, получив образующую систему $x_1, x_2, \dots, x_n$.
+                            <br>Тогда следующий вектор $x_{n+1}$ должен выражаться через них как через образующие:
+                            $$ x_{n+1} = \sum_{j=1}^n \gamma_j x_j \implies x_{n+1} - \sum \gamma_j x_j = \theta $$
+                            Мы получили нетривиальное равенство нулю, что доказывает линейную зависимость системы $x_1, \dots, x_{n+1}$. Теорема доказана.
                         </div>
                     </div>
 
+                    <div class="block lem">
+                        <div class="block-header">⚡ Следствие из Теоремы 1</div>
+                        Все базы конечномерного линейного пространства $V$ состоят из одинакового числа векторов.
+                    </div>
+
                     <div class="block thm">
-                        <div class="block-header">🏆 Теорема Кронекера-Капеллы</div>
-                        Система линейных алгебраических уравнений $Ax = b$ совместна тогда и только тогда, когда ранг основной матрицы системы равен рангу расширенной матрицы:
-                        <div class="math-box">$$ \text{rg}(A) = \text{rg}(A \mid b) $$</div>
+                        <div class="block-header">🏆 Теорема 2 (О дополняемости до базиса)</div>
+                        Любую линейно независимую систему векторов $a_1, \dots, a_k$ конечномерного пространства $V$ можно дополнить до базиса этого пространства.
+                        <button class="proof-toggle" onclick="toggleProof('proof-complete-basis')">▶ Показать доказательство</button>
+                        <div class="proof" id="proof-complete-basis">
+                            <div class="proof-title">Доказательство:</div>
+                            Пусть $e_1, \dots, e_n$ — некоторый базис пространства $V$. Рассмотрим объединенную систему векторов:
+                            $$ a_1, \dots, a_k, e_1, \dots, e_n $$
+                            Эта система заведомо является образующей для $V$, так как содержит базис $e_i$.
+                            <br>Применим лемму 2: если какой-то из векторов $e_j$ выражается через предыдущие, мы можем удалить его по лемме 3, не нарушая свойства образующей системы.
+                            <br>Поскольку векторы $a_1, \dots, a_k$ линейно независимы, ни один из них не может быть удален (так как никакой вектор $a_i$ не выражается через предыдущие $a_1, \dots, a_{i-1}$).
+                            <br>В итоге, удалив все линейно зависимые векторы, мы получим линейно независимую систему образующих, состоящую из $a_1, \dots, a_k$ и некоторых добавленных векторов $e_{i_1}, \dots, e_{i_s}$. Эта система является базисом по определению. Теорема доказана.
+                        </div>
                     </div>
                 </div>
 
                 <!-- Section 6 -->
-                <div class="section-card" id="section-6" style="margin-bottom: 30px;">
+                <div class="section-card" id="section-6">
                     <span class="section-num">Раздел 6</span>
-                    <h2 class="section-title">Системы уравнений и фундаментальная система решений</h2>
+                    <h2 class="section-title">Изоморфизмы и координаты конечномерных пространств</h2>
                     
+                    <div class="block def">
+                        <div class="block-header">🔑 Определение: Изоморфизм линейных пространств</div>
+                        Линейные пространства $V$ и $W$ над полем $P$ называются <strong>изоморфными</strong> ($V \cong W$), если существует взаимно однозначное отображение $\phi: V \to W$, сохраняющее линейные операции:
+                        <div class="math-box">$$ \phi(u + v) = \phi(u) + \phi(v), \quad \phi(\lambda u) = \lambda \phi(u) \quad \forall u,v \in V, \lambda \in P $$</div>
+                    </div>
+
                     <div class="block thm">
-                        <div class="block-header">🏆 Теорема о размерности пространства решений однородной СЛАУ</div>
-                        Множество решений однородной системы линейных уравнений с $n$ неизвестными и матрицей коэффициентов $A$ ранга $r$ образует линейное подпространство $W \le P^n$, размерность которого равна:
-                        <div class="math-box">$$ \dim(W) = n - r $$</div>
-                        Любой базис этого пространства решений называется <strong>Фундаментальной системой решений (ФСР)</strong>.
-                        <div class="proof">
+                        <div class="block-header">🏆 Теорема об изоморфизме конечномерных пространств</div>
+                        Два конечномерных линейных пространства $V$ и $W$ над одним и тем же полем $P$ изоморфны тогда и только тогда, когда их размерности равны:
+                        <div class="math-box">$$ V \cong W \iff \dim V = \dim W $$</div>
+                        <button class="proof-toggle" onclick="toggleProof('proof-isomorphism-spaces')">▶ Показать доказательство</button>
+                        <div class="proof" id="proof-isomorphism-spaces">
                             <div class="proof-title">Доказательство:</div>
-                            Пусть ранг матрицы системы равен $r$. Без потери общности предположим, что базисный минор расположен в левом верхнем углу. Выразим базисные переменные $x_1, \dots, x_r$ через свободные $x_{r+1}, \dots, x_n$.
-                            <br>Придавая свободным переменным поочередно значения строк единичной матрицы порядка $n-r$:
-                            $$ e_1 = (1, 0, \dots, 0), \quad e_2 = (0, 1, \dots, 0), \quad \dots, \quad e_{n-r} = (0, 0, \dots, 1) $$
-                            мы получим $n-r$ решений $a_1, a_2, \dots, a_{n-r}$.
-                            <br>Они линейно независимы, поскольку содержат единичную матрицу в качестве подвектора свободных координат, и любой вектор решения однозначно представляется их линейной комбинацией. Значит, это базис пространства решений, и его размерность равна $n-r$.
+                            1. <em>Необходимость</em>: Пусть $V \cong W$ и $\phi: V \to W$ — изоморфизм. Пусть $e_1, \dots, e_n$ — базис $V$. 
+                            <br>Покажем, что $\phi(e_1), \dots, \phi(e_n)$ — базис $W$.
+                            <br>Сначала покажем линейную независимость: пусть $\sum \lambda_i \phi(e_i) = \theta_W \implies \phi(\sum \lambda_i e_i) = \phi(\theta_V)$. Поскольку $\phi$ — инъективное отображение, $\sum \lambda_i e_i = \theta_V \implies \lambda_i = 0$, так как $e_i$ — базис. 
+                            <br>Аналогично доказывается, что образы векторов порождают $W$. Отсюда $\dim W = n = \dim V$.
+                            <br>2. <em>Достаточность</em>: Пусть $\dim V = \dim W = n$. Выберем базис $e_1, \dots, e_n$ в $V$ и базис $f_1, \dots, f_n$ в $W$. 
+                            <br>Зададим отображение $\psi: V \to W$, которое вектору $x = \sum x_i e_i$ сопоставляет вектор $\psi(x) = \sum x_i f_i$. Это отображение биективно и линейно, следовательно, является изоморфизмом. Теорема доказана.
+                        </div>
+                    </div>
+
+                    <div class="block def">
+                        <div class="block-header">🔑 Определение: Матрица перехода</div>
+                        Пусть в $V$ заданы два базиса: старый $e = (e_1, \dots, e_n)$ и новый $e' = (e'_1, \dots, e'_n)$.
+                        <br>Разложим новые базисные векторы по старому базису:
+                        <div class="math-box">$$ e'_j = \sum_{i=1}^n t_{ij} e_i \quad (j = 1, \dots, n) $$</div>
+                        Квадратная матрица $T = (t_{ij})$ порядка $n$, столбцы которой составлены из координат новых базисных векторов в старом базисе, называется <strong>матрицей перехода</strong> от старого базиса к новому.
+                    </div>
+
+                    <div class="block thm">
+                        <div class="block-header">🏆 Теорема (Правило преобразования координат)</div>
+                        Если вектор $a \in V$ в старом базисе имеет строку координат $X = (x_1, \dots, x_n)$, а в новом базисе — строку координат $X' = (x'_1, \dots, x'_n)$, то они связаны соотношением:
+                        <div class="math-box">$$ X = X' \cdot T \quad \iff \quad X' = X \cdot T^{-1} $$</div>
+                    </div>
+
+                    <div class="block thm">
+                        <div class="block-header">🏆 Теорема о невырожденности матрицы перехода</div>
+                        Всякая матрица перехода $T$ от одного базиса к другому является невырожденной ($\det T 
+e 0$).
+                        <button class="proof-toggle" onclick="toggleProof('proof-transition-matrix-nondegenerate')">▶ Показать доказательство</button>
+                        <div class="proof" id="proof-transition-matrix-nondegenerate">
+                            <div class="proof-title">Доказательство:</div>
+                            Пусть $T$ — матрица перехода от старого базиса $e$ к новому базису $e'$. Пусть $S$ — матрица перехода от нового базиса $e'$ обратно к старому базису $e$.
+                            <br>Тогда для координат любого вектора имеем $X = X' T$ и $X' = X S$.
+                            <br>Отсюда: $X = (X S) T = X (ST)$.
+                            <br>В силу произвольности вектора $X$, получаем $ST = E$ (единичная матрица).
+                            <br>Тогда по теореме об определителе произведения матриц: $\det(S) \cdot \det(T) = \det(E) = 1 \implies \det(T) 
+e 0$. Следовательно, матрица $T$ невырождена. Теорема доказана.
                         </div>
                     </div>
                 </div>
 
                 <!-- Section 7 -->
-                <div class="section-card" id="section-7" style="margin-bottom: 30px;">
+                <div class="section-card" id="section-7">
                     <span class="section-num">Раздел 7</span>
-                    <h2 class="section-title">Линейные операторы и собственные векторы</h2>
+                    <h2 class="section-title">Линейные подпространства и прямые суммы</h2>
                     
                     <div class="block def">
-                        <div class="block-header">🔑 Определение: Линейный оператор</div>
-                        Отображение $\mathcal{A}: V \to V$ называется <strong>линейным оператором (преобразованием)</strong>, если выполняются условия:
-                        <div class="math-box">$$ \mathcal{A}(x + y) = \mathcal{A}(x) + \mathcal{A}(y), \quad \mathcal{A}(\lambda x) = \lambda \mathcal{A}(x) \quad \forall x,y \in V, \lambda \in P $$</div>
+                        <div class="block-header">🔑 Определение: Линейное подпространство</div>
+                        Непустое подмножество $W$ линейного пространства $V$ называется <strong>подпространством</strong> ($W \le V$), если оно замкнуто относительно сложения векторов и умножения на скаляры:
+                        <div class="math-box">$$ u,v \in W \implies u+v \in W; \quad u \in W, \lambda \in P \implies \lambda u \in W $$</div>
+                    </div>
+
+                    <div class="block def">
+                        <div class="block-header">🔑 Определение: Сумма и Пересечение подпространств</div>
+                        Пусть $U, W \le V$.
+                        <br><strong>Суммой подпространств</strong> называется множество векторов вида:
+                        <div class="math-box">$$ U + W = \{ u + w \mid u \in U, w \in W \} $$</div>
+                        <strong>Пересечением подпространств</strong> $U \cap W$ называется множество векторов, принадлежащих одновременно и $U$, и $W$.
                     </div>
 
                     <div class="block thm">
-                        <div class="block-header">🏆 Теорема о законе изменения матрицы оператора при смене базиса</div>
-                        Если матрица линейного оператора $\mathcal{A}$ в базисе $e$ равна $A$, а в базисе $e'$ равна $A'$, то они связаны соотношением:
-                        <div class="math-box">$$ A' = C^{-1} A C $$</div>
-                        где $C$ — матрица перехода от старого базиса $e$ к новому базису $e'$.
+                        <div class="block-header">🏆 Теорема о размерности суммы двух подпространств</div>
+                        Размерность суммы двух конечномерных подпространств $U$ и $W$ равна сумме их размерностей за вычетом размерности их пересечения:
+                        <div class="math-box">$$ \dim(U + W) = \dim U + \dim W - \dim(U \cap W) $$</div>
+                        <button class="proof-toggle" onclick="toggleProof('proof-sum-dimensions')">▶ Показать доказательство</button>
+                        <div class="proof" id="proof-sum-dimensions">
+                            <div class="proof-title">Доказательство:</div>
+                            Пусть пересечение $U \cap W$ имеет размерность $m$. Выберем базис пересечения: $c_1, \dots, c_m$.
+                            <br>Дополним этот базис до базиса подпространства $U$: $c_1, \dots, c_m, u_1, \dots, u_k$ ($\dim U = m + k$).
+                            <br>Аналогично, дополним его до базиса подпространства $W$: $c_1, \dots, c_m, w_1, \dots, w_s$ ($\dim W = m + s$).
+                            <br>Покажем, что объединенная система векторов:
+                            $$ c_1, \dots, c_m, u_1, \dots, u_k, w_1, \dots, w_s \quad (*) $$
+                            является базисом пространства $U + W$.
+                            <br>1. <em>Образующая система</em>: Любой вектор $x \in U + W$ представим в виде $u + w$. Поскольку $u$ раскладывается по базису $U$, а $w$ по базису $W$, вектор $x$ является линейной комбинацией векторов из $(*)$.
+                            <br>2. <em>Линейная независимость</em>: Составим линейную комбинацию, равную нулю:
+                            $$ \sum \alpha_i c_i + \sum eta_j u_j + \sum \gamma_p w_p = \theta $$
+                            $$ \implies \sum eta_j u_j + \sum \alpha_i c_i = -\sum \gamma_p w_p $$
+                            Вектор слева лежит в $U$, вектор справа лежит в $W$. Следовательно, вектор справа лежит в $U \cap W$, то есть раскладывается по базису $c_1, \dots, c_m$:
+                            $$ -\sum \gamma_p w_p = \sum \delta_i c_i \implies \sum \gamma_p w_p + \sum \delta_i c_i = \theta $$
+                            Поскольку векторы $c_i, w_p$ линейно независимы (образуют базис $W$), все коэффициенты $\gamma_p = 0$.
+                            <br>Подставив это в исходное уравнение, получим $\sum \alpha_i c_i + \sum eta_j u_j = \theta \implies \alpha_i = eta_j = 0$ в силу базиса $U$. 
+                            <br>Следовательно, система $(*)$ линейно независима. Её размерность равна $m + k + s$.
+                            <br>Тогда $\dim(U + W) = m + k + s = (m + k) + (m + s) - m = \dim U + \dim W - \dim(U \cap W)$. Теорема доказана.
+                        </div>
                     </div>
 
                     <div class="block def">
-                        <div class="block-header">🔑 Определение: Собственные векторы и числа</div>
-                        Ненулевой вектор $x \in V$ называется <strong>собственным вектором</strong> линейного оператора $\mathcal{A}$, если найдется скаляр $\lambda \in P$ (называемый <strong>собственным значением</strong>) такой, что:
-                        <div class="math-box">$$ \mathcal{A}x = \lambda x \iff (A - \lambda I)x = \theta $$</div>
+                        <div class="block-header">🔑 Определение: Прямая сумма подпространств</div>
+                        Сумма подпространств $V_1 + V_2$ называется <strong>прямой суммой</strong> (обозначается $V_1 \oplus V_2$), если каждый вектор этой суммы представляется единственным образом в виде $v_1 + v_2$, где $v_1 \in V_1$, $v_2 \in V_2$.
+                    </div>
+
+                    <div class="block thm">
+                        <div class="block-header">🏆 Теорема 1 (Критерий прямой суммы)</div>
+                        Сумма подпространств $V_1 + V_2$ является прямой тогда и только тогда, когда их пересечение тривиально:
+                        <div class="math-box">$$ V_1 \cap V_2 = \{ \theta \} $$</div>
+                        <button class="proof-toggle" onclick="toggleProof('proof-direct-sum-criterion')">▶ Показать доказательство</button>
+                        <div class="proof" id="proof-direct-sum-criterion">
+                            <div class="proof-title">Доказательство:</div>
+                            1. <em>Необходимость</em>: Пусть сумма прямая. Предположим, что существует ненулевой вектор $z \in V_1 \cap V_2$.
+                            <br>Тогда вектор $z$ можно представить двумя разными способами:
+                            $$ z = z + \theta \quad (z \in V_1, \theta \in V_2) $$
+                            $$ z = \theta + z \quad (\theta \in V_1, z \in V_2) $$
+                            Это противоречит единственности разложения. Следовательно, $V_1 \cap V_2 = \{ \theta \}$.
+                            <br>2. <em>Достаточность</em>: Пусть $V_1 \cap V_2 = \{ \theta \}$. Предположим, что некоторый вектор имеет два разложения:
+                            $$ x = v_1 + v_2 = v'_1 + v'_2 \implies v_1 - v'_1 = v'_2 - v_2 $$
+                            Так как $v_1 - v'_1 \in V_1$, а $v'_2 - v_2 \in V_2$, то их разность лежит в пересечении $V_1 \cap V_2$.
+                            <br>Но пересечение тривиально $\implies v_1 - v'_1 = \theta \implies v_1 = v'_1$ и $v_2 = v'_2$. Разложение единственно, сумма прямая. Теорема доказана.
+                        </div>
+                    </div>
+
+                    <div class="block thm">
+                        <div class="block-header">🏆 Теорема 2 (О размерности прямой суммы)</div>
+                        Сумма $W = V_1 + V_2$ является прямой тогда и только тогда, когда:
+                        <div class="math-box">$$ \text{dim } W = \text{dim } V_1 + \text{dim } V_2 $$</div>
+                    </div>
+
+                    <div class="block thm">
+                        <div class="block-header">🏆 Теорема о существовании прямого дополнения</div>
+                        Для любого подпространства $W$ конечномерного пространства $V$ существует подпространство $T \le V$, такое что:
+                        <div class="math-box">$$ V = W \oplus T $$</div>
+                        Подпространство $T$ называется <strong>прямым дополнением</strong> подпространства $W$.
+                        <button class="proof-toggle" onclick="toggleProof('proof-direct-complement')">▶ Показать доказательство</button>
+                        <div class="proof" id="proof-direct-complement">
+                            <div class="proof-title">Доказательство:</div>
+                            Пусть $w_1, \dots, w_k$ — базис подпространства $W$.
+                            <br>По теореме о дополняемости до базиса (Теорема 2 из Раздела 5), мы можем дополнить эту систему до базиса всего пространства $V$:
+                            $$ w_1, \dots, w_k, t_1, \dots, t_s \quad (k+s = n = \dim V) $$
+                            Пусть $T = \langle t_1, \dots, t_s 
+angle$ — линейная оболочка добавленных векторов.
+                            <br>Поскольку объединенная система является базисом всего пространства, пересечение $W \cap T = \{ \theta \}$ (так как если бы в пересечении лежал ненулевой вектор, это нарушило бы линейную независимость базиса).
+                            <br>Тогда по критерию прямой суммы $W + T = W \oplus T$. Поскольку размерность суммы равна $k + s = \dim V$, то $V = W \oplus T$. Теорема доказана.
+                        </div>
                     </div>
                 </div>
 
                 <!-- Section 8 -->
-                <div class="section-card" id="section-8" style="margin-bottom: 30px;">
+                <div class="section-card" id="section-8">
                     <span class="section-num">Раздел 8</span>
-                    <h2 class="section-title">Инвариантные множители и каноническая форма Смита</h2>
+                    <h2 class="section-title">Ранг матрицы и эквивалентные преобразования</h2>
                     
                     <div class="block def">
-                        <div class="block-header">🔑 Определение: Эквивалентность матриц над кольцом многочленов</div>
-                        Две матрицы $A(\lambda)$ и $B(\lambda)$ над кольцом $P[\lambda]$ называются <strong>эквивалентными</strong>, если одна получается из другой с помощью конечного числа элементарных преобразований строк и столбцов (перестановка, умножение на ненулевое число поля, прибавление строки, умноженной на многочлен).
+                        <div class="block-header">🔑 Определение: Ранги матрицы</div>
+                        Пусть $A$ — матрица размера $m 	imes n$ над полем $P$.
+                        <br>1. <strong>Минорный ранг</strong> матрицы $A$ — наибольший порядок отличных от нуля миноров этой матрицы.
+                        <br>2. <strong>Ранг по строкам (столбцам)</strong> — максимальное число линейно независимых строк (столбцов) матрицы $A$.
+                    </div>
+
+                    <div class="block lem">
+                        <div class="block-header">⚡ Лемма 1 (Элементарные преобразования и строки)</div>
+                        При элементарных преобразованиях строк матрицы её ранг по строкам (и по столбцам) не изменяется.
+                        <button class="proof-toggle" onclick="toggleProof('proof-elementary-rank-rows')">▶ Показать доказательство</button>
+                        <div class="proof" id="proof-elementary-rank-rows">
+                            <div class="proof-title">Доказательство:</div>
+                            Элементарные преобразования строк не выводят строки матрицы из линейной оболочки её исходных строк.
+                            <br>Следовательно, линейная оболочка строк матрицы $B$, полученной преобразованиями, содержится в линейной оболочке строк исходной матрицы $A$: $W(B) \subseteq W(A) \implies \dim W(B) \le \dim W(A)$.
+                            <br>Поскольку элементарные преобразования обратимы, аналогично $W(A) \subseteq W(B) \implies \dim W(A) \le \dim W(B)$.
+                            <br>Значит, $W(A) = W(B) \implies \dim W(A) = \dim W(B)$, то есть ранг по строкам сохраняется. Лемма доказана.
+                        </div>
+                    </div>
+
+                    <div class="block thm">
+                        <div class="block-header">🏆 Основная Теорема о ранге матрицы</div>
+                        Для любой матрицы $A$ минорный ранг, ранг по строкам и ранг по столбцам совпадают.
+                        <button class="proof-toggle" onclick="toggleProof('proof-main-rank-theorem')">▶ Показать доказательство</button>
+                        <div class="proof" id="proof-main-rank-theorem">
+                            <div class="proof-title">Доказательство:</div>
+                            Элементарными преобразованиями строк и столбцов любую ненулевую матрицу $A$ можно привести к ступенчатому каноническому виду:
+                            $$ C = egin{pmatrix} E_r & 0 \ 0 & 0 \end{pmatrix} $$
+                            где $E_r$ — единичная матрица порядка $r$.
+                            <br>1. Для матрицы $C$ очевидно, что минорный ранг равен $r$, ранг по строкам равен $r$, и ранг по столбцам равен $r$.
+                            <br>2. Поскольку элементарные преобразования строк и столбцов по Леммам 1 и 2 сохраняют все три типа рангов, эти ранги исходной матрицы $A$ равны соответствующим рангам матрицы $C$, то есть равны $r$. Теорема доказана.
+                        </div>
+                    </div>
+
+                    <div class="block thm">
+                        <div class="block-header">🏆 Теорема о ранге произведения матриц</div>
+                        Ранг произведения двух матриц не превосходит ранга каждого из сомножителей:
+                        <div class="math-box">$$ \text{rg}(AB) \le \min(\text{rg}(A), \text{rg}(B)) $$</div>
+                        <button class="proof-toggle" onclick="toggleProof('proof-product-rank')">▶ Показать доказательство</button>
+                        <div class="proof" id="proof-product-rank">
+                            <div class="proof-title">Доказательство:</div>
+                            Пусть $C = AB$. Строки матрицы $C$ представляют собой линейные комбинации строк матрицы $B$.
+                            <br>Следовательно, линейная оболочка строк матрицы $C$ содержится в линейной оболочке строк матрицы $B$:
+                            $$ W(AB) \subseteq W(B) \implies \dim W(AB) \le \dim W(B) \implies \text{rg}(AB) \le \text{rg}(B) $$
+                            Аналогично, столбцы матрицы $C$ являются линейными комбинациями столбцов матрицы $A$. Переходя к транспонированным матрицам, получаем:
+                            $$ \text{rg}(AB) = \text{rg}((AB)^T) = \text{rg}(B^T A^T) \le \text{rg}(A^T) = \text{rg}(A) $$
+                            Объединяя результаты, имеем $\text{rg}(AB) \le \min(\text{rg}(A), \text{rg}(B))$. Теорема доказана.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 9 -->
+                <div class="section-card" id="section-9">
+                    <span class="section-num">Раздел 9</span>
+                    <h2 class="section-title">СЛАУ, Теорема Кронекера-Капеллы и ФСР</h2>
+                    
+                    <div class="block thm">
+                        <div class="block-header">🏆 Теорема Кронекера-Капеллы</div>
+                        Система линейных алгебраических уравнений $Ax = b$ совместна тогда и только тогда, когда ранг основной матрицы системы равен рангу расширенной матрицы:
+                        <div class="math-box">$$ \text{rg}(A) = \text{rg}(A \mid b) $$</div>
+                        <button class="proof-toggle" onclick="toggleProof('proof-kron-cap')">▶ Показать доказательство</button>
+                        <div class="proof" id="proof-kron-cap">
+                            <div class="proof-title">Доказательство:</div>
+                            Запишем систему СЛАУ в векторном виде:
+                            $$ x_1 A_1 + x_2 A_2 + \dots + x_n A_n = b $$
+                            где $A_j$ — столбцы матрицы $A$.
+                            <br>1. <em>Необходимость</em>: Пусть система совместна, и $(c_1, \dots, c_n)$ — решение. Тогда столбцевой вектор свободных членов $b$ является линейной комбинацией столбцов матрицы $A$.
+                            <br>Значит, добавление столбца $b$ не изменяет линейную оболочку столбцов: $W(A \mid b) = W(A) \implies \text{rg}(A \mid b) = \text{rg}(A)$.
+                            <br>2. <em>Достаточность</em>: Пусть $\text{rg}(A \mid b) = \text{rg}(A) \implies \dim W(A \mid b) = \dim W(A)$. 
+                            <br>Поскольку $W(A) \subseteq W(A \mid b)$, равенство размерностей гарантирует $W(A) = W(A \mid b)$.
+                            <br>Следовательно, вектор $b \in W(A)$, то есть выражается линейно через столбцы матрицы $A$. Коэффициенты этого разложения являются решением системы. Теорема доказана.
+                        </div>
+                    </div>
+
+                    <div class="block thm">
+                        <div class="block-header">🏆 Теорема о размерности пространства решений однородной СЛАУ</div>
+                        Множество решений однородной системы линейных уравнений $Ax = 0$ с $n$ неизвестными образует подпространство $W \le P^n$, размерность которого равна:
+                        <div class="math-box">$$ \dim W = n - r $$</div>
+                        где $r = \text{rg}(A)$. Любой базис этого пространства решений называется <strong>Фундаментальной системой решений (ФСР)</strong>.
+                        <button class="proof-toggle" onclick="toggleProof('proof-homogeneous-solutions')">▶ Показать доказательство</button>
+                        <div class="proof" id="proof-homogeneous-solutions">
+                            <div class="proof-title">Доказательство:</div>
+                            Пусть ранг матрицы системы равен $r$. Без потери общности предположим, что базисный минор расположен в левом верхнем углу. Выразим базисные переменные $x_1, \dots, x_r$ через свободные $x_{r+1}, \dots, x_n$.
+                            <br>Придавая свободным переменным поочередно значения строк единичной матрицы порядка $n-r$:
+                            $$ e_1 = (1, 0, \dots, 0), \quad e_2 = (0, 1, \dots, 0), \quad \dots, \quad e_{n-r} = (0, 0, \dots, 1) $$
+                            мы получим $n-r$ частных решений $a_1, a_2, \dots, a_{n-r}$.
+                            <br>Покажем их линейную независимость. Матрица, составленная из векторов решений, содержит в правой части единичную матрицу порядка $n-r$. Следовательно, её ранг равен $n-r$, и векторы решений линейно независимы.
+                            <br>Любое решение однозначно восстанавливается по значениям свободных координат. Таким образом, полученные решения образуют базис пространства решений. Его размерность равна $n-r$. Теорема доказана.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 10 -->
+                <div class="section-card" id="section-10">
+                    <span class="section-num">Раздел 10</span>
+                    <h2 class="section-title">Линейные преобразования, операторы и их матрицы</h2>
+                    
+                    <div class="block def">
+                        <div class="block-header">🔑 Определение: Линейный оператор</div>
+                        Отображение $\mathcal{A}: V \to V$ называется <strong>линейным преобразованием (оператором)</strong>, если для любых $u, v \in V$ и любого $\lambda \in P$:
+                        <div class="math-box">$$ \mathcal{A}(u + v) = \mathcal{A}(u) + \mathcal{A}(v), \quad \mathcal{A}(\lambda u) = \lambda \mathcal{A}(u) $$</div>
+                    </div>
+
+                    <div class="block thm">
+                        <div class="block-header">🏆 Теорема о характеризации линейного преобразования базой</div>
+                        Пусть $e_1, \dots, e_n$ — базис пространства $V$, а $w_1, \dots, w_n$ — произвольный набор векторов из $V$.
+                        <br>Тогда существует одно и только одно линейное преобразование $\mathcal{A}$, такое что:
+                        <div class="math-box">$$ \mathcal{A}(e_i) = w_i \quad (i = 1, \dots, n) $$</div>
+                        <button class="proof-toggle" onclick="toggleProof('proof-operator-base')">▶ Показать доказательство</button>
+                        <div class="proof" id="proof-operator-base">
+                            <div class="proof-title">Доказательство:</div>
+                            1. <em>Существование</em>: Любой вектор $x \in V$ однозначно записывается в виде $x = \sum x_i e_i$. 
+                            <br>Зададим отображение $\mathcal{A}$ по правилу:
+                            $$ \mathcal{A}(x) = \sum x_i w_i $$
+                            Легко проверить, что это отображение линейно и удовлетворяет условию $\mathcal{A}(e_i) = w_i$.
+                            <br>2. <em>Единственность</em>: Если существует другое линейное отображение $\mathcal{B}$ с таким же свойством, то для любого $x = \sum x_i e_i$ в силу линейности:
+                            $$ \mathcal{B}(x) = \mathcal{B}\left( \sum x_i e_i 
+ight) = \sum x_i \mathcal{B}(e_i) = \sum x_i w_i = \mathcal{A}(x) $$
+                            Следовательно, $\mathcal{B} = \mathcal{A}$. Теорема доказана.
+                        </div>
+                    </div>
+
+                    <div class="block lem">
+                        <div class="block-header">⚡ Лемма о матрице линейного преобразования</div>
+                        Если вектор $x$ имеет столбец координат $[x]$ в базисе $e$, а его образ $y = \mathcal{A}(x)$ имеет столбец координат $[y]$, то:
+                        <div class="math-box">$$ [y] = A \cdot [x] $$</div>
+                        где $A$ — матрица линейного оператора в базисе $e$.
+                    </div>
+
+                    <div class="block thm">
+                        <div class="block-header">🏆 Теорема о законе изменения матрицы оператора при смене базиса</div>
+                        Если матрица линейного оператора $\mathcal{A}$ в старом базисе равна $A$, а в новом базисе равна $A'$, то они связаны соотношением:
+                        <div class="math-box">$$ A' = T^{-1} A T $$</div>
+                        где $T$ — матрица перехода от старого базиса к новому.
+                        <button class="proof-toggle" onclick="toggleProof('proof-operator-change-basis')">▶ Показать доказательство</button>
+                        <div class="proof" id="proof-operator-change-basis">
+                            <div class="proof-title">Доказательство:</div>
+                            Пусть $y = \mathcal{A}(x)$. Запишем связь координат в старом и новом базисах:
+                            $$ [x] = T [x]', \quad [y] = T [y]' $$
+                            Подставим эти выражения во вторую формулу $[y] = A [x]$:
+                            $$ T [y]' = A (T [x]') \implies [y]' = (T^{-1} A T) [x]' $$
+                            С другой стороны, по определению матрицы оператора в новом базисе:
+                            $$ [y]' = A' [x]' $$
+                            В силу произвольности вектора $x$, получаем $A' = T^{-1} A T$. Теорема доказана.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 11 -->
+                <div class="section-card" id="section-11">
+                    <span class="section-num">Раздел 11</span>
+                    <h2 class="section-title">Ядро, образ, алгебра и инвариантные подпространства</h2>
+                    
+                    <div class="block def">
+                        <div class="block-header">🔑 Определение: Ядро и Образ оператора</div>
+                        Пусть $\mathcal{A}: V \to V$ — линейный оператор.
+                        <br>1. <strong>Ядром оператора</strong> называется множество векторов:
+                        <div class="math-box">$$ \text{Ker } \mathcal{A} = \{ x \in V \mid \mathcal{A}(x) = \theta \} $$</div>
+                        2. <strong>Образом оператора</strong> называется множество векторов:
+                        <div class="math-box">$$ \text{Im } \mathcal{A} = \{ \mathcal{A}(x) \mid x \in V \} $$</div>
+                    </div>
+
+                    <div class="block thm">
+                        <div class="block-header">🏆 Теорема о связи ранга и дефекта оператора</div>
+                        Для любого линейного оператора $\mathcal{A}$ на конечномерном пространстве $V$ сумма размерности его ядра (дефекта) и размерности его образа (ранга) равна размерности пространства $V$:
+                        <div class="math-box">$$ \dim(\text{Ker } \mathcal{A}) + \dim(\text{Im } \mathcal{A}) = \dim V $$</div>
+                        <button class="proof-toggle" onclick="toggleProof('proof-rank-nullity')">▶ Показать доказательство</button>
+                        <div class="proof" id="proof-rank-nullity">
+                            <div class="proof-title">Доказательство:</div>
+                            Пусть $\dim V = n$, и $\dim(\text{Ker } \mathcal{A}) = k$. Выберем базис ядра: $e_1, \dots, e_k$.
+                            <br>Дополним этот набор до базиса всего пространства $V$: $e_1, \dots, e_k, t_{k+1}, \dots, t_n$.
+                            <br>Покажем, что образы добавленных векторов $\mathcal{A}(t_{k+1}), \dots, \mathcal{A}(t_n)$ образуют базис пространства $\text{Im } \mathcal{A}$.
+                            <br>1. <em>Образующая система</em>: Любой вектор $y \in \text{Im } \mathcal{A}$ имеет вид $\mathcal{A}(x)$. Разложим $x$ по базису:
+                            $$ x = \sum_{i=1}^k \alpha_i e_i + \sum_{j=k+1}^n eta_j t_j $$
+                            Применим оператор:
+                            $$ y = \mathcal{A}(x) = \sum_{i=1}^k \alpha_i \mathcal{A}(e_i) + \sum_{j=k+1}^n eta_j \mathcal{A}(t_j) = 0 + \sum_{j=k+1}^n eta_j \mathcal{A}(t_j) $$
+                            Следовательно, образы векторов порождают $\text{Im } \mathcal{A}$.
+                            <br>2. <em>Линейная независимость</em>: Пусть $\sum_{j=k+1}^n \gamma_j \mathcal{A}(t_j) = \theta \implies \mathcal{A}\left( \sum \gamma_j t_j 
+ight) = \theta$.
+                            <br>Тогда вектор $u = \sum_{j=k+1}^n \gamma_j t_j$ принадлежит ядру $\text{Ker } \mathcal{A}$, то есть выражается по базису ядра:
+                            $$ \sum_{j=k+1}^n \gamma_j t_j = \sum_{i=1}^k \delta_i e_i \implies \sum_{j=k+1}^n \gamma_j t_j - \sum_{i=1}^k \delta_i e_i = \theta $$
+                            Поскольку вся объединенная система векторов $e_i, t_j$ линейно независима (базис $V$), все коэффициенты $\gamma_j = \delta_i = 0$.
+                            <br>Следовательно, размерность образа равна $n-k$.
+                            <br>Отсюда $\dim(\text{Ker } \mathcal{A}) + \dim(\text{Im } \mathcal{A}) = k + (n-k) = n = \dim V$. Теорема доказана.
+                        </div>
+                    </div>
+
+                    <div class="block thm">
+                        <div class="block-header">🏆 Теорема о ранге нильпотентного оператора индекса 2</div>
+                        Если для линейного оператора $\mathcal{A}$ на пространстве $V$ размерности $n$ выполняется условие $\mathcal{A}^2 = 0$, то его ранг не превосходит половины размерности пространства:
+                        <div class="math-box">$$ \text{rg}(\mathcal{A}) \le \frac{n}{2} $$</div>
+                        <button class="proof-toggle" onclick="toggleProof('proof-nilpotent-rank')">▶ Показать доказательство</button>
+                        <div class="proof" id="proof-nilpotent-rank">
+                            <div class="proof-title">Доказательство:</div>
+                            Условие $\mathcal{A}^2 = 0$ означает, что для любого $v \in V$ образ $\mathcal{A}(v)$ лежит в ядре оператора $\text{Ker } \mathcal{A}$.
+                            <br>Следовательно, образ является подпространством ядра:
+                            $$ \text{Im } \mathcal{A} \subseteq \text{Ker } \mathcal{A} \implies \dim(\text{Im } \mathcal{A}) \le \dim(\text{Ker } \mathcal{A}) $$
+                            По теореме о связи ранга и дефекта:
+                            $$ \dim(\text{Im } \mathcal{A}) + \dim(\text{Ker } \mathcal{A}) = n $$
+                            Заменяя дефект на большую или равную величину ранга, имеем:
+                            $$ 2 \cdot \dim(\text{Im } \mathcal{A}) \le n \implies \dim(\text{Im } \mathcal{A}) \le \frac{n}{2} $$
+                            Теорема доказана.
+                        </div>
+                    </div>
+
+                    <div class="block def">
+                        <div class="block-header">🔑 Определение: Инвариантное подпространство</div>
+                        Подпространство $W \le V$ называется <strong>инвариантным подпространством</strong> относительно линейного оператора $\mathcal{A}$, если образ любого вектора из $W$ также лежит в $W$:
+                        <div class="math-box">$$ \mathcal{A}(W) \subseteq W \iff w \in W \implies \mathcal{A}(w) \in W $$</div>
+                    </div>
+                </div>
+
+                <!-- Section 12 -->
+                <div class="section-card" id="section-12">
+                    <span class="section-num">Раздел 12</span>
+                    <h2 class="section-title">Собственные векторы, собственные значения и диагонализуемость</h2>
+                    
+                    <div class="block def">
+                        <div class="block-header">🔑 Определение: Собственные векторы и значения</div>
+                        Ненулевой вектор $x \in V$ называется <strong>собственным вектором</strong> линейного оператора $\mathcal{A}$, если существует такой скаляр $\lambda \in P$ (называемый <strong>собственным значением</strong>), что:
+                        <div class="math-box">$$ \mathcal{A}(x) = \lambda x \iff (\mathcal{A} - \lambda \mathcal{E})x = \theta $$</div>
+                    </div>
+
+                    <div class="block lem">
+                        <div class="block-header">⚡ Лемма о собственных векторах</div>
+                        Если $x$ — собственный вектор оператора $\mathcal{A}$, отвечающий собственному значению $\lambda_0$, то для любого ненулевого скаляра $c 
+e 0$ вектор $cx$ также является собственным вектором с тем же собственным значением.
+                        <button class="proof-toggle" onclick="toggleProof('proof-eigen-scalar')">▶ Показать доказательство</button>
+                        <div class="proof" id="proof-eigen-scalar">
+                            <div class="proof-title">Доказательство:</div>
+                            В силу линейности оператора $\mathcal{A}$:
+                            $$ \mathcal{A}(cx) = c \mathcal{A}(x) = c (\lambda_0 x) = \lambda_0 (cx) $$
+                            Поскольку $c 
+e 0$ и $x 
+e \theta$, то $cx 
+e \theta$. Значит, $cx$ — собственный вектор. Лемма доказана.
+                        </div>
+                    </div>
+
+                    <div class="block lem">
+                        <div class="block-header">⚡ Лемма о характеристических многочленах подобных матриц</div>
+                        Подобные (сопряженные) матрицы имеют одинаковые характеристические многочлены и, следовательно, одинаковые собственные значения.
+                        <button class="proof-toggle" onclick="toggleProof('proof-similar-char-poly')">▶ Показать доказательство</button>
+                        <div class="proof" id="proof-similar-char-poly">
+                            <div class="proof-title">Доказательство:</div>
+                            Пусть $A' = T^{-1} A T$. Запишем характеристический многочлен для $A'$:
+                            $$ \det(A' - \lambda E) = \det(T^{-1} A T - \lambda T^{-1} E T) = \det(T^{-1} (A - \lambda E) T) $$
+                            Применяя теорему об определителе произведения:
+                            $$ \det(T^{-1}) \cdot \det(A - \lambda E) \cdot \det(T) = \frac{1}{\det T} \cdot \det(A - \lambda E) \cdot \det T = \det(A - \lambda E) $$
+                            Характеристические многочлены совпадают. Лемма доказана.
+                        </div>
+                    </div>
+
+                    <div class="block thm">
+                        <div class="block-header">🏆 Теорема о диагональной форме матрицы оператора</div>
+                        Матрица линейного оператора $\mathcal{A}$ в некотором базисе является диагональной тогда и только тогда, когда этот базис состоит из собственных векторов оператора $\mathcal{A}$.
+                        <button class="proof-toggle" onclick="toggleProof('proof-diagonal-operator')">▶ Показать доказательство</button>
+                        <div class="proof" id="proof-diagonal-operator">
+                            <div class="proof-title">Доказательство:</div>
+                            1. <em>Необходимость</em>: Пусть матрица оператора в базисе $e_1, \dots, e_n$ диагональна: $A = \text{diag}(\lambda_1, \dots, \lambda_n)$.
+                            <br>Тогда по определению матрицы оператора:
+                            $$ \mathcal{A}(e_i) = \lambda_i e_i \quad (i = 1, \dots, n) $$
+                            Поскольку базисные векторы ненулевые, каждый вектор $e_i$ является собственным вектором с собственным значением $\lambda_i$.
+                            <br>2. <em>Достаточность</em>: Пусть базис состоит из собственных векторов $e_i$, то есть $\mathcal{A}(e_i) = \lambda_i e_i$.
+                            <br>Тогда координаты вектора $\mathcal{A}(e_i)$ в базисе $e$ содержат только один ненулевой элемент $\lambda_i$ на $i$-й позиции. Столбцы матрицы оператора будут диагональными. Теорема доказана.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 13 -->
+                <div class="section-card" id="section-13">
+                    <span class="section-num">Раздел 13</span>
+                    <h2 class="section-title">Многочленные матрицы (λ-матрицы) и форма Смита</h2>
+                    
+                    <div class="block def">
+                        <div class="block-header">🔑 Определение: λ-матрица</div>
+                        Матрица, элементами которой являются многочлены от переменной $\lambda$ над полем $P$, называется <strong>многочленной матрицей</strong> (или $\lambda$-матрицей).
                     </div>
 
                     <div class="block thm">
                         <div class="block-header">🏆 Теорема о канонической форме Смита</div>
-                        Любая $\lambda$-матрица $A(\lambda)$ ранга $r$ над кольцом $P[\lambda]$ эквивалентна диагональной матрице вида:
+                        Любая $\lambda$-матрица $F(\lambda)$ ранга $r$ над кольцом многочленов $P[\lambda]$ эквивалентна канонической диагональной матрице вида:
                         <div class="math-box">$$ D(\lambda) = \text{diag}(d_1(\lambda), d_2(\lambda), \dots, d_r(\lambda), 0, \dots, 0) $$</div>
-                        где каждый $d_i(\lambda)$ — нормированный многочлен, причем $d_i(\lambda)$ делится на $d_{i-1}(\lambda)$ для всех $i = 2, \dots, r$. Многочлены $d_i(\lambda)$ называются <strong>инвариантными множителями</strong> матрицы $A(\lambda)$ и определяются однозначно.
+                        где каждый $d_i(\lambda)$ — нормированный многочлен (со старшим коэффициентом 1), причем $d_i(\lambda)$ делится на $d_{i-1}(\lambda)$ для всех $i = 2, \dots, r$. 
+                        <br>Многочлены $d_i(\lambda)$ называются <strong>инвариантными множителями</strong> матрицы $F(\lambda)$ и определяются однозначно.
+                        <button class="proof-toggle" onclick="toggleProof('proof-smith-form')">▶ Показать доказательство</button>
+                        <div class="proof" id="proof-smith-form">
+                            <div class="proof-title">Доказательство (Алгоритм Смита):</div>
+                            1. Выберем в матрице ненулевой элемент минимальной степени. Переставим его в левый верхний угол (элемент $a_{11}$).
+                            <br>2. Разделим с остатком все элементы первого столбца и первой строки на $a_{11}$. Если остаток ненулевой, с помощью элементарных преобразований уменьшаем степень элемента в углу. 
+                            <br>Поскольку степень многочлена — конечное целое число, этот процесс завершится за конечное число шагов, и мы сможем обнулить все элементы в первой строке и первом столбце, кроме угла.
+                            <br>3. Далее, применяем индукцию по размеру матрицы для правого нижнего блока.
+                            <br>4. В конце, если какой-то диагональный элемент $d_i(\lambda)$ не делится на предыдущий $d_{i-1}(\lambda)$, мы прибавляем строку к строке и снова запускаем алгоритм деления с остатком, понижая степень. Процесс сходится к канонической форме Смита. Теорема доказана.
+                        </div>
+                    </div>
+
+                    <div class="block thm">
+                        <div class="block-header">🏆 Матричный критерий подобия (Сходства матриц)</div>
+                        Две квадратные матрицы $A$ и $B$ над полем $P$ подобны (т.е. представляют один оператор в разных базисах) тогда и только тогда, когда их характеристические $\lambda$-матрицы эквивалентны:
+                        <div class="math-box">$$ A \sim B \iff (A - \lambda E) \sim (B - \lambda E) $$</div>
                     </div>
                 </div>
-            </div>
+
+            </div> <!-- End of lecture sections -->
 
             <!-- Flashcards Section -->
             <section class="flashcards-section" id="flashcards">
                 <span class="section-num">Интерактив</span>
                 <h2 class="section-title">🎓 3D Карточки: Высшая Алгебра</h2>
-                <p style="color: var(--text-secondary); margin-bottom: 20px;">Нажмите на карточку, чтобы перевернуть её и прочитать краткое лаконичное лекционное определение понятия.</p>
+                <p style="color: var(--text-secondary); margin-bottom: 20px;">Нажмите на карточку, чтобы перевернуть её и прочитать краткое лекционное определение понятия.</p>
                 
                 <div class="flashcards-grid">
                     <!-- 1 -->
@@ -1216,7 +1607,7 @@ ight) a_i $$
                                 <h4>Фактор-группа</h4>
                             </div>
                             <div class="flashcard-face flashcard-back">
-                                Множество смежных классов $G/H$ по нормальной подгруппе $H \trianglelefteq G$ с групповой операцией $(aH)(bH) = abH$.
+                                <p>Множество смежных классов $G/H$ по нормальной подгруппе $H \trianglelefteq G$ с групповой операцией $(aH)(bH) = abH$.</p>
                             </div>
                         </div>
                     </div>
@@ -1228,7 +1619,7 @@ ight) a_i $$
                                 <h4>Теорема Лагранжа</h4>
                             </div>
                             <div class="flashcard-face flashcard-back">
-                                Порядок подгруппы делит порядок группы: $|G| = |H| \cdot [G:H]$.
+                                <p>Порядок подгруппы делит порядок группы: $|G| = |H| \cdot [G:H]$.</p>
                             </div>
                         </div>
                     </div>
@@ -1240,7 +1631,7 @@ ight) a_i $$
                                 <h4>Лин. Пространство</h4>
                             </div>
                             <div class="flashcard-face flashcard-back">
-                                Множество элементов с замкнутыми сложением и умножением на скаляры, удовлетворяющее 8 базовым аксиомам.
+                                <p>Множество элементов с замкнутыми сложением и умножением на скаляры, удовлетворяющее 8 базовым аксиомам.</p>
                             </div>
                         </div>
                     </div>
@@ -1252,7 +1643,7 @@ ight) a_i $$
                                 <h4>Лин. Независимость</h4>
                             </div>
                             <div class="flashcard-face flashcard-back">
-                                Свойство системы векторов, при котором их тривиальная линейная комбинация равна нулю только при нулевых коэффициентах.
+                                <p>Свойство системы векторов, при котором их тривиальная линейная комбинация равна нулю только при нулевых коэффициентах.</p>
                             </div>
                         </div>
                     </div>
@@ -1264,7 +1655,7 @@ ight) a_i $$
                                 <h4>Базис</h4>
                             </div>
                             <div class="flashcard-face flashcard-back">
-                                Линейно независимая упорядоченная система векторов пространства, через которую линейно выражается любой вектор.
+                                <p>Линейно независимая упорядоченная система векторов пространства, через которую линейно выражается любой вектор.</p>
                             </div>
                         </div>
                     </div>
@@ -1276,7 +1667,7 @@ ight) a_i $$
                                 <h4>Подпространство</h4>
                             </div>
                             <div class="flashcard-face flashcard-back">
-                                Подмножество $W \subseteq V$, само являющееся линейным пространством относительно индуцированных операций.
+                                <p>Подмножество $W \subseteq V$, само являющееся линейным пространством относительно индуцированных операций.</p>
                             </div>
                         </div>
                     </div>
@@ -1288,7 +1679,7 @@ ight) a_i $$
                                 <h4>Ранг матрицы</h4>
                             </div>
                             <div class="flashcard-face flashcard-back">
-                                Наибольший порядок отличных от нуля миноров матрицы или максимальное число её линейно независимых строк/столбцов.
+                                <p>Наибольший порядок отличных от нуля миноров матрицы или максимальное число её линейно независимых строк/столбцов.</p>
                             </div>
                         </div>
                     </div>
@@ -1300,7 +1691,7 @@ ight) a_i $$
                                 <h4>Лин. Оператор</h4>
                             </div>
                             <div class="flashcard-face flashcard-back">
-                                Отображение $\mathcal{A}: V \to V$, сохраняющее операции сложения векторов и умножения на скаляры.
+                                <p>Отображение $\mathcal{A}: V \to V$, сохраняющее операции сложения векторов и умножения на скаляры.</p>
                             </div>
                         </div>
                     </div>
@@ -1315,7 +1706,7 @@ ight) a_i $$
                 
                 <div class="sandbox-grid">
                     <div class="matrix-calculator">
-                        <h3 class="note-title">🔢 Ввод матрицы и расчёты</h3>
+                        <h3 class="block-header">🔢 Ввод матрицы и расчёты</h3>
                         <div class="matrix-size-selector">
                             <button class="matrix-size-btn active" id="size-2-btn" onclick="setMatrixSize(2)">2 × 2</button>
                             <button class="matrix-size-btn" id="size-3-btn" onclick="setMatrixSize(3)">3 × 3</button>
@@ -1346,7 +1737,7 @@ ight) a_i $$
                     </div>
 
                     <div class="visualizer-container">
-                        <h3 class="note-title">📐 Визуализатор линейных преобразований</h3>
+                        <h3 class="block-header">📐 Визуализатор линейных преобразований</h3>
                         <canvas class="canvas-canvas" id="grid-canvas" width="340" height="340"></canvas>
                         
                         <div class="visualizer-controls">
@@ -1356,7 +1747,7 @@ ight) a_i $$
                     </div>
                     
                     <div class="gauss-steps-container" id="gauss-steps">
-                        <h3 class="note-title" style="display:flex; justify-content:space-between; align-items:center;">
+                        <h3 class="block-header" style="display:flex; justify-content:space-between; align-items:center;">
                             ⛓️ Пошаговое приведение методом Гаусса
                             <button onclick="document.getElementById('gauss-steps').style.display='none'" style="background:none; border:none; color:var(--text-primary); cursor:pointer; font-size:1.2rem;">×</button>
                         </h3>
@@ -1386,6 +1777,20 @@ ight) a_i $$
     </footer>
 
     <script>
+        // Toggle proofs collapsible logic
+        function toggleProof(id) {
+            const proof = document.getElementById(id);
+            const toggle = proof.previousElementSibling;
+            if (proof.style.display === 'block') {
+                proof.style.display = 'none';
+                toggle.innerText = '▶ Показать доказательство';
+            } else {
+                proof.style.display = 'block';
+                toggle.innerText = '▼ Скрыть доказательство';
+                MathJax.typesetPromise([proof]);
+            }
+        }
+
         // Theme switching logic using localStorage and body.dark-mode class
         const themeToggle = document.getElementById('theme-toggle');
         
@@ -1399,13 +1804,32 @@ ight) a_i $$
             drawGrid();
         });
 
-        // Navigation Highlight
+        // Navigation Highlight and active menu scrolling
         const navLinks = document.querySelectorAll('.nav-link');
         navLinks.forEach(link => {
             link.addEventListener('click', () => {
                 navLinks.forEach(l => l.classList.remove('active'));
                 link.classList.add('active');
             });
+        });
+
+        // Highlight active sidebar items on scroll
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('.section-card, section');
+            let currentActive = '';
+            
+            sections.forEach(sec => {
+                const top = sec.offsetTop - 100;
+                if (window.scrollY >= top) {
+                    currentActive = sec.getAttribute('id');
+                }
+            });
+            
+            if (currentActive) {
+                navLinks.forEach(link => {
+                    link.classList.toggle('active', link.getAttribute('href') === `#${currentActive}`);
+                });
+            }
         });
 
         // Matrix Sandbox and Linear Transformations logic
@@ -1488,7 +1912,6 @@ ight) a_i $$
                 if (!hasNonZero) rank = 0;
                 else if (det !== 0) rank = 3;
                 else {
-                    // Check if any 2x2 minor is non-zero
                     let minorNonZero = false;
                     for (let r1 = 0; r1 < 3; r1++) {
                         for (let r2 = r1+1; r2 < 3; r2++) {
@@ -1511,7 +1934,6 @@ ight) a_i $$
         // Draw coordinate grid for visualizer
         function drawGrid(t = 1.0) {
             if (matrixSize === 3) {
-                // For 3x3 we draw the 2D projection using the upper left 2x2 part
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 ctx.font = '12px Inter';
                 ctx.fillStyle = document.body.classList.contains('dark-mode') ? '#ffffff' : '#000000';
@@ -1525,20 +1947,17 @@ ight) a_i $$
             const cx = canvas.width / 2;
             const cy = canvas.height / 2;
             
-            // Draw grid lines
             ctx.strokeStyle = document.body.classList.contains('dark-mode') ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)';
             ctx.lineWidth = 1;
             
             const gridSize = 8;
             
-            // Linear combination for grid lines
             const a11 = 1 + (mat[0][0] - 1)*t;
             const a12 = (mat[0][1])*t;
             const a21 = (mat[1][0])*t;
             const a22 = 1 + (mat[1][1] - 1)*t;
             
             for (let i = -gridSize; i <= gridSize; i++) {
-                // Vertical lines
                 ctx.beginPath();
                 let start = transformPoint(i, -gridSize, a11, a12, a21, a22);
                 let end = transformPoint(i, gridSize, a11, a12, a21, a22);
@@ -1546,7 +1965,6 @@ ight) a_i $$
                 ctx.lineTo(cx + end.x * currentScale, cy - end.y * currentScale);
                 ctx.stroke();
                 
-                // Horizontal lines
                 ctx.beginPath();
                 start = transformPoint(-gridSize, i, a11, a12, a21, a22);
                 end = transformPoint(gridSize, i, a11, a12, a21, a22);
@@ -1555,7 +1973,6 @@ ight) a_i $$
                 ctx.stroke();
             }
             
-            // Axes
             ctx.strokeStyle = document.body.classList.contains('dark-mode') ? 'rgba(255,255,255,0.25)' : 'rgba(0,0,0,0.15)';
             ctx.lineWidth = 2;
             ctx.beginPath();
@@ -1564,7 +1981,6 @@ ight) a_i $$
             ctx.stroke();
             
             // Draw base vectors
-            // Vector i
             ctx.strokeStyle = '#ef4444'; // Red
             ctx.lineWidth = 3;
             ctx.beginPath();
@@ -1572,7 +1988,6 @@ ight) a_i $$
             ctx.lineTo(cx + a11 * currentScale, cy - a21 * currentScale);
             ctx.stroke();
             
-            // Vector j
             ctx.strokeStyle = '#3b82f6'; // Blue
             ctx.beginPath();
             ctx.moveTo(cx, cy);
@@ -1596,7 +2011,6 @@ ight) a_i $$
                 let progress = (timestamp - start) / duration;
                 if (progress > 1) progress = 1;
                 
-                // Smooth easing curve (elastic out)
                 let ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
                 
                 drawGrid(ease);
@@ -1622,7 +2036,7 @@ ight) a_i $$
                 list.innerHTML += `
                     <div class="gauss-step">
                         <strong>Шаг 1: Исходная система</strong><br>
-                        $$\\begin{pmatrix} ${mat[0][0]} & ${mat[0][1]} \\ ${mat[1][0]} & ${mat[1][1]} \\end{pmatrix}$$
+                        $$\begin{pmatrix} ${mat[0][0]} & ${mat[0][1]} \\ ${mat[1][0]} & ${mat[1][1]} \\end{pmatrix}$$
                     </div>
                 `;
                 
@@ -1630,7 +2044,7 @@ ight) a_i $$
                     list.innerHTML += `
                         <div class="gauss-step">
                             <strong>Шаг 2: Поменять строки местами (ведущий элемент равен 0)</strong><br>
-                            $$\\begin{pmatrix} ${mat[1][0]} & ${mat[1][1]} \\ 0 & ${mat[0][1]} \\end{pmatrix}$$
+                            $$\begin{pmatrix} ${mat[1][0]} & ${mat[1][1]} \\ 0 & ${mat[0][1]} \\end{pmatrix}$$
                         </div>
                     `;
                 } else if (mat[0][0] !== 0) {
@@ -1639,7 +2053,7 @@ ight) a_i $$
                     list.innerHTML += `
                         <div class="gauss-step">
                             <strong>Шаг 2: Из 2-й строки вычитаем 1-ю строку, умноженную на ${coef.toFixed(2)}</strong><br>
-                            $$\\begin{pmatrix} ${mat[0][0]} & ${mat[0][1]} \\ 0 & ${next_1.toFixed(2)} \\end{pmatrix}$$
+                            $$\begin{pmatrix} ${mat[0][0]} & ${mat[0][1]} \\ 0 & ${next_1.toFixed(2)} \\end{pmatrix}$$
                         </div>
                     `;
                 }
@@ -1647,7 +2061,7 @@ ight) a_i $$
                 list.innerHTML += `
                     <div class="gauss-step">
                         <strong>Шаг 1: Исходная матрица $3 \\times 3$</strong><br>
-                        $$\\begin{pmatrix} ${mat[0][0]} & ${mat[0][1]} & ${mat[0][2]} \\ ${mat[1][0]} & ${mat[1][1]} & ${mat[1][2]} \\ ${mat[2][0]} & ${mat[2][1]} & ${mat[2][2]} \\end{pmatrix}$$
+                        $$\begin{pmatrix} ${mat[0][0]} & ${mat[0][1]} & ${mat[0][2]} \\ ${mat[1][0]} & ${mat[1][1]} & ${mat[1][2]} \\ ${mat[2][0]} & ${mat[2][1]} & ${mat[2][2]} \\end{pmatrix}$$
                     </div>
                     <div class="gauss-step">
                         <strong>Шаг 2: Обнуление элементов под ведущим элементом первого столбца</strong><br>
@@ -1656,15 +2070,14 @@ ight) a_i $$
                 `;
             }
             
-            // Re-render MathJax equations
-            MathJax.typeset();
+            MathJax.typesetPromise([list]);
         }
 
         // Quiz Database and dynamic engine
         const quizData = [
             {
-                category: "1. Группы и Кольца",
-                question: "Какое из условий является обязательным для того, чтобы подгруппа H группы G определяла корректную фактор-группу G/H?",
+                category: "1. Группы, Кольца, Поля",
+                question: "Какое из условий является обязательным для того, чтобы подгруппа H группы G определяла фактор-группу G/H?",
                 options: [
                     "Подгруппа H должна быть циклической",
                     "Подгруппа H должна быть нормальной (gH = Hg для всех g в G)",
@@ -1675,88 +2088,148 @@ ight) a_i $$
                 explanation: "Операция умножения смежных классов $(aH)(bH) = (ab)H$ корректна тогда и только тогда, когда подгруппа $H$ нормальна в $G$. В противном случае произведение классов зависит от выбора представителей."
             },
             {
-                category: "2. Корни многочленов",
+                category: "2. Корни многочленов (Кронекер)",
                 question: "Конструкция Кронекера доказывает существование расширения поля, содержащего корень неприводимого многочлена f(x) над полем P. В качестве этого расширения берется фактор-кольцо:",
                 options: [
                     "$$P[x] / (f)$$",
                     "$$P[x] / (x^2)$$",
-                    "$$P[x] \\\\times P$$",
+                    "$$P[x] \\times P$$",
                     "$$P[x]$$"
                 ],
                 correct: 0,
-                explanation: "Поскольку идеал $(f)$, порожденный неприводимым многочленом $f(x)$, является максимальным в кольце главных идеалов $P[x]$, фактор-кольцо $P[x]/(f)$ является полем и содержит корень $\\\\alpha = x + (f)$ многочлена $f(x)$."
+                explanation: "Поскольку идеал $(f)$, порожденный неприводимым многочленом $f(x)$, является максимальным в кольце главных идеалов $P[x]$, фактор-кольцо $P[x]/(f)$ является полем и содержит корень $\\alpha = x + (f)$ многочлена $f(x)$."
             },
             {
-                category: "3. Линейная зависимость",
-                question: "Если система векторов содержит нулевой вектор, то она является...",
+                category: "3. Линейные пространства",
+                question: "Какое из следующих свойств векторов линейного пространства НЕ доказывается напрямую из 8 аксиом?",
                 options: [
-                    "Всегда линейно зависимой",
-                    "Всегда линейно независимой",
-                    "Линейно независимой только при ортогональности остальных векторов",
-                    "Базисом пространства решений"
-                ],
-                correct: 0,
-                explanation: "Если в системе векторов есть нулевой вектор $\\\\theta$ (пусть $a_1 = \\\\theta$), мы можем взять нетривиальную линейную комбинацию $1 \\\\cdot a_1 + 0 \\\\cdot a_2 + \\\\dots + 0 \\\\cdot a_k = \\\\theta$, где коэффициент при первом векторе отличен от нуля. Значит, система всегда линейно зависима."
-            },
-            {
-                category: "4. Изоморфизм пространств",
-                question: "В каком случае два конечномерных линейных пространства над полем R изоморфны?",
-                options: [
-                    "Если они оба бесконечномерны",
-                    "Только если они совпадают поточечно",
-                    "Тогда и только тогда, когда их размерности равны",
-                    "Если матрицы перехода между ними ортогональны"
-                ],
-                correct: 2,
-                explanation: "В соответствии с лекционной теоремой, размерность является единственным инвариантом конечномерного пространства над фиксированным полем. Равенство размерностей гарантирует существование изоморфизма."
-            },
-            {
-                category: "5. Ранги матриц",
-                question: "Чему равен максимально возможный ранг произведения матрицы A размера 3x2 на матрицу B размера 2x3?",
-                options: [
-                    "1",
-                    "2",
-                    "3",
-                    "6"
+                    "Произведение нуля на любой вектор равно нулевому вектору",
+                    "Длина любого вектора всегда строго больше нуля",
+                    "Произведение -1 на вектор дает противоположный вектор",
+                    "Произведение любого числа на нулевой вектор равно нулевому вектору"
                 ],
                 correct: 1,
-                explanation: "По теореме о ранге произведения: $\\\\text{rg}(AB) \\\\le \\\\min(\\\\text{rg}(A), \\\\text{rg}(B))$. Поскольку матрицы имеют размерности $3 \\\\times 2$ и $2 \\\\times 3$, их максимальные ранги равны 2. Следовательно, ранг произведения не может быть больше 2."
+                explanation: "Понятие длины (нормы) вектора вводится только в нормированных или евклидовых пространствах. В общем линейном пространстве понятие 'длины' не определено."
             },
             {
-                category: "6. Системы уравнений и ФСР",
-                question: "Чему равна размерность пространства решений однородной системы линейных уравнений с n неизвестными, если ранг матрицы коэффициентов равен r?",
+                category: "4. Леммы о линейной зависимости",
+                question: "Если упорядоченная система ненулевых векторов линейно зависима, то в соответствии с Леммой 2:",
+                options: [
+                    "Все векторы системы равны друг другу",
+                    "По крайней мере один из векторов линейно выражается через предыдущие",
+                    "Первый вектор системы всегда равен нулю",
+                    "Любой вектор системы выражается через последующие"
+                ],
+                correct: 1,
+                explanation: "Лемма 2 утверждает, что в линейно зависимой системе ненулевых векторов хотя бы один из векторов (с некоторым максимальным индексом $s$) линейно выражается через предшествующие ему векторы."
+            },
+            {
+                category: "5. Базы, размерность и дополнения",
+                question: "Пусть размерность пространства V равна n. Какое максимальное число линейно независимых векторов может содержать V?",
+                options: [
+                    "$$n-1$$",
+                    "$$n$$",
+                    "$$n+1$$",
+                    "Бесконечно много"
+                ],
+                correct: 1,
+                explanation: "По определению размерности, базис пространства состоит из $n$ векторов. Любая система из более чем $n$ векторов является линейно зависимой. Значит, максимальное число независимых векторов равно $n$."
+            },
+            {
+                category: "6. Изоморфизмы и координаты",
+                question: "Как преобразуется строка координат X вектора при переходе от старого базиса к новому с помощью матрицы перехода T?",
+                options: [
+                    "$$X = X' \\cdot T$$",
+                    "$$X' = X \\cdot T$$",
+                    "$$X = T \\cdot X'$$",
+                    "$$X' = T^{-1} \\cdot X$$"
+                ],
+                correct: 0,
+                explanation: "Связь координат вектора в старом базисе $X$ и новом базисе $X'$ задается классической формулой $X = X' \\cdot T$, где $T$ — матрица перехода."
+            },
+            {
+                category: "7. Подпространства и прямые суммы",
+                question: "Сумма двух подпространств U и W является прямой суммой тогда и только тогда, когда:",
+                options: [
+                    "Размерности U и W равны",
+                    "Их пересечение тривиально (содержит только нулевой вектор)",
+                    "U и W ортогональны",
+                    "Их объединение совпадает со всем пространством"
+                ],
+                correct: 1,
+                explanation: "По критерию прямой суммы, сумма подпространств является прямой ($U \\oplus W$) тогда и только тогда, когда их пересечение тривиально: $U \\cap W = \\{ \\theta \\}$."
+            },
+            {
+                category: "8. Ранг матрицы и преобразования",
+                question: "Какое из утверждений о ранге матрицы является НЕВЕРНЫМ?",
+                options: [
+                    "Ранг по строкам равен рангу по столбцам",
+                    "Ранг произведения двух матриц не превосходит ранга каждого из сомножителей",
+                    "Элементарные преобразования могут увеличить ранг матрицы",
+                    "Ранг матрицы равен порядку её максимального ненулевого минора"
+                ],
+                correct: 2,
+                explanation: "Элементарные преобразования строк и столбцов матрицы являются обратимыми линейными операциями и гарантированно сохраняют ранг матрицы неизменным."
+            },
+            {
+                category: "9. СЛАУ, Кронекер-Капелли и ФСР",
+                question: "Если однородная СЛАУ с n неизвестными имеет матрицу коэффициентов ранга r, то размерность пространства решений равна:",
                 options: [
                     "$$r$$",
                     "$$n$$",
-                    "$$n - r$$",
-                    "$$n + r$$"
+                    "$$n-r$$",
+                    "$$n+r$$"
                 ],
                 correct: 2,
-                explanation: "Согласно доказанной теореме, размерность пространства решений однородной системы равна числу свободных переменных, то есть $n - r$. Любой базис этого пространства образует фундаментальную систему решений (ФСР)."
+                explanation: "Согласно доказанной теореме, размерность пространства решений однородной системы равна числу свободных переменных, то есть $n - r$. Любой базис этого пространства решений образует ФСР."
             },
             {
-                category: "7. Линейные операторы",
-                question: "Как изменяется матрица A линейного оператора при переходе от старого базиса к новому с помощью матрицы перехода C?",
+                category: "10. Лин. преобразования и матрицы",
+                question: "Как изменяется матрица A линейного оператора при замене базиса с помощью матрицы перехода T?",
                 options: [
-                    "$$A' = C A$$",
-                    "$$A' = C^{-1} A C$$",
-                    "$$A' = C A C^{-1}$$",
-                    "$$A' = C^T A C$$"
+                    "$$A' = T A$$",
+                    "$$A' = T^{-1} A T$$",
+                    "$$A' = T A T^{-1}$$",
+                    "$$A' = T^T A T$$"
                 ],
                 correct: 1,
-                explanation: "При замене базиса координаты векторов преобразуются через матрицу перехода $C$. Для линейного оператора это дает преобразование матрицы оператора по закону подобия: $A' = C^{-1} A C$."
+                explanation: "При замене базиса координаты векторов преобразуются через матрицу перехода $T$. Для линейного оператора это дает преобразование матрицы оператора по закону подобия: $A' = T^{-1} A T$."
             },
             {
-                category: "8. Канонические формы матриц",
-                question: "Какое свойство инвариантных множителей $d_i(\\\\lambda)$ ($i=1,\\\\dots,r$) в канонической форме Смита является обязательным?",
+                category: "11. Ядро, образ и инварианты",
+                question: "Если для линейного оператора выполняется условие A^2 = 0, то что можно утверждать о его ранге?",
+                options: [
+                    "Ранг равен нулю",
+                    "Ранг не превосходит половины размерности пространства (rg A <= n/2)",
+                    "Ранг строго больше n/2",
+                    "Ранг равен размерности пространства n"
+                ],
+                correct: 1,
+                explanation: "Условие $A^2 = 0$ означает, что образ оператора целиком содержится в его ядре ($\\text{Im } A \\subseteq \\text{Ker } A$). Из теоремы о ранге и дефекте вытекает, что $\\text{rg } A \\le n/2$."
+            },
+            {
+                category: "12. Собственные векторы и значения",
+                question: "В каком случае матрица линейного оператора в некотором базисе является диагональной?",
+                options: [
+                    "Если все собственные значения равны единице",
+                    "Тогда и только тогда, когда базис целиком состоит из собственных векторов этого оператора",
+                    "Если оператор является нильпотентным",
+                    "Если определитель матрицы оператора равен нулю"
+                ],
+                correct: 1,
+                explanation: "Матрица линейного оператора диагональна тогда и только тогда, когда базисные векторы при действии оператора просто растягиваются на скалярный коэффициент, то есть являются собственными векторами."
+            },
+            {
+                category: "13. λ-матрицы и Смитова форма",
+                question: "Какое свойство инвариантных множителей d_i(λ) в канонической форме Смита является обязательным?",
                 options: [
                     "Все они равны нулю",
-                    "$$d_i(\\\\lambda)$$ делится без остатка на $$d_{i-1}(\\\\lambda)$$ для всех $$i \\\\ge 2$$",
-                    "$$d_{i-1}(\\\\lambda)$$ делится без остатка на $$d_i(\\\\lambda)$$ для всех $$i \\\\ge 2$$",
-                    "Все они имеют степень 1"
+                    "Каждый последующий многочлен d_i(λ) делится без остатка на предыдущий d_{i-1}(λ)",
+                    "Все они имеют степень 1",
+                    "Они ортогональны друг другу"
                 ],
                 correct: 1,
-                explanation: "По определению канонической диагональной формы Смита над кольцом многочленов, каждый последующий диагональный элемент $d_i(\\\\lambda)$ должен делиться нацело на предыдущий элемент $d_{i-1}(\\\\lambda)$."
+                explanation: "По определению канонической диагональной формы Смита над кольцом многочленов, каждый последующий диагональный элемент $d_i(\\lambda)$ должен делиться нацело на предыдущий элемент $d_{i-1}(\\lambda)$."
             }
         ];
 
@@ -1789,15 +2262,13 @@ ight) a_i $$
                 </div>
             `;
             
-            // Render equations inside quiz if any
-            MathJax.typeset();
+            MathJax.typesetPromise([container]);
         }
 
         function selectOption(idx) {
             const q = quizData[currentQuestion];
             const options = document.querySelectorAll('.quiz-option');
             
-            // Disable further clicks
             options.forEach(opt => opt.removeAttribute('onclick'));
             
             if (idx === q.correct) {
@@ -1816,7 +2287,7 @@ ight) a_i $$
             `;
             
             document.getElementById('quiz-next-btn').style.display = 'block';
-            MathJax.typeset();
+            MathJax.typesetPromise([feedbackBox]);
         }
 
         function nextQuestion() {
@@ -1828,10 +2299,10 @@ ight) a_i $$
             document.getElementById('quiz-progress').style.width = '100%';
             const container = document.getElementById('quiz-content');
             container.innerHTML = `
-                <div class="quiz-card quiz-scoreboard">
+                <div class="quiz-card" style="text-align:center;">
                     <h4>Тест завершен!</h4>
                     <div class="quiz-score-num">${score} / ${quizData.length}</div>
-                    <p style="color: var(--text-secondary); margin: 15px 0;">Вы показали отличный уровень подготовки по курсу Высшей Алгебры!</p>
+                    <p style="color: var(--text-secondary); margin: 15px 0;">Вы показали отличный уровень подготовки по полному курсу Высшей Алгебры!</p>
                     <button class="quiz-restart-btn" onclick="restartQuiz()">🏆 Пройти заново</button>
                 </div>
             `;
