@@ -1209,8 +1209,7 @@
                             $$ \lambda_1 a_1 + \dots + \lambda_s a_s + 0 \cdot a_{s+1} + \dots = \theta \implies \lambda_1 a_1 + \dots + \lambda_s a_s = \theta $$
                             Отсюда выразим $\lambda_s a_s = -\lambda_1 a_1 - \dots - \lambda_{s-1} a_{s-1}$.
                             <br>Разделив на $\lambda_s \ne 0$, получаем выражение вектора $a_s$ через предыдущие:
-                            $$ a_s = \sum_{i=1}^{s-1} \left( -\frac{\lambda_i}{\lambda_s} 
-ight) a_i $$
+                            $$ a_s = \sum_{i=1}^{s-1} \left( -\frac{\lambda_i}{\lambda_s} \right) a_i $$
                             Лемма доказана.
                         </div>
                     </div>
@@ -1225,8 +1224,7 @@ ight) a_i $$
                             $$ v = \sum_{k=1}^n \lambda_k a_k $$
                             Пусть для определенности $a_n$ выражается через остальные: $a_n = \sum_{j=1}^{n-1} \beta_j a_j$.
                             <br>Подставим выражение для $a_n$ в равенство для $v$:
-                            $$ v = \sum_{k=1}^{n-1} \lambda_k a_k + \lambda_n \left( \sum_{j=1}^{n-1} \beta_j a_j 
-ight) = \sum_{k=1}^{n-1} (\lambda_k + \lambda_n \beta_k) a_k $$
+                            $$ v = \sum_{k=1}^{n-1} \lambda_k a_k + \lambda_n \left( \sum_{j=1}^{n-1} \beta_j a_j \right) = \sum_{k=1}^{n-1} (\lambda_k + \lambda_n \beta_k) a_k $$
                             Следовательно, вектор $v$ выразился линейно через систему без вектора $a_n$. Лемма доказана.
                         </div>
                     </div>
@@ -1732,8 +1730,7 @@ ight) = \sum_{k=1}^{n-1} (\lambda_k + \lambda_n \beta_k) a_k $$
                             Применим оператор:
                             $$ y = \mathcal{A}(x) = \sum_{i=1}^k \alpha_i \mathcal{A}(e_i) + \sum_{j=k+1}^n \beta_j \mathcal{A}(t_j) = 0 + \sum_{j=k+1}^n \beta_j \mathcal{A}(t_j) $$
                             Следовательно, образы векторов порождают $\text{Im } \mathcal{A}$.
-                            2. <em>Линейная независимость</em>: Пусть $\sum_{j=k+1}^n \gamma_j \mathcal{A}(t_j) = \theta \implies \mathcal{A}\left( \sum \gamma_j t_j 
-ight) = \theta$.
+                            2. <em>Линейная независимость</em>: Пусть $\sum_{j=k+1}^n \gamma_j \mathcal{A}(t_j) = \theta \implies \mathcal{A}\left( \sum \gamma_j t_j \right) = \theta$.
                             Тогда вектор $u = \sum_{j=k+1}^n \gamma_j t_j$ принадлежит ядру $\text{Ker } \mathcal{A}$, то есть выражается по базису ядра:
                             $$ \sum_{j=k+1}^n \gamma_j t_j = \sum_{i=1}^k \delta_i e_i \implies \sum_{j=k+1}^n \gamma_j t_j - \sum_{i=1}^k \delta_i e_i = \theta $$
                             Поскольку вся объединенная система векторов $e_i, t_j$ линейно независима (базис $V$), все коэффициенты $\gamma_j = \delta_i = 0$.
