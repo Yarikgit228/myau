@@ -3692,9 +3692,9 @@ angle$ в $\mathbb{R}^3$:</p>
                     <div class="quiz-card" style="text-align:center; padding: 40px 20px; background: rgba(30, 20, 60, 0.4); border-radius:24px; border:1px solid var(--accent-primary);">
                         <span style="font-size:3.5rem;">🏆</span>
                         <h3 style="margin-top:15px; font-weight:800; font-size:1.5rem; color:var(--text-primary);">Тренировка Завершена!</h3>
-                        <p style="color:var(--text-secondary); margin: 15px 0; font-weight:600;">Вы вспомнили \${sessionScore} из \${sessionCards.length} терминов высшей алгебры!</p>
+                        <p style="color:var(--text-secondary); margin: 15px 0; font-weight:600;">Вы вспомнили ${sessionScore} из ${sessionCards.length} терминов высшей алгебры!</p>
                         <div style="background:var(--accent-gradient); color:white; display:inline-block; padding:10px 20px; border-radius:12px; font-weight:800; font-size:1rem; margin-bottom:20px;">
-                            +\${bonus} XP за прохождение!
+                            +${bonus} XP за прохождение!
                         </div>
                         <br>
                         <button class="quiz-restart-btn" onclick="resetFlashcardSessionUI()">Запустить Снова</button>
@@ -3707,17 +3707,17 @@ angle$ в $\mathbb{R}^3$:</p>
             document.getElementById('session-card-wrapper').classList.remove('flipped');
             
             document.getElementById('session-card-front').innerHTML = `
-                <div style="font-size: 3.5rem; margin-bottom:15px;">\${card.icon}</div>
-                <h3 style="font-weight:800; font-size:1.6rem; color:var(--text-primary); font-family:'Outfit';">\${card.term}</h3>
+                <div style="font-size: 3.5rem; margin-bottom:15px;">${card.icon}</div>
+                <h3 style="font-weight:800; font-size:1.6rem; color:var(--text-primary); font-family:'Outfit';">${card.term}</h3>
                 <span style="font-size:0.75rem; color:var(--text-secondary); font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-top:10px; display:inline-block; background:var(--bg-secondary); padding:4px 10px; border-radius:20px;">Кликните чтобы перевернуть</span>
             `;
             
             document.getElementById('session-card-back').innerHTML = `
-                <h4 style="font-weight:800; color:var(--accent-secondary); margin-bottom:15px; font-size:1.2rem;">\${card.term}</h4>
-                <p style="font-size:1.1rem; line-height:1.5; font-weight:600; color:var(--text-primary); text-align:center;">\${card.desc}</p>
+                <h4 style="font-weight:800; color:var(--accent-secondary); margin-bottom:15px; font-size:1.2rem;">${card.term}</h4>
+                <p style="font-size:1.1rem; line-height:1.5; font-weight:600; color:var(--text-primary); text-align:center;">${card.desc}</p>
             `;
             
-            document.getElementById('session-progress-text').innerText = `\${sessionCurrentIndex + 1} / \${sessionCards.length}`;
+            document.getElementById('session-progress-text').innerText = `${sessionCurrentIndex + 1} / ${sessionCards.length}`;
             
             if (window.MathJax && window.MathJax.typesetPromise) {
                 window.MathJax.typesetPromise([document.getElementById('session-card-back')]);
@@ -3794,7 +3794,7 @@ angle$ в $\mathbb{R}^3$:</p>
         function startSurvivalTimer() {
             stopSurvivalTimer();
             survivalTimeLeft = 60;
-            document.getElementById('quiz-timer-text').innerText = `\${survivalTimeLeft}с`;
+            document.getElementById('quiz-timer-text').innerText = `${survivalTimeLeft}с`;
             document.getElementById('quiz-timer-fill').style.transition = 'none';
             document.getElementById('quiz-timer-fill').style.width = '100%';
             
@@ -3804,8 +3804,8 @@ angle$ в $\mathbb{R}^3$:</p>
             
             survivalTimer = setInterval(() => {
                 survivalTimeLeft--;
-                document.getElementById('quiz-timer-text').innerText = `\${survivalTimeLeft}с`;
-                document.getElementById('quiz-timer-fill').style.width = `\${(survivalTimeLeft / 60) * 100}%`;
+                document.getElementById('quiz-timer-text').innerText = `${survivalTimeLeft}с`;
+                document.getElementById('quiz-timer-fill').style.width = `${(survivalTimeLeft / 60) * 100}%`;
                 
                 if (survivalTimeLeft <= 0) {
                     stopSurvivalTimer();
@@ -3827,7 +3827,7 @@ angle$ в $\mathbb{R}^3$:</p>
                 <div class="quiz-card" style="text-align:center; padding: 40px 20px; background: rgba(239, 68, 68, 0.1); border-radius:24px; border:1px solid #ef4444;">
                     <span style="font-size:3.5rem;">⏱️</span>
                     <h3 style="margin-top:15px; font-weight:800; font-size:1.5rem; color:#ef4444;">Время Сессии Истекло!</h3>
-                    <p style="color:var(--text-secondary); margin: 15px 0; font-weight:600;">Вы успели ответить на \${score} из \${quizData.length} вопросов под жестким давлением таймера.</p>
+                    <p style="color:var(--text-secondary); margin: 15px 0; font-weight:600;">Вы успели ответить на ${score} из ${quizData.length} вопросов под жестким давлением таймера.</p>
                     <button class="quiz-restart-btn" onclick="showQuizModeSelector()">🏆 Выбрать режим квиза</button>
                 </div>
             `;
@@ -3893,9 +3893,9 @@ angle$ в $\mathbb{R}^3$:</p>
                 <div class="quiz-card" style="text-align:center; padding: 40px 20px; border-radius:24px; border:1px solid var(--accent-primary);">
                     <span style="font-size:3.5rem;">🎉</span>
                     <h3 style="margin-top:15px; font-weight:800; font-size:1.5rem; color:var(--text-primary);">Тест Завершен!</h3>
-                    <div class="quiz-score-num" style="margin: 15px 0;">\${score} / \${quizData.length}</div>
+                    <div class="quiz-score-num" style="margin: 15px 0;">${score} / ${quizData.length}</div>
                     <div style="background:var(--accent-gradient); color:white; display:inline-block; padding:10px 20px; border-radius:12px; font-weight:800; font-size:1.1rem; margin-bottom:20px;">
-                        +\${xpGained} XP получено!
+                        +${xpGained} XP получено!
                     </div>
                     <p style="color: var(--text-secondary); margin-bottom: 25px; font-weight:600;">Вы показали отличный уровень подготовки по полному курсу Высшей Алгебры!</p>
                     <button class="quiz-restart-btn" onclick="showQuizModeSelector()">🏆 На главную квиза</button>
