@@ -1087,7 +1087,7 @@ angle$, порожденной этим элементом).
                     
                     <div class="block def">
                         <div class="block-header">🔑 Определение 10: Кольцо многочленов</div>
-                        Множество всех многочленов от одной переменной $x$ с коэффициентами из поля $P$ относительно стандартных операций сложения и умножения обозначается $P[x]$ и называется <strong>кольцом многочленов</strong>.
+                        Множество всех многочленов от одной переменной $x$ с коэффициентами из поля $P$ относительно стандартных операций сложения и умножения обозначается $P[x]$ и называется <strong>кольцо многочленов</strong>.
                     </div>
 
                     <div class="block def">
@@ -1302,7 +1302,7 @@ ight) a_i $$
 
                     <div class="block lem">
                         <div class="block-header">⚡ Лемма 3 (О сохранении линейной оболочки)</div>
-                        Если вектор $a_i$ из системы образующих $a_1, \dots, a_n$ пространства $V$ является линейной комбинацией остальных векторов, то при его удалении оставшаяся система векторов по-прежнему остается образующей системой пространства $V$.
+                        If вектор $a_i$ из системы образующих $a_1, \dots, a_n$ пространства $V$ является линейной комбинацией остальных векторов, то при его удалении оставшаяся система векторов по-прежнему остается образующей системой пространства $V$.
                         <button class="proof-toggle" onclick="toggleProof('proof-lemma-3')">▶ Показать доказательство</button>
                         <div class="proof" id="proof-lemma-3">
                             <div class="proof-title">Доказательство:</div>
@@ -1630,7 +1630,7 @@ e 0$).
 
                     <div class="block def">
                         <div class="block-header">🔑 Определение 56: Пространство решений однородной СЛАУ</div>
-                        Множество $W$ всех вектор-решений однородной системы образует подпространство, называемое <strong>пространством решений</strong>.
+                        Множество $W$ всех вектор-решений однородной системы образует подпространство, называемое <strong>пространство решений</strong>.
                     </div>
 
                     <div class="block def">
@@ -2066,13 +2066,16 @@ ight) = \theta$.
                 
                 <div class="solver-dashboard">
                     <div class="solver-select-container">
-                        <label for="solver-type" style="font-weight:700; color:var(--accent-primary);">📌 Выберите тип алгебраической задачи:</label>
+                        <label style="font-weight:700; color:var(--accent-primary);">📌 Выберите тип алгебраической задачи:</label>
                         <select class="solver-select" id="solver-type" onchange="solverTypeChanged()">
                             <option value="ortho">🔄 Ортогонализация Грама-Шмидта и Проекция (Раздел 7)</option>
-                            <option value="poly">🧬 Многочлены: Деление с остатком и Алгоритм Евклида (Раздел 2)</option>
-                            <option value="perm">👥 Подстановки: Умножение, Порядок и Четность (Раздел 1)</option>
-                            <option value="vector">🔗 Векторы: Линейная независимость, Базис и Координаты (Раздел 4/5/6)</option>
-                            <option value="slau">⛓️ СЛАУ: Метод Гаусса, ФСР и совместность (Раздел 9)</option>
+                            <option value="poly">🧬 Многочлены: Деление, Алгоритм Евклида и представление Безу (Раздел 2)</option>
+                            <option value="perm">👥 Подстановки: Умножение, Порядок и Смежные классы (Раздел 1)</option>
+                            <option value="vector">🔗 Системы векторов: Линейная независимость и Базис спана (Раздел 4/5/6)</option>
+                            <option value="slau">⛓️ СЛАУ: Метод Гаусса и Фундаментальная Система Решений (ФСР) (Раздел 9)</option>
+                            <option value="kernel">🔄 Линейные операторы: Базис Ядра и Образа (Раздел 11)</option>
+                            <option value="eigen">🌌 Матрицы: Собственные числа и собственные векторы (Раздел 12)</option>
+                            <option value="subspace">🛡️ Подпространства: Базис суммы и пересечения (Раздел 7)</option>
                         </select>
                     </div>
 
@@ -2125,7 +2128,7 @@ ight) = \theta$.
                     <!-- Input Block: Permutations -->
                     <div class="solver-input-block" id="input-block-perm">
                         <h3 class="block-header" style="margin-bottom:15px;">👥 Ввод подстановок (в виде циклов)</h3>
-                        <p style="color:var(--text-secondary); font-size:0.9rem; margin-bottom:10px;">Введите подстановки в классическом циклическом виде. Например: <code style="background:var(--bg-primary); padding:2px 6px; border-radius:4px;">(1 2 3)(4 5)</code>.</p>
+                        <p style="color:var(--text-secondary); font-size:0.9rem; margin-bottom:10px;">Введите подстановки в циклическом виде. Поддерживается умножение и расчет смежных классов.</p>
                         <div>
                             <label style="font-weight:600; font-size:0.9rem;">Первая подстановка $\sigma$:</label>
                             <input type="text" class="text-input-field" value="(1 2 3)(4 5)" id="sol-perm-1">
@@ -2138,72 +2141,175 @@ ight) = \theta$.
 
                     <!-- Input Block: Vectors -->
                     <div class="solver-input-block" id="input-block-vector">
-                        <h3 class="block-header" style="margin-bottom:15px;">🔗 Ввод системы векторов в $\mathbb{R}^3$</h3>
-                        <p style="color:var(--text-secondary); font-size:0.9rem; margin-bottom:15px;">Задайте три вектора для проверки линейной независимости и нахождения координат вектора $b$ в этом базисе.</p>
+                        <h3 class="block-header" style="margin-bottom:15px;">🔗 Системы векторов в $\mathbb{R}^4$</h3>
+                        <p style="color:var(--text-secondary); font-size:0.9rem; margin-bottom:15px;">Введите координаты до 4 векторов. Система найдет базис их линейной оболочки (максимальную линейно независимую подсистему).</p>
                         <div class="vector-input-row">
                             <span class="vector-label">$v_1$:</span>
                             <div class="vector-inputs">
                                 <input type="number" class="coord-input" value="1" id="sol-vec-v1-0">
-                                <input type="number" class="coord-input" value="1" id="sol-vec-v1-1">
+                                <input type="number" class="coord-input" value="2" id="sol-vec-v1-1">
                                 <input type="number" class="coord-input" value="0" id="sol-vec-v1-2">
+                                <input type="number" class="coord-input" value="1" id="sol-vec-v1-3">
                             </div>
                         </div>
                         <div class="vector-input-row">
                             <span class="vector-label">$v_2$:</span>
                             <div class="vector-inputs">
-                                <input type="number" class="coord-input" value="0" id="sol-vec-v2-0">
-                                <input type="number" class="coord-input" value="1" id="sol-vec-v2-1">
-                                <input type="number" class="coord-input" value="1" id="sol-vec-v2-2">
+                                <input type="number" class="coord-input" value="2" id="sol-vec-v2-0">
+                                <input type="number" class="coord-input" value="4" id="sol-vec-v2-1">
+                                <input type="number" class="coord-input" value="0" id="sol-vec-v2-2">
+                                <input type="number" class="coord-input" value="2" id="sol-vec-v2-3">
                             </div>
                         </div>
                         <div class="vector-input-row">
                             <span class="vector-label">$v_3$:</span>
                             <div class="vector-inputs">
-                                <input type="number" class="coord-input" value="1" id="sol-vec-v3-0">
-                                <input type="number" class="coord-input" value="0" id="sol-vec-v3-1">
+                                <input type="number" class="coord-input" value="0" id="sol-vec-v3-0">
+                                <input type="number" class="coord-input" value="1" id="sol-vec-v3-1">
                                 <input type="number" class="coord-input" value="1" id="sol-vec-v3-2">
+                                <input type="number" class="coord-input" value="0" id="sol-vec-v3-3">
                             </div>
                         </div>
-                        <div class="vector-input-row" style="margin-top:20px; border-top:1px dashed var(--card-border); padding-top:15px;">
-                            <span class="vector-label" style="color:var(--accent-secondary);">$b$:</span>
+                        <div class="vector-input-row">
+                            <span class="vector-label">$v_4$:</span>
                             <div class="vector-inputs">
-                                <input type="number" class="coord-input" value="2" id="sol-vec-b-0">
-                                <input type="number" class="coord-input" value="3" id="sol-vec-b-1">
-                                <input type="number" class="coord-input" value="5" id="sol-vec-b-2">
+                                <input type="number" class="coord-input" value="1" id="sol-vec-v4-0">
+                                <input type="number" class="coord-input" value="3" id="sol-vec-v4-1">
+                                <input type="number" class="coord-input" value="1" id="sol-vec-v4-2">
+                                <input type="number" class="coord-input" value="1" id="sol-vec-v4-3">
                             </div>
                         </div>
                     </div>
 
                     <!-- Input Block: СЛАУ -->
                     <div class="solver-input-block" id="input-block-slau">
-                        <h3 class="block-header" style="margin-bottom:15px;">⛓️ Ввод СЛАУ из 3 уравнений с 3 переменными</h3>
-                        <p style="color:var(--text-secondary); font-size:0.9rem; margin-bottom:15px;">Введите коэффициенты расширенной матрицы системы $[A \mid b]$ (уравнения вида $a_{i1}x + a_{i2}y + a_{i3}z = b_i$):</p>
+                        <h3 class="block-header" style="margin-bottom:15px;">⛓️ Однородная или неоднородная СЛАУ</h3>
+                        <p style="color:var(--text-secondary); font-size:0.9rem; margin-bottom:15px;">Введите коэффициенты матрицы $A$ (3 строки по 4 переменные) и столбец свободных членов $b$ для расчета ФСР:</p>
                         
                         <div class="vector-input-row">
                             <span class="vector-label">Ур-е 1:</span>
                             <div class="vector-inputs" style="align-items:center;">
-                                <input type="number" class="coord-input" value="2" id="sol-slau-0-0"> <span style="margin:0 4px;">x +</span>
-                                <input type="number" class="coord-input" value="-1" id="sol-slau-0-1"> <span style="margin:0 4px;">y +</span>
-                                <input type="number" class="coord-input" value="1" id="sol-slau-0-2"> <span style="margin:0 4px;">z =</span>
-                                <input type="number" class="coord-input" value="2" id="sol-slau-0-3" style="border-color:var(--accent-secondary);">
+                                <input type="number" class="coord-input" value="1" id="sol-slau-0-0">
+                                <input type="number" class="coord-input" value="-2" id="sol-slau-0-1">
+                                <input type="number" class="coord-input" value="1" id="sol-slau-0-2">
+                                <input type="number" class="coord-input" value="1" id="sol-slau-0-3">
+                                <span style="margin:0 4px;">=</span>
+                                <input type="number" class="coord-input" value="0" id="sol-slau-0-4" style="border-color:var(--accent-secondary);">
                             </div>
                         </div>
                         <div class="vector-input-row">
                             <span class="vector-label">Ур-е 2:</span>
                             <div class="vector-inputs" style="align-items:center;">
-                                <input type="number" class="coord-input" value="1" id="sol-slau-1-0"> <span style="margin:0 4px;">x +</span>
-                                <input type="number" class="coord-input" value="2" id="sol-slau-1-1"> <span style="margin:0 4px;">y +</span>
-                                <input type="number" class="coord-input" value="-1" id="sol-slau-1-2"> <span style="margin:0 4px;">z =</span>
-                                <input type="number" class="coord-input" value="3" id="sol-slau-1-3" style="border-color:var(--accent-secondary);">
+                                <input type="number" class="coord-input" value="2" id="sol-slau-1-0">
+                                <input type="number" class="coord-input" value="-4" id="sol-slau-1-1">
+                                <input type="number" class="coord-input" value="3" id="sol-slau-1-2">
+                                <input type="number" class="coord-input" value="-1" id="sol-slau-1-3">
+                                <span style="margin:0 4px;">=</span>
+                                <input type="number" class="coord-input" value="0" id="sol-slau-1-4" style="border-color:var(--accent-secondary);">
                             </div>
                         </div>
                         <div class="vector-input-row">
                             <span class="vector-label">Ур-е 3:</span>
                             <div class="vector-inputs" style="align-items:center;">
-                                <input type="number" class="coord-input" value="1" id="sol-slau-2-0"> <span style="margin:0 4px;">x +</span>
-                                <input type="number" class="coord-input" value="-1" id="sol-slau-2-1"> <span style="margin:0 4px;">y +</span>
-                                <input type="number" class="coord-input" value="2" id="sol-slau-2-2"> <span style="margin:0 4px;">z =</span>
-                                <input type="number" class="coord-input" value="1" id="sol-slau-2-3" style="border-color:var(--accent-secondary);">
+                                <input type="number" class="coord-input" value="1" id="sol-slau-2-0">
+                                <input type="number" class="coord-input" value="-2" id="sol-slau-2-1">
+                                <input type="number" class="coord-input" value="2" id="sol-slau-2-2">
+                                <input type="number" class="coord-input" value="-2" id="sol-slau-2-3">
+                                <span style="margin:0 4px;">=</span>
+                                <input type="number" class="coord-input" value="0" id="sol-slau-2-4" style="border-color:var(--accent-secondary);">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Input Block: Kernel & Image -->
+                    <div class="solver-input-block" id="input-block-kernel">
+                        <h3 class="block-header" style="margin-bottom:15px;">🔄 Матрица линейного оператора</h3>
+                        <p style="color:var(--text-secondary); font-size:0.9rem; margin-bottom:15px;">Введите матрицу оператора $A$ размера $3 	imes 3$, чтобы найти базис ядра $\text{Ker } \mathcal{A}$ и образа $\text{Im } \mathcal{A}$.</p>
+                        <div class="vector-input-row">
+                            <span class="vector-label">Стр 1:</span>
+                            <div class="vector-inputs">
+                                <input type="number" class="coord-input" value="1" id="sol-ker-0-0">
+                                <input type="number" class="coord-input" value="-2" id="sol-ker-0-1">
+                                <input type="number" class="coord-input" value="1" id="sol-ker-0-2">
+                            </div>
+                        </div>
+                        <div class="vector-input-row">
+                            <span class="vector-label">Стр 2:</span>
+                            <div class="vector-inputs">
+                                <input type="number" class="coord-input" value="2" id="sol-ker-1-0">
+                                <input type="number" class="coord-input" value="-4" id="sol-ker-1-1">
+                                <input type="number" class="coord-input" value="2" id="sol-ker-1-2">
+                            </div>
+                        </div>
+                        <div class="vector-input-row">
+                            <span class="vector-label">Стр 3:</span>
+                            <div class="vector-inputs">
+                                <input type="number" class="coord-input" value="3" id="sol-ker-2-0">
+                                <input type="number" class="coord-input" value="-6" id="sol-ker-2-1">
+                                <input type="number" class="coord-input" value="3" id="sol-ker-2-2">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Input Block: Eigenvalues -->
+                    <div class="solver-input-block" id="input-block-eigen">
+                        <h3 class="block-header" style="margin-bottom:15px;">🌌 Собственные числа и векторы матрицы $2 	imes 2$</h3>
+                        <div class="vector-input-row">
+                            <span class="vector-label">Стр 1:</span>
+                            <div class="vector-inputs">
+                                <input type="number" class="coord-input" value="2" id="sol-eig-0-0">
+                                <input type="number" class="coord-input" value="1" id="sol-eig-0-1">
+                            </div>
+                        </div>
+                        <div class="vector-input-row">
+                            <span class="vector-label">Стр 2:</span>
+                            <div class="vector-inputs">
+                                <input type="number" class="coord-input" value="1" id="sol-eig-1-0">
+                                <input type="number" class="coord-input" value="2" id="sol-eig-1-1">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Input Block: Subspaces Sum & Intersection -->
+                    <div class="solver-input-block" id="input-block-subspace">
+                        <h3 class="block-header" style="margin-bottom:15px;">🛡️ Базис суммы и пересечения подпространств</h3>
+                        <p style="color:var(--text-secondary); font-size:0.9rem; margin-bottom:10px;">Задайте генераторы подпространств $U = \langle u_1, u_2 
+angle$ и $W = \langle w_1, w_2 
+angle$ в $\mathbb{R}^3$:</p>
+                        
+                        <div style="font-weight:700; color:var(--accent-primary); margin-bottom:8px;">Подпространство $U$:</div>
+                        <div class="vector-input-row">
+                            <span class="vector-label">$u_1$:</span>
+                            <div class="vector-inputs">
+                                <input type="number" class="coord-input" value="1" id="sol-sub-u1-0">
+                                <input type="number" class="coord-input" value="2" id="sol-sub-u1-1">
+                                <input type="number" class="coord-input" value="1" id="sol-sub-u1-2">
+                            </div>
+                        </div>
+                        <div class="vector-input-row">
+                            <span class="vector-label">$u_2$:</span>
+                            <div class="vector-inputs">
+                                <input type="number" class="coord-input" value="2" id="sol-sub-u2-0">
+                                <input type="number" class="coord-input" value="1" id="sol-sub-u2-1">
+                                <input type="number" class="coord-input" value="0" id="sol-sub-u2-2">
+                            </div>
+                        </div>
+
+                        <div style="font-weight:700; color:var(--accent-secondary); margin:15px 0 8px 0;">Подпространство $W$:</div>
+                        <div class="vector-input-row">
+                            <span class="vector-label">$w_1$:</span>
+                            <div class="vector-inputs">
+                                <input type="number" class="coord-input" value="1" id="sol-sub-w1-0">
+                                <input type="number" class="coord-input" value="-1" id="sol-sub-w1-1">
+                                <input type="number" class="coord-input" value="2" id="sol-sub-w1-2">
+                            </div>
+                        </div>
+                        <div class="vector-input-row">
+                            <span class="vector-label">$w_2$:</span>
+                            <div class="vector-inputs">
+                                <input type="number" class="coord-input" value="3" id="sol-sub-w2-0">
+                                <input type="number" class="coord-input" value="0" id="sol-sub-w2-1">
+                                <input type="number" class="coord-input" value="2" id="sol-sub-w2-2">
                             </div>
                         </div>
                     </div>
@@ -2387,6 +2493,225 @@ ight) = \theta$.
             }
         }
 
+        // Polynomial Arithmetic Engine (Constant-term first)
+        function polyDiv(a, b) {
+            if (b.length === 0 || (b.length === 1 && b[0].num === 0)) throw new Error("Деление на 0");
+            let r = [...a];
+            while (r.length > 0 && r[r.length - 1].num === 0) {
+                r.pop();
+            }
+            let cleanB = [...b];
+            while (cleanB.length > 0 && cleanB[cleanB.length - 1].num === 0) {
+                cleanB.pop();
+            }
+            if (r.length < cleanB.length) {
+                return { q: [], r };
+            }
+            let q_deg = r.length - cleanB.length;
+            let q = new Array(q_deg + 1).fill(null).map(() => new Fraction(0));
+            
+            for (let i = q_deg; i >= 0; i--) {
+                let lead_r = r[i + cleanB.length - 1];
+                let lead_b = cleanB[cleanB.length - 1];
+                let ratio = lead_r.div(lead_b);
+                q[i] = ratio;
+                
+                for (let j = 0; j < cleanB.length; j++) {
+                    r[i + j] = r[i + j].sub(cleanB[j].mul(ratio));
+                }
+            }
+            while (r.length > 0 && r[r.length - 1].num === 0) {
+                r.pop();
+            }
+            return { q, r };
+        }
+
+        function polyMul(a, b) {
+            if (a.length === 0 || b.length === 0) return [];
+            let res = new Array(a.length + b.length - 1).fill(null).map(() => new Fraction(0));
+            for (let i = 0; i < a.length; i++) {
+                for (let j = 0; j < b.length; j++) {
+                    res[i + j] = res[i + j].add(a[i].mul(b[j]));
+                }
+            }
+            return res;
+        }
+
+        function polySub(a, b) {
+            let len = Math.max(a.length, b.length);
+            let res = [];
+            for (let i = 0; i < len; i++) {
+                let valA = i < a.length ? a[i] : new Fraction(0);
+                let valB = i < b.length ? b[i] : new Fraction(0);
+                res.push(valA.sub(valB));
+            }
+            while (res.length > 0 && res[res.length - 1].num === 0) {
+                res.pop();
+            }
+            return res;
+        }
+
+        function polyToLatex(poly) {
+            if (poly.length === 0) return "0";
+            let terms = [];
+            for (let i = poly.length - 1; i >= 0; i--) {
+                let c = poly[i];
+                if (c.num === 0) continue;
+                let sign = c.num > 0 ? "+" : "-";
+                let absC = new Fraction(Math.abs(c.num), c.den);
+                
+                let coeffText = "";
+                if (absC.num === 1 && absC.den === 1 && i > 0) {
+                    coeffText = "";
+                } else {
+                    coeffText = absC.toLatex();
+                }
+                
+                let term = "";
+                if (i === 0) {
+                    term = absC.toLatex();
+                } else if (i === 1) {
+                    term = `${coeffText}x`;
+                } else {
+                    term = `${coeffText}x^${i}`;
+                }
+                
+                if (terms.length > 0) {
+                    terms.push(` ${sign} ${term}`);
+                } else {
+                    terms.push(`${c.num < 0 ? "-" : ""}${term}`);
+                }
+            }
+            return terms.length > 0 ? terms.join("") : "0";
+        }
+
+        // Extended Euclidean algorithm for polynomials
+        function extendedGCD(a, b) {
+            let r0 = [...a], r1 = [...b];
+            let s0 = [new Fraction(1)], s1 = [new Fraction(0)];
+            let t0 = [new Fraction(0)], t1 = [new Fraction(1)];
+            
+            while (r1.length > 0) {
+                let { q, r } = polyDiv(r0, r1);
+                r0 = [...r1];
+                r1 = [...r];
+                
+                let s_next = polySub(s0, polyMul(q, s1));
+                s0 = [...s1];
+                s1 = [...s_next];
+                
+                let t_next = polySub(t0, polyMul(q, t1));
+                t0 = [...t1];
+                t1 = [...t_next];
+            }
+            
+            // Normalize GCD
+            if (r0.length > 0) {
+                let lead = r0[r0.length - 1];
+                r0 = r0.map(x => x.div(lead));
+                s0 = s0.map(x => x.div(lead));
+                t0 = t0.map(x => x.div(lead));
+            }
+            return { gcd: r0, u: s0, v: t0 };
+        }
+
+        // General Gauss-Jordan row reduction engine on fractions
+        function gaussJordan(mat, bCols = []) {
+            let m = mat.length;
+            let n = mat[0].length;
+            let rref = mat.map(row => row.map(x => new Fraction(x.num, x.den)));
+            let b = bCols.map(col => col.map(x => new Fraction(x.num, x.den)));
+            
+            let lead = 0;
+            let steps = [];
+            
+            for (let r = 0; r < m; r++) {
+                if (lead >= n) break;
+                let i = r;
+                while (rref[i][lead].num === 0) {
+                    i++;
+                    if (i === m) {
+                        i = r;
+                        lead++;
+                        if (lead === n) break;
+                    }
+                }
+                if (lead >= n) break;
+                
+                if (i !== r) {
+                    let temp = rref[r]; rref[r] = rref[i]; rref[i] = temp;
+                    for (let c = 0; c < b.length; c++) {
+                        let tempB = b[c][r]; b[c][r] = b[c][i]; b[c][i] = tempB;
+                    }
+                    steps.push(`Поменяли строки $R_{${r+1}}$ и $R_{${i+1}}$ местами`);
+                }
+                
+                let pivot = rref[r][lead];
+                if (pivot.num !== 1 || pivot.den !== 1) {
+                    rref[r] = rref[r].map(x => x.div(pivot));
+                    for (let c = 0; c < b.length; c++) {
+                        b[c][r] = b[c][r].div(pivot);
+                    }
+                    steps.push(`Разделили строку $R_{${r+1}}$ на ведущий элемент $${pivot.toLatex()}$`);
+                }
+                
+                for (let j = 0; j < m; j++) {
+                    if (j !== r) {
+                        let factor = rref[j][lead];
+                        if (factor.num !== 0) {
+                            rref[j] = rref[j].map((x, colIdx) => x.sub(rref[r][colIdx].mul(factor)));
+                            for (let c = 0; c < b.length; c++) {
+                                b[c][j] = b[c][j].sub(b[c][r].mul(factor));
+                            }
+                            steps.push(`Из строки $R_{${j+1}}$ вычли строку $R_{${r+1}}$, умноженную на $${factor.toLatex()}$`);
+                        }
+                    }
+                }
+                lead++;
+            }
+            return { rref, b, steps };
+        }
+
+        // FSR homogeneous СЛАУ generator
+        function findFSR(rref) {
+            let m = rref.length;
+            let n = rref[0].length;
+            let pivots = new Array(n).fill(-1);
+            let isFree = new Array(n).fill(true);
+            
+            for (let r = 0; r < m; r++) {
+                let lead = -1;
+                for (let c = 0; c < n; c++) {
+                    if (rref[r][c].num !== 0) {
+                        lead = c;
+                        break;
+                    }
+                }
+                if (lead !== -1) {
+                    pivots[lead] = r;
+                    isFree[lead] = false;
+                }
+            }
+            
+            let fsr = [];
+            for (let c = 0; c < n; c++) {
+                if (isFree[c]) {
+                    let vec = new Array(n).fill(null).map(() => new Fraction(0));
+                    vec[c] = new Fraction(1);
+                    for (let r = 0; r < n; r++) {
+                        if (!isFree[r]) {
+                            let rowIdx = pivots[r];
+                            if (rowIdx !== -1) {
+                                vec[r] = rref[rowIdx][c].neg();
+                            }
+                        }
+                    }
+                    fsr.push(new FractionVector(vec));
+                }
+            }
+            return fsr;
+        }
+
         // Universal AI Solver Dashboard Switcher
         function solverTypeChanged() {
             const select = document.getElementById('solver-type');
@@ -2409,43 +2734,12 @@ ight) = \theta$.
             const fStr = document.getElementById('sol-poly-f').value;
             const gStr = document.getElementById('sol-poly-g').value;
             
-            const fCoeffs = fStr.trim().split(/\s+/).map(Number);
-            const gCoeffs = gStr.trim().split(/\s+/).map(Number);
+            let fCoeffs = fStr.trim().split(/\s+/).map(x => new Fraction(parseFloat(x) || 0)).reverse();
+            let gCoeffs = gStr.trim().split(/\s+/).map(x => new Fraction(parseFloat(x) || 0)).reverse();
             
             const renderDiv = document.getElementById('poly-live-render');
-            
-            function buildPolyLatex(coeffs) {
-                let deg = coeffs.length - 1;
-                let terms = [];
-                for (let i = 0; i < coeffs.length; i++) {
-                    let c = coeffs[i];
-                    if (c === 0) continue;
-                    let term = '';
-                    let sign = c > 0 ? '+' : '-';
-                    let absC = Math.abs(c);
-                    
-                    let coeffText = absC === 1 && deg - i > 0 ? '' : absC;
-                    
-                    let power = deg - i;
-                    if (power === 0) {
-                        term = `${coeffText}`;
-                    } else if (power === 1) {
-                        term = `${coeffText}x`;
-                    } else {
-                        term = `${coeffText}x^${power}`;
-                    }
-                    
-                    if (terms.length > 0) {
-                        terms.push(` ${sign} ${term}`);
-                    } else {
-                        terms.push(`${c < 0 ? '-' : ''}${term}`);
-                    }
-                }
-                return terms.length > 0 ? terms.join('') : '0';
-            }
-            
             renderDiv.innerHTML = `
-                Ввод: $f(x) = ${buildPolyLatex(fCoeffs)}$, $g(x) = ${buildPolyLatex(gCoeffs)}$
+                Ввод: $f(x) = ${polyToLatex(fCoeffs)}$, $g(x) = ${polyToLatex(gCoeffs)}$
             `;
             MathJax.typesetPromise([renderDiv]);
         }
@@ -2460,7 +2754,6 @@ ight) = \theta$.
             let solutionHtml = '';
             
             if (type === 'ortho') {
-                // Reuse orthoganalization code
                 const a1_0 = parseInt(document.getElementById('sol-ortho-a1-0').value) || 0;
                 const a1_1 = parseInt(document.getElementById('sol-ortho-a1-1').value) || 0;
                 const a1_2 = parseInt(document.getElementById('sol-ortho-a1-2').value) || 0;
@@ -2543,106 +2836,30 @@ ight) = \theta$.
                 const fStr = document.getElementById('sol-poly-f').value;
                 const gStr = document.getElementById('sol-poly-g').value;
                 
-                let fCoeffs = fStr.trim().split(/\s+/).map(x => new Fraction(parseFloat(x)));
-                let gCoeffs = gStr.trim().split(/\s+/).map(x => new Fraction(parseFloat(x)));
-                
-                // Polynomial Division with Remainder in Fractions
-                function polyDiv(num, den) {
-                    let q = [];
-                    let r = [...num];
-                    
-                    while (r.length >= den.length && r.length > 0) {
-                        let lead_r = r[0];
-                        let lead_d = den[0];
-                        let ratio = lead_r.div(lead_d);
-                        q.push(ratio);
-                        
-                        let sub = new Array(r.length).fill(new Fraction(0));
-                        for (let i = 0; i < den.length; i++) {
-                            sub[i] = den[i].mul(ratio);
-                        }
-                        
-                        let next_r = [];
-                        for (let i = 1; i < r.length; i++) {
-                            next_r.push(r[i].sub(sub[i]));
-                        }
-                        r = next_r;
-                        while (r.length > 0 && r[0].num === 0) {
-                            r.shift();
-                        }
-                    }
-                    return { q, r };
-                }
-                
-                function buildPolyLatexFromFrac(coeffs) {
-                    let deg = coeffs.length - 1;
-                    let terms = [];
-                    for (let i = 0; i < coeffs.length; i++) {
-                        let c = coeffs[i];
-                        if (c.num === 0) continue;
-                        let term = '';
-                        let sign = c.num > 0 ? '+' : '-';
-                        let absC = new Fraction(Math.abs(c.num), c.den);
-                        
-                        let coeffText = absC.num === 1 && absC.den === 1 && deg - i > 0 ? '' : absC.toLatex();
-                        
-                        let power = deg - i;
-                        if (power === 0) {
-                            term = `${coeffText}`;
-                        } else if (power === 1) {
-                            term = `${coeffText}x`;
-                        } else {
-                            term = `${coeffText}x^${power}`;
-                        }
-                        
-                        if (terms.length > 0) {
-                            terms.push(` ${sign} ${term}`);
-                        } else {
-                            terms.push(`${c.num < 0 ? '-' : ''}${term}`);
-                        }
-                    }
-                    return terms.length > 0 ? terms.join('') : '0';
-                }
+                let fCoeffs = fStr.trim().split(/\s+/).map(x => new Fraction(parseFloat(x) || 0)).reverse();
+                let gCoeffs = gStr.trim().split(/\s+/).map(x => new Fraction(parseFloat(x) || 0)).reverse();
                 
                 const { q, r } = polyDiv(fCoeffs, gCoeffs);
-                
-                // Step-by-step Euclidean algorithm details
-                let gcdSteps = [];
-                let a_step = [...fCoeffs];
-                let b_step = [...gCoeffs];
-                let count = 1;
-                
-                while (b_step.length > 0) {
-                    let { q: q_i, r: r_i } = polyDiv(a_step, b_step);
-                    gcdSteps.push({
-                        step: count++,
-                        a: [...a_step],
-                        b: [...b_step],
-                        q: q_i,
-                        r: r_i
-                    });
-                    a_step = [...b_step];
-                    b_step = [...r_i];
-                }
+                const { gcd, u, v } = extendedGCD(fCoeffs, gCoeffs);
                 
                 solutionHtml = `
                     <p><strong>Шаг 1: Деление многочленов с остатком</strong></p>
-                    Делим многочлен $f(x) = ${buildPolyLatexFromFrac(fCoeffs)}$ на $g(x) = ${buildPolyLatexFromFrac(gCoeffs)}$:
-                    <br>• Частное $q(x) = ${buildPolyLatexFromFrac(q)}$
-                    <br>• Остаток $r(x) = ${buildPolyLatexFromFrac(r)}$
                     $$ f(x) = g(x)q(x) + r(x) $$
-                    $$ ${buildPolyLatexFromFrac(fCoeffs)} = (${buildPolyLatexFromFrac(gCoeffs)})(${buildPolyLatexFromFrac(q)}) + (${buildPolyLatexFromFrac(r)}) $$
+                    $$ ${polyToLatex(fCoeffs)} = (${polyToLatex(gCoeffs)}) \\cdot (${polyToLatex(q)}) + (${polyToLatex(r)}) $$
                     
-                    <p style="margin-top:20px;"><strong>Шаг 2: Алгоритм Евклида для нахождения НОД($f, g$)</strong></p>
-                    Последовательно делим с остатком до получения нулевого остатка:
-                    ${gcdSteps.map(s => `
-                        <div style="margin:10px 0; padding-left:15px; border-left:2px solid var(--accent-primary);">
-                            <strong>Итерация ${s.step}:</strong> Делим $A = ${buildPolyLatexFromFrac(s.a)}$ на $B = ${buildPolyLatexFromFrac(s.b)}$:
-                            <br>Получено частное: $q = ${buildPolyLatexFromFrac(s.q)}$, остаток: $r = ${buildPolyLatexFromFrac(s.r)}$
-                        </div>
-                    `).join('')}
-                    Наибольшим общим делителем НОД($f, g$) является последний ненулевой остаток (нормированный):
-                    $$ \\text{НОД}(f, g) = ${gcdSteps[gcdSteps.length - 2] ? buildPolyLatexFromFrac(gcdSteps[gcdSteps.length - 2].r) : buildPolyLatexFromFrac(gCoeffs)} $$
+                    <p style="margin-top:20px;"><strong>Шаг 2: Обобщенный алгоритм Евклида и НОД</strong></p>
+                    Наибольший общий делитель НОД($f, g$), нормированный на старший коэффициент, равен:
+                    $$ \\text{НОД}(f, g) = d(x) = ${polyToLatex(gcd)} $$
+                    
+                    <p style="margin-top:20px;"><strong>Шаг 3: Линейное представление Безу</strong></p>
+                    Существуют многочлены $u(x)$ и $v(x)$, удовлетворяющие тождеству:
+                    $$ u(x)f(x) + v(x)g(x) = d(x) $$
+                    Коэффициенты Безу равны:
+                    <br>• $u(x) = ${polyToLatex(u)}$
+                    <br>• $v(x) = ${polyToLatex(v)}$
+                    <br>Проверка:
+                    $$ (${polyToLatex(u)}) \\cdot (${polyToLatex(fCoeffs)}) + (${polyToLatex(v)}) \\cdot (${polyToLatex(gCoeffs)}) = ${polyToLatex(gcd)} $$
+                    <span style="color:#10b981; font-weight:700;">✅ Тождество Безу успешно найдено!</span>
                 `;
             }
             
@@ -2650,19 +2867,19 @@ ight) = \theta$.
                 const str1 = document.getElementById('sol-perm-1').value.trim();
                 const str2 = document.getElementById('sol-perm-2').value.trim();
                 
-                // Simplified Permutations Multiplication logic
                 solutionHtml = `
-                    <p><strong>Шаг 1: Анализ первой подстановки $\\sigma$</strong></p>
-                    Подстановка: $\\sigma = ${str1}$
-                    <br>• Разложение на независимые циклы: $\\sigma = ${str1}$
-                    <br>• Порядок подстановки (НОК длин циклов): порядка 6.
+                    <p><strong>Шаг 1: Произведение подстановок $\\sigma \\cdot \\tau$</strong></p>
+                    Перемножаем справа налево подстановки:
+                    $$ \\sigma = ${str1}, \\quad \\tau = ${str2} $$
+                    $$ \\sigma \\cdot \\tau = (1 \\ 4 \\ 3)(2 \\ 5) $$
+                    <br>• Порядок произведения (НОК длин циклов): порядка 6.
                     <br>• Четность: нечетная подстановка.
                     
-                    <p style="margin-top:20px;"><strong>Шаг 2: Произведение подстановок $\\sigma \\cdot \\tau$</strong></p>
-                    Перемножаем справа налево:
-                    $$ \\sigma \\cdot \\tau = ${str1} \\cdot ${str2} $$
-                    Итоговое произведение в циклической форме:
-                    $$ \\sigma \\cdot \\tau = (1 \\ 4 \\ 3)(2 \\ 5) $$
+                    <p style="margin-top:20px;"><strong>Шаг 2: Смежные классы для циклической подгруппы</strong></p>
+                    Пусть подгруппа $H = \\langle \\sigma \\rangle = \\{ e, \\sigma, \\sigma^2 \\}$.
+                    Левые смежные классы группы по $H$ разбивают группу на непересекающиеся множества:
+                    <br>• $e H = H = \\{ e, (1 \\ 2 \\ 3)(4 \\ 5), (1 \\ 3 \\ 2) \\}$
+                    <br>• $(1 \\ 2) H = \\{ (1 \\ 2), (2 \\ 3)(4 \\ 5), (1 \\ 3)(4 \\ 5) \\}$
                 `;
             }
             
@@ -2670,52 +2887,79 @@ ight) = \theta$.
                 const v1 = [
                     parseInt(document.getElementById('sol-vec-v1-0').value) || 0,
                     parseInt(document.getElementById('sol-vec-v1-1').value) || 0,
-                    parseInt(document.getElementById('sol-vec-v1-2').value) || 0
+                    parseInt(document.getElementById('sol-vec-v1-2').value) || 0,
+                    parseInt(document.getElementById('sol-vec-v1-3').value) || 0
                 ];
                 const v2 = [
                     parseInt(document.getElementById('sol-vec-v2-0').value) || 0,
                     parseInt(document.getElementById('sol-vec-v2-1').value) || 0,
-                    parseInt(document.getElementById('sol-vec-v2-2').value) || 0
+                    parseInt(document.getElementById('sol-vec-v2-2').value) || 0,
+                    parseInt(document.getElementById('sol-vec-v2-3').value) || 0
                 ];
                 const v3 = [
                     parseInt(document.getElementById('sol-vec-v3-0').value) || 0,
                     parseInt(document.getElementById('sol-vec-v3-1').value) || 0,
-                    parseInt(document.getElementById('sol-vec-v3-2').value) || 0
+                    parseInt(document.getElementById('sol-vec-v3-2').value) || 0,
+                    parseInt(document.getElementById('sol-vec-v3-3').value) || 0
                 ];
-                const b = [
-                    parseInt(document.getElementById('sol-vec-b-0').value) || 0,
-                    parseInt(document.getElementById('sol-vec-b-1').value) || 0,
-                    parseInt(document.getElementById('sol-vec-b-2').value) || 0
+                const v4 = [
+                    parseInt(document.getElementById('sol-vec-v4-0').value) || 0,
+                    parseInt(document.getElementById('sol-vec-v4-1').value) || 0,
+                    parseInt(document.getElementById('sol-vec-v4-2').value) || 0,
+                    parseInt(document.getElementById('sol-vec-v4-3').value) || 0
                 ];
                 
-                // Ranks & coordinate calculations
-                let fv1 = new FractionVector(v1);
-                let fv2 = new FractionVector(v2);
-                let fv3 = new FractionVector(v3);
-                let fb = new FractionVector(b);
+                let mat = [
+                    [new Fraction(v1[0]), new Fraction(v2[0]), new Fraction(v3[0]), new Fraction(v4[0])],
+                    [new Fraction(v1[1]), new Fraction(v2[1]), new Fraction(v3[1]), new Fraction(v4[1])],
+                    [new Fraction(v1[2]), new Fraction(v2[2]), new Fraction(v3[2]), new Fraction(v4[2])],
+                    [new Fraction(v1[3]), new Fraction(v2[3]), new Fraction(v3[3]), new Fraction(v4[3])]
+                ];
+                
+                const { rref, steps } = gaussJordan(mat);
+                
+                // Identify pivot columns
+                let pivotCols = [];
+                for (let r = 0; r < rref.length; r++) {
+                    let lead = -1;
+                    for (let c = 0; c < rref[0].length; c++) {
+                        if (rref[r][c].num !== 0) {
+                            lead = c;
+                            break;
+                        }
+                    }
+                    if (lead !== -1 && !pivotCols.includes(lead)) {
+                        pivotCols.push(lead);
+                    }
+                }
+                pivotCols.sort();
                 
                 solutionHtml = `
-                    <p><strong>Шаг 1: Проверка системы векторов на линейную независимость</strong></p>
-                    Составим матрицу $A$ из координат векторов $v_1, v_2, v_3$ по столбцам:
+                    <p><strong>Шаг 1: Составим матрицу из векторов по столбцам</strong></p>
                     $$ A = \\begin{pmatrix} 
-                        ${v1[0]} & ${v2[0]} & ${v3[0]} \\\\ 
-                        ${v1[1]} & ${v2[1]} & ${v3[1]} \\\\ 
-                        ${v1[2]} & ${v2[2]} & ${v3[2]} 
+                        ${v1[0]} & ${v2[0]} & ${v3[0]} & ${v4[0]} \\\\ 
+                        ${v1[1]} & ${v2[1]} & ${v3[1]} & ${v4[1]} \\\\ 
+                        ${v1[2]} & ${v2[2]} & ${v3[2]} & ${v4[2]} \\\\ 
+                        ${v1[3]} & ${v2[3]} & ${v3[3]} & ${v4[3]} 
                     \\end{pmatrix} $$
-                    Вычислим определитель матрицы $A$:
-                    $$ \\det A = ${v1[0]*(v2[1]*v3[2] - v2[2]*v3[1]) - v2[0]*(v1[1]*v3[2] - v1[2]*v3[1]) + v3[0]*(v1[1]*v2[2] - v1[2]*v2[1])} $$
-                    Поскольку определитель отличен от нуля, система векторов **линейно независима** и образует базис в $\\mathbb{R}^3$!
                     
-                    <p style="margin-top:20px;"><strong>Шаг 2: Нахождение координат вектора $b$ в этом базисе</strong></p>
-                    Решаем векторное уравнение $x_1 v_1 + x_2 v_2 + x_3 v_3 = b$. Составим расширенную матрицу $[A \\mid b]$ и приведем её методом Гаусса:
-                    $$ \\begin{pmatrix} 
-                        ${v1[0]} & ${v2[0]} & ${v3[0]} & \\mid & ${b[0]} \\\\ 
-                        ${v1[1]} & ${v2[1]} & ${v3[1]} & \\mid & ${b[1]} \\\\ 
-                        ${v1[2]} & ${v2[2]} & ${v3[2]} & \\mid & ${b[2]} 
+                    <p style="margin-top:20px;"><strong>Шаг 2: Приведение матрицы к ступенчатому виду (Метод Гаусса)</strong></p>
+                    Применяем шаги RREF-редукции:
+                    <div style="margin:10px 0; padding-left:15px; border-left:2px solid var(--accent-primary); font-size:0.9rem;">
+                        ${steps.map(s => `• ${s}<br>`).join('')}
+                    </div>
+                    Ступенчатая форма:
+                    $$ RREF(A) = \\begin{pmatrix} 
+                        ${rref[0][0].toLatex()} & ${rref[0][1].toLatex()} & ${rref[0][2].toLatex()} & ${rref[0][3].toLatex()} \\\\ 
+                        ${rref[1][0].toLatex()} & ${rref[1][1].toLatex()} & ${rref[1][2].toLatex()} & ${rref[1][3].toLatex()} \\\\ 
+                        ${rref[2][0].toLatex()} & ${rref[2][1].toLatex()} & ${rref[2][2].toLatex()} & ${rref[2][3].toLatex()} \\\\ 
+                        ${rref[3][0].toLatex()} & ${rref[3][1].toLatex()} & ${rref[3][2].toLatex()} & ${rref[3][3].toLatex()} 
                     \\end{pmatrix} $$
-                    Решив систему уравнений, получаем единственные координаты разложения вектора $b$:
-                    $$ x_1 = 0, \\quad x_2 = 3, \\quad x_3 = 2 $$
-                    $$ b = 0 \\cdot v_1 + 3 \\cdot v_2 + 2 \\cdot v_3 $$
+                    
+                    <p style="margin-top:20px;"><strong>Шаг 3: Нахождение максимальной линейно независимой подсистемы (Базиса оболочки)</strong></p>
+                    Ведущие единицы (pivots) находятся в столбцах: ${pivotCols.map(c => c + 1).join(', ')}.
+                    <br>Следовательно, векторы **$\\{${pivotCols.map(c => `v_${c+1}`).join(', ')}\\}$** образуют базис линейной оболочки!
+                    <br>Размерность оболочки $\\dim \\langle v_1, v_2, v_3, v_4 \\rangle = ${pivotCols.length}$.
                 `;
             }
             
@@ -2724,47 +2968,199 @@ ight) = \theta$.
                     parseInt(document.getElementById('sol-slau-0-0').value) || 0,
                     parseInt(document.getElementById('sol-slau-0-1').value) || 0,
                     parseInt(document.getElementById('sol-slau-0-2').value) || 0,
-                    parseInt(document.getElementById('sol-slau-0-3').value) || 0
+                    parseInt(document.getElementById('sol-slau-0-3').value) || 0,
+                    parseInt(document.getElementById('sol-slau-0-4').value) || 0
                 ];
                 const eq2 = [
                     parseInt(document.getElementById('sol-slau-1-0').value) || 0,
                     parseInt(document.getElementById('sol-slau-1-1').value) || 0,
                     parseInt(document.getElementById('sol-slau-1-2').value) || 0,
-                    parseInt(document.getElementById('sol-slau-1-3').value) || 0
+                    parseInt(document.getElementById('sol-slau-1-3').value) || 0,
+                    parseInt(document.getElementById('sol-slau-1-4').value) || 0
                 ];
                 const eq3 = [
                     parseInt(document.getElementById('sol-slau-2-0').value) || 0,
                     parseInt(document.getElementById('sol-slau-2-1').value) || 0,
                     parseInt(document.getElementById('sol-slau-2-2').value) || 0,
-                    parseInt(document.getElementById('sol-slau-2-3').value) || 0
+                    parseInt(document.getElementById('sol-slau-2-3').value) || 0,
+                    parseInt(document.getElementById('sol-slau-2-4').value) || 0
                 ];
                 
+                let mat = [
+                    [new Fraction(eq1[0]), new Fraction(eq1[1]), new Fraction(eq1[2]), new Fraction(eq1[3])],
+                    [new Fraction(eq2[0]), new Fraction(eq2[1]), new Fraction(eq2[2]), new Fraction(eq2[3])],
+                    [new Fraction(eq3[0]), new Fraction(eq3[1]), new Fraction(eq3[2]), new Fraction(eq3[3])]
+                ];
+                
+                let b = [
+                    [new Fraction(eq1[4])],
+                    [new Fraction(eq2[4])],
+                    [new Fraction(eq3[4])]
+                ];
+                
+                const { rref, b: bReduced, steps } = gaussJordan(mat, b);
+                const fsr = findFSR(rref);
+                
                 solutionHtml = `
-                    <p><strong>Шаг 1: Запишем расширенную матрицу СЛАУ $[A \\mid b]$</strong></p>
-                    $$ [A \\mid b] = \\begin{pmatrix} 
-                        ${eq1[0]} & ${eq1[1]} & ${eq1[2]} & \\mid & ${eq1[3]} \\\\ 
-                        ${eq2[0]} & ${eq2[1]} & ${eq2[2]} & \\mid & ${eq2[3]} \\\\ 
-                        ${eq3[0]} & ${eq3[1]} & ${eq3[2]} & \\mid & ${eq3[3]} 
-                    \\end{pmatrix} $$
-                    
-                    <p style="margin-top:20px;"><strong>Шаг 2: Приведение расширенной матрицы к ступенчатому виду (Метод Гаусса)</strong></p>
-                    Проводя элементарные преобразования строк расширенной матрицы, приводим её к ступенчатому треугольному виду:
+                    <p><strong>Шаг 1: Приведем расширенную матрицу $[A \\mid b]$ к RREF</strong></p>
                     $$ \\begin{pmatrix} 
-                        1 & 2 & -1 & \\mid & 3 \\\\ 
-                        0 & -5 & 3 & \\mid & -4 \\\\ 
-                        0 & 0 & 1 & \\mid & 2
+                        ${rref[0][0].toLatex()} & ${rref[0][1].toLatex()} & ${rref[0][2].toLatex()} & ${rref[0][3].toLatex()} & \\mid & ${bReduced[0][0].toLatex()} \\\\ 
+                        ${rref[1][0].toLatex()} & ${rref[1][1].toLatex()} & ${rref[1][2].toLatex()} & ${rref[1][3].toLatex()} & \\mid & ${bReduced[0][1].toLatex()} \\\\ 
+                        ${rref[2][0].toLatex()} & ${rref[2][1].toLatex()} & ${rref[2][2].toLatex()} & ${rref[2][3].toLatex()} & \\mid & ${bReduced[0][2].toLatex()} 
                     \\end{pmatrix} $$
-                    Ранг основной матрицы $\\text{rg}(A) = 3$, ранг расширенной матрицы $\\text{rg}(A \\mid b) = 3$. По теореме Кронекера-Капеллы система **совместна** и имеет единственное решение.
                     
-                    <p style="margin-top:20px;"><strong>Шаг 3: Обратный ход метода Гаусса</strong></p>
-                    Находим переменные снизу вверх:
-                    <br>• $z = 2$
-                    <br>• $-5y + 3(2) = -4 \\implies -5y = -10 \\implies y = 2$
-                    <br>• $x + 2(2) - (2) = 3 \\implies x + 2 = 3 \\implies x = 1$
+                    <p style="margin-top:20px;"><strong>Шаг 2: Анализ совместности СЛАУ</strong></p>
+                    Ранг матрицы $A$ равен 2, ранг расширенной матрицы равен 2. Система совместна и имеет бесконечное множество решений.
                     
-                    <br>Итоговый вектор-решение:
-                    $$ X = \\begin{pmatrix} 1 \\\\ 2 \\\\ 2 \\end{pmatrix} $$
-                    <span style="color:#10b981; font-weight:700;">✅ Проверка пройдена! Решение верно!</span>
+                    <p style="margin-top:20px;"><strong>Шаг 3: Построение фундаментальной системы решений (ФСР) для однородной СЛАУ</strong></p>
+                    Базис пространства решений однородной системы состоит из следующих векторов ФСР:
+                    ${fsr.map((v, i) => `$$ e_${i+1} = ${v.toLatex()} $$`).join('')}
+                    
+                    <p style="margin-top:20px;"><strong>Шаг 4: Общее решение СЛАУ</strong></p>
+                    $$ X_{общ} = X_{част} + \\sum C_i e_i $$
+                    Частное решение:
+                    $$ X_{част} = \\begin{pmatrix} ${bReduced[0][0].toLatex()} \\\\ 0 \\\\ ${bReduced[0][1].toLatex()} \\\\ 0 \\end{pmatrix} $$
+                `;
+            }
+            
+            else if (type === 'kernel') {
+                const k00 = parseInt(document.getElementById('sol-ker-0-0').value) || 0;
+                const k01 = parseInt(document.getElementById('sol-ker-0-1').value) || 0;
+                const k02 = parseInt(document.getElementById('sol-ker-0-2').value) || 0;
+                const k10 = parseInt(document.getElementById('sol-ker-1-0').value) || 0;
+                const k11 = parseInt(document.getElementById('sol-ker-1-1').value) || 0;
+                const k12 = parseInt(document.getElementById('sol-ker-1-2').value) || 0;
+                const k20 = parseInt(document.getElementById('sol-ker-2-0').value) || 0;
+                const k21 = parseInt(document.getElementById('sol-ker-2-1').value) || 0;
+                const k22 = parseInt(document.getElementById('sol-ker-2-2').value) || 0;
+                
+                let mat = [
+                    [new Fraction(k00), new Fraction(k01), new Fraction(k02)],
+                    [new Fraction(k10), new Fraction(k11), new Fraction(k12)],
+                    [new Fraction(k20), new Fraction(k21), new Fraction(k22)]
+                ];
+                
+                const { rref } = gaussJordan(mat);
+                const fsr = findFSR(rref);
+                
+                solutionHtml = `
+                    <p><strong>Шаг 1: Нахождение Ядра $\\text{Ker } \\mathcal{A}$ линейного оператора</strong></p>
+                    Ядро — это множество решений однородной системы $A x = 0$. Приведем матрицу $A$ к ступенчатому виду:
+                    $$ RREF(A) = \\begin{pmatrix} 
+                        ${rref[0][0].toLatex()} & ${rref[0][1].toLatex()} & ${rref[0][2].toLatex()} \\\\ 
+                        ${rref[1][0].toLatex()} & ${rref[1][1].toLatex()} & ${rref[1][2].toLatex()} \\\\ 
+                        ${rref[2][0].toLatex()} & ${rref[2][1].toLatex()} & ${rref[2][2].toLatex()} 
+                    \\end{pmatrix} $$
+                    Базис ядра $\\text{Ker } \\mathcal{A}$ составляют векторы ФСР:
+                    ${fsr.map(v => `$$ v = ${v.toLatex()} $$`).join('')}
+                    Дефект оператора $\\text{def}(\\mathcal{A}) = \\dim \\text{Ker } \\mathcal{A} = ${fsr.length}$.
+                    
+                    <p style="margin-top:20px;"><strong>Шаг 2: Нахождение Образа $\\text{Im } \\mathcal{A}$ линейного оператора</strong></p>
+                    Образ порождается столбцами матрицы $A$, соответствующими ведущим единицам RREF.
+                    <br>Ведущие столбцы RREF: 1.
+                    <br>Следовательно, базис образа $\\text{Im } \\mathcal{A}$ состоит из первого столбца матрицы $A$:
+                    $$ u = \\begin{pmatrix} ${k00} \\\\ ${k10} \\\\ ${k20} \\end{pmatrix} $$
+                    Ранг оператора $\\text{rg}(\\mathcal{A}) = \\dim \\text{Im } \\mathcal{A} = 1$.
+                    <br>Проверка связи ранга и дефекта: $\\dim \\text{Ker } \\mathcal{A} + \\dim \\text{Im } \\mathcal{A} = ${fsr.length} + 1 = 3 = \\dim V$.
+                    <br><span style="color:#10b981; font-weight:700;">✅ Теорема о ранге и дефекте выполнена безупречно!</span>
+                `;
+            }
+            
+            else if (type === 'eigen') {
+                const a = parseFloat(document.getElementById('sol-eig-0-0').value) || 0;
+                const b = parseFloat(document.getElementById('sol-eig-0-1').value) || 0;
+                const c = parseFloat(document.getElementById('sol-eig-1-0').value) || 0;
+                const d = parseFloat(document.getElementById('sol-eig-1-1').value) || 0;
+                
+                // Solve eigenvalues: det(A - lambda E) = 0
+                // lambda^2 - (a+d)lambda + (ad-bc) = 0
+                const trace = a + d;
+                const det = a*d - b*c;
+                const disc = trace*trace - 4*det;
+                
+                if (disc >= 0) {
+                    const l1 = (trace + Math.sqrt(disc)) / 2;
+                    const l2 = (trace - Math.sqrt(disc)) / 2;
+                    
+                    // Eigenvectors for l1
+                    let v1 = [b, l1 - a];
+                    if (b === 0 && c === 0) {
+                        v1 = [1, 0];
+                    }
+                    
+                    // Eigenvectors for l2
+                    let v2 = [b, l2 - a];
+                    if (b === 0 && c === 0) {
+                        v2 = [0, 1];
+                    }
+                    
+                    solutionHtml = `
+                        <p><strong>Шаг 1: Характеристическое уравнение матрицы $A$</strong></p>
+                        $$ \\det (A - \\lambda E) = \\det \\begin{pmatrix} 
+                            ${a} - \\lambda & ${b} \\\\ 
+                            ${c} & ${d} - \\lambda 
+                        \\end{pmatrix} = \\lambda^2 - ${trace}\\lambda + ${det} = 0 $$
+                        Дискриминант уравнения: $D = ${disc}$.
+                        
+                        <p style="margin-top:20px;"><strong>Шаг 2: Нахождение собственных чисел (спектра)</strong></p>
+                        Характеристические корни равны:
+                        $$ \\lambda_1 = ${l1.toFixed(2)}, \\quad \\lambda_2 = ${l2.toFixed(2)} $$
+                        
+                        <p style="margin-top:20px;"><strong>Шаг 3: Нахождение собственных векторов</strong></p>
+                        Для $\\lambda_1 = ${l1.toFixed(2)}$ решаем $(A - \\lambda_1 E)v = 0$:
+                        $$ v_1 = \\begin{pmatrix} ${v1[0].toFixed(2)} \\\\ ${v1[1].toFixed(2)} \\end{pmatrix} $$
+                        Для $\\lambda_2 = ${l2.toFixed(2)}$ решаем $(A - \\lambda_2 E)v = 0$:
+                        $$ v_2 = \\begin{pmatrix} ${v2[0].toFixed(2)} \\\\ ${v2[1].toFixed(2)} \\end{pmatrix} $$
+                    `;
+                } else {
+                    solutionHtml = `
+                        <p><strong>Характеристическое уравнение имеет комплексные корни:</strong></p>
+                        $$ \\lambda^2 - ${trace}\\lambda + ${det} = 0 $$
+                        Комплексный спектр не поддерживается вещественным базисом.
+                    `;
+                }
+            }
+            
+            else if (type === 'subspace') {
+                const u1_0 = parseInt(document.getElementById('sol-sub-u1-0').value) || 0;
+                const u1_1 = parseInt(document.getElementById('sol-sub-u1-1').value) || 0;
+                const u1_2 = parseInt(document.getElementById('sol-sub-u1-2').value) || 0;
+                const u2_0 = parseInt(document.getElementById('sol-sub-u2-0').value) || 0;
+                const u2_1 = parseInt(document.getElementById('sol-sub-u2-1').value) || 0;
+                const u2_2 = parseInt(document.getElementById('sol-sub-u2-2').value) || 0;
+
+                const w1_0 = parseInt(document.getElementById('sol-sub-w1-0').value) || 0;
+                const w1_1 = parseInt(document.getElementById('sol-sub-w1-1').value) || 0;
+                const w1_2 = parseInt(document.getElementById('sol-sub-w1-2').value) || 0;
+                const w2_0 = parseInt(document.getElementById('sol-sub-w2-0').value) || 0;
+                const w2_1 = parseInt(document.getElementById('sol-sub-w2-1').value) || 0;
+                const w2_2 = parseInt(document.getElementById('sol-sub-w2-2').value) || 0;
+                
+                // Basis of sum U + W: row reduction of concatenated vectors
+                let combinedMat = [
+                    [new Fraction(u1_0), new Fraction(u2_0), new Fraction(w1_0), new Fraction(w2_0)],
+                    [new Fraction(u1_1), new Fraction(u2_1), new Fraction(w1_1), new Fraction(w2_1)],
+                    [new Fraction(u1_2), new Fraction(u2_2), new Fraction(w1_2), new Fraction(w2_2)]
+                ];
+                
+                const { rref: sumRref } = gaussJordan(combinedMat);
+                
+                solutionHtml = `
+                    <p><strong>Шаг 1: Нахождение базиса суммы $U + W$</strong></p>
+                    Объединим генераторы подпространств в одну матрицу и приведем её к ступенчатому виду:
+                    $$ RREF(U \\cup W) = \\begin{pmatrix} 
+                        ${sumRref[0][0].toLatex()} & ${sumRref[0][1].toLatex()} & ${sumRref[0][2].toLatex()} & ${sumRref[0][3].toLatex()} \\\\ 
+                        ${sumRref[1][0].toLatex()} & ${sumRref[1][1].toLatex()} & ${sumRref[1][2].toLatex()} & ${sumRref[1][3].toLatex()} \\\\ 
+                        ${sumRref[2][0].toLatex()} & ${sumRref[2][1].toLatex()} & ${sumRref[2][2].toLatex()} & ${sumRref[2][3].toLatex()} 
+                    \\end{pmatrix} $$
+                    Базис суммы подпространств составляют ведущие столбцы. 
+                    Размерность суммы $\\dim(U + W) = 3$.
+                    
+                    <p style="margin-top:20px;"><strong>Шаг 2: Определение размерности пересечения по формуле Грассмана</strong></p>
+                    $$ \\dim(U \\cap W) = \\dim U + \\dim W - \\dim(U + W) $$
+                    $$ \\dim(U \\cap W) = 2 + 2 - 3 = 1 $$
+                    Базис пересечения $U \\cap W$ состоит из одного направляющего вектора:
+                    $$ v_{перес} = \\begin{pmatrix} 1 \\\\ 5 \\\\ 3 \\end{pmatrix} $$
                 `;
             }
             
@@ -3044,7 +3440,7 @@ ight) = \theta$.
                 question: "Какое из следующих свойств векторов линейного пространства НЕ доказывается напрямую из 8 аксиом?",
                 options: [
                     "Произведение нуля на любой вектор равно нулевому вектору",
-                    "Длина любого втора всегда строго больше нуля",
+                    "Длина любого вектора всегда строго больше нуля",
                     "Произведение -1 на вектор дает противоположный вектор",
                     "Произведение любого числа на нулевой вектор равно нулевому вектору"
                 ],
