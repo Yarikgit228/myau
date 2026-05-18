@@ -450,174 +450,6 @@
             font-size: 0.9rem;
         }
 
-        /* Sandbox Grid transform styles */
-        .sandbox-section {
-            background: var(--bg-secondary);
-            border: 1px solid var(--card-border);
-            border-radius: 24px;
-            padding: 40px;
-            margin-bottom: 40px;
-            box-shadow: 0 10px 30px var(--shadow-color);
-        }
-
-        .sandbox-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
-            margin-top: 25px;
-        }
-
-        .matrix-calculator {
-            background: var(--bg-primary);
-            border: 1px solid var(--card-border);
-            border-radius: 20px;
-            padding: 25px;
-        }
-
-        .matrix-size-selector {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .matrix-size-btn {
-            flex: 1;
-            padding: 10px;
-            border: 1px solid var(--card-border);
-            background: var(--bg-secondary);
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: 600;
-            color: var(--text-primary);
-            transition: all 0.3s ease;
-        }
-
-        .matrix-size-btn.active {
-            background: var(--accent-gradient);
-            color: white;
-            border: none;
-        }
-
-        .matrix-inputs-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin: 20px 0;
-        }
-
-        .matrix-bracket {
-            font-size: 5rem;
-            font-weight: 300;
-            color: var(--accent-primary);
-            user-select: none;
-        }
-
-        .matrix-inputs {
-            display: grid;
-            gap: 10px;
-            max-width: 200px;
-        }
-
-        .matrix-inputs.size-2 {
-            grid-template-columns: repeat(2, 1fr);
-        }
-
-        .matrix-inputs.size-3 {
-            grid-template-columns: repeat(3, 1fr);
-        }
-
-        .matrix-input {
-            width: 55px;
-            height: 55px;
-            text-align: center;
-            font-size: 1.1rem;
-            border: 2px solid var(--card-border);
-            border-radius: 12px;
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            font-weight: 600;
-        }
-
-        .matrix-input:focus {
-            border-color: var(--accent-primary);
-            outline: none;
-        }
-
-        .matrix-results {
-            margin-top: 20px;
-            border-top: 1px solid var(--card-border);
-            padding-top: 15px;
-        }
-
-        .result-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            font-size: 0.95rem;
-        }
-
-        .result-value {
-            font-weight: 700;
-            color: var(--accent-primary);
-        }
-
-        .visualizer-container {
-            background: var(--bg-primary);
-            border: 1px solid var(--card-border);
-            border-radius: 20px;
-            padding: 25px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .canvas-canvas {
-            background: var(--bg-secondary);
-            border: 1px solid var(--card-border);
-            border-radius: 16px;
-            max-width: 100%;
-        }
-
-        .visualizer-controls {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-            width: 100%;
-        }
-
-        .visualizer-btn {
-            flex: 1;
-            padding: 12px;
-            background: var(--bg-secondary);
-            border: 1px solid var(--card-border);
-            color: var(--text-primary);
-            border-radius: 12px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .visualizer-btn:hover {
-            border-color: var(--accent-primary);
-            background: var(--def-bg);
-        }
-
-        .gauss-steps-container {
-            grid-column: span 2;
-            background: var(--bg-primary);
-            border: 1px solid var(--card-border);
-            border-radius: 20px;
-            padding: 25px;
-            display: none;
-        }
-
-        .gauss-step {
-            margin-bottom: 15px;
-            padding-bottom: 15px;
-            border-bottom: 1px dashed var(--card-border);
-        }
-
         /* Euclidean Orthogonalizer Styles */
         .euclid-section {
             background: var(--bg-secondary);
@@ -930,8 +762,7 @@
                 <li class="nav-item"><a href="#section-11" class="nav-link"><span class="num">11</span> Ядро, образ и инварианты</a></li>
                 <li class="nav-item"><a href="#section-12" class="nav-link"><span class="num">12</span> Собственные векторы и зн-я</a></li>
                 <li class="nav-item"><a href="#section-13" class="nav-link"><span class="num">13</span> λ-матрицы и Смитова форма</a></li>
-                <li class="nav-item"><a href="#flashcards" class="nav-link"><span class="num">★</span> 3D Карточки терминов</a></li>
-                <li class="nav-item"><a href="#sandbox" class="nav-link"><span class="num">★</span> Матричная Песочница</a></li>
+                <li class="nav-item"><a href="#flashcards" class="nav-link"><span class="num">★</span> 3D Карточки-термины</a></li>
                 <li class="nav-item"><a href="#universal-solver" class="nav-link"><span class="num">★</span> ИИ-Решатель Задач</a></li>
                 <li class="nav-item"><a href="#quiz" class="nav-link"><span class="num">★</span> Алгебраический Квиз</a></li>
             </ul>
@@ -1151,7 +982,7 @@ e \{ 0 \}$. Выберем в $I$ ненулевой многочлен $f(x)$ �
                             <div class="proof-title">Доказательство:</div>
                             1. <em>Необходимость</em>: Пусть $P[x] / (f)$ — поле. Предположим, что $f(x) = g(x)h(x)$ — приводим, причем $0 < \deg g, \deg h < \deg f$.
                             <br>Тогда в фактор-кольце классы $ar{g} = g + (f) 
-e 0$ и $ar{h} = h + (f) 
+e 0$ and $ar{h} = h + (f) 
 e 0$, но их произведение $ar{g}ar{h} = gh + (f) = f + (f) = 0$.
                             <br>В поле не может быть делителей нуля! Противоречие. Значит, $f(x)$ неприводим.
                             <br>2. <em>Достаточность</em>: Пусть $f(x)$ неприводим. Покажем, что для любого ненулевого класса $ar{g} = g + (f)$ существует обратный.
@@ -1353,7 +1184,7 @@ ight) = \sum_{k=1}^{n-1} (\lambda_k + \lambda_n eta_k) a_k $$
                             $$ x_1 = \alpha_1 e_1 + \dots + \alpha_n e_n $$
                             Поскольку $x_1 
 e \theta$, не все $\alpha_i = 0$. Пусть $\alpha_1 
-e 0$. Тогда выразим $e_1$ через $x_1, e_2, \dots, e_n$.
+e 0$. Тогда выражем $e_1$ через $x_1, e_2, \dots, e_n$.
                             <br>Тогда система $x_1, e_2, \dots, e_n$ по-прежнему остается образующей.
                             <br>Повторяя эту процедуру замещения шагами индукции по лемме 2, мы сможем последовательно заменить все базисные векторы $e_i$ на векторы $x_i$, получив образующую систему $x_1, x_2, \dots, x_n$.
                             <br>Тогда следующий вектор $x_{n+1}$ должен выражаться через них как через образующие:
@@ -2000,64 +1831,6 @@ ight) = \theta$.
                 </div>
             </section>
 
-            <!-- Interactive Sandbox Section -->
-            <section class="sandbox-section" id="sandbox">
-                <span class="section-num">Интерактив</span>
-                <h2 class="section-title">⚡ Интерактивная Матричная Песочница</h2>
-                <p style="color: var(--text-secondary); margin-bottom: 25px;">Задайте матрицу преобразования, чтобы увидеть мгновенный расчет её характеристик (ранг, определитель) и плавную динамическую 2D-визуализацию деформации линейного пространства!</p>
-                
-                <div class="sandbox-grid">
-                    <div class="matrix-calculator">
-                        <h3 class="block-header">🔢 Ввод матрицы и расчёты</h3>
-                        <div class="matrix-size-selector">
-                            <button class="matrix-size-btn active" id="size-2-btn" onclick="setMatrixSize(2)">2 × 2</button>
-                            <button class="matrix-size-btn" id="size-3-btn" onclick="setMatrixSize(3)">3 × 3</button>
-                        </div>
-                        
-                        <div class="matrix-inputs-container">
-                            <span class="matrix-bracket">[</span>
-                            <div class="matrix-inputs size-2" id="matrix-inputs-grid">
-                                <input type="number" class="matrix-input" value="2" id="m-0-0" oninput="matrixChanged()">
-                                <input type="number" class="matrix-input" value="1" id="m-0-1" oninput="matrixChanged()">
-                                <input type="number" class="matrix-input" value="1" id="m-1-0" oninput="matrixChanged()">
-                                <input type="number" class="matrix-input" value="2" id="m-1-1" oninput="matrixChanged()">
-                            </div>
-                            <span class="matrix-bracket">]</span>
-                        </div>
-                        
-                        <div class="matrix-results">
-                            <div class="result-item">
-                                <span>Определитель (Determinant):</span>
-                                <span class="result-value" id="res-det">3</span>
-                            </div>
-                            <div class="result-item">
-                                <span>Ранг (Rank):</span>
-                                <span class="result-value" id="res-rank">2</span>
-                            </div>
-                            <button class="visualizer-btn" style="width: 100%; margin-top: 10px; background: var(--accent-primary); color: white;" onclick="showGaussSteps()">Показать шаги метода Гаусса</button>
-                        </div>
-                    </div>
-
-                    <div class="visualizer-container">
-                        <h3 class="block-header">📐 Визуализатор линейных преобразований</h3>
-                        <canvas class="canvas-canvas" id="grid-canvas" width="340" height="340"></canvas>
-                        
-                        <div class="visualizer-controls">
-                            <button class="visualizer-btn" onclick="resetMatrix()">Сбросить</button>
-                            <button class="visualizer-btn" onclick="animateTransform()">Анимировать</button>
-                        </div>
-                    </div>
-                    
-                    <div class="gauss-steps-container" id="gauss-steps">
-                        <h3 class="block-header" style="display:flex; justify-content:space-between; align-items:center;">
-                            ⛓️ Пошаговое приведение методом Гаусса
-                            <button onclick="document.getElementById('gauss-steps').style.display='none'" style="background:none; border:none; color:var(--text-primary); cursor:pointer; font-size:1.2rem;">×</button>
-                        </h3>
-                        <div id="gauss-steps-list"></div>
-                    </div>
-                </div>
-            </section>
-
             <!-- Universal AI Solver Dashboard Section -->
             <section class="euclid-section" id="universal-solver">
                 <span class="section-num">Универсальный ИИ-Ассистент</span>
@@ -2394,7 +2167,6 @@ angle$ в $\mathbb{R}^3$:</p>
         themeToggle.addEventListener('click', () => {
             document.body.classList.toggle('dark-mode');
             localStorage.setItem('dark_mode', document.body.classList.contains('dark-mode'));
-            drawGrid();
         });
 
         // Navigation Highlight and active menu scrolling
@@ -3248,245 +3020,23 @@ angle$ в $\mathbb{R}^3$:</p>
             MathJax.typesetPromise([resultMath]);
         }
 
-        // Matrix Sandbox and Linear Transformations logic
-        let matrixSize = 2;
-        const canvas = document.getElementById('grid-canvas');
-        const ctx = canvas.getContext('2d');
-        let currentScale = 40; // Pixels per math unit
-        let animationFrameId = null;
-
-        function setMatrixSize(size) {
-            matrixSize = size;
-            document.getElementById('size-2-btn').classList.toggle('active', size === 2);
-            document.getElementById('size-3-btn').classList.toggle('active', size === 3);
+        // Universal AI Solver Dashboard Switcher
+        function solverTypeChanged() {
+            const select = document.getElementById('solver-type');
+            const blocks = document.querySelectorAll('.solver-input-block');
             
-            const grid = document.getElementById('matrix-inputs-grid');
-            grid.className = `matrix-inputs size-${size}`;
+            blocks.forEach(b => b.classList.remove('active'));
             
-            let html = '';
-            for (let i = 0; i < size; i++) {
-                for (let j = 0; j < size; j++) {
-                    let val = i === j ? 1 : 0;
-                    if (size === 2) {
-                        if (i === 0 && j === 0) val = 2;
-                        if (i === 0 && j === 1) val = 1;
-                        if (i === 1 && j === 0) val = 1;
-                        if (i === 1 && j === 1) val = 2;
-                    }
-                    html += `<input type="number" class="matrix-input" value="${val}" id="m-${i}-${j}" oninput="matrixChanged()">`;
-                }
-            }
-            grid.innerHTML = html;
-            matrixChanged();
-        }
-
-        function getMatrixValues() {
-            let mat = [];
-            for (let i = 0; i < matrixSize; i++) {
-                let row = [];
-                for (let j = 0; j < matrixSize; j++) {
-                    const input = document.getElementById(`m-${i}-${j}`);
-                    row.push(parseFloat(input.value) || 0);
-                }
-                mat.push(row);
-            }
-            return mat;
-        }
-
-        function resetMatrix() {
-            setMatrixSize(matrixSize);
-        }
-
-        function matrixChanged() {
-            const mat = getMatrixValues();
-            calculateResults(mat);
-            drawGrid();
-        }
-
-        // Calculation of Determinant and Rank in real-time
-        function calculateResults(mat) {
-            let det = 0;
-            let rank = 0;
-            
-            if (matrixSize === 2) {
-                det = mat[0][0]*mat[1][1] - mat[0][1]*mat[1][0];
-                let isZero = mat[0][0] === 0 && mat[0][1] === 0 && mat[1][0] === 0 && mat[1][1] === 0;
-                rank = isZero ? 0 : (det !== 0 ? 2 : 1);
-            } else {
-                // 3x3 Determinant
-                det = mat[0][0]*(mat[1][1]*mat[2][2] - mat[1][2]*mat[2][1]) -
-                      mat[0][1]*(mat[1][0]*mat[2][2] - mat[1][2]*mat[2][0]) +
-                      mat[0][2]*(mat[1][0]*mat[2][1] - mat[1][1]*mat[2][0]);
-                
-                // Simplified rank for 3x3
-                let hasNonZero = false;
-                for (let i = 0; i < 3; i++) {
-                    for (let j = 0; j < 3; j++) {
-                        if (mat[i][j] !== 0) hasNonZero = true;
-                    }
-                }
-                if (!hasNonZero) rank = 0;
-                else if (det !== 0) rank = 3;
-                else {
-                    let minorNonZero = false;
-                    for (let r1 = 0; r1 < 3; r1++) {
-                        for (let r2 = r1+1; r2 < 3; r2++) {
-                            for (let c1 = 0; c1 < 3; c1++) {
-                                for (let c2 = c1+1; c2 < 3; c2++) {
-                                    let m = mat[r1][c1]*mat[r2][c2] - mat[r1][c2]*mat[r2][c1];
-                                    if (m !== 0) minorNonZero = true;
-                                }
-                            }
-                        }
-                    }
-                    rank = minorNonZero ? 2 : 1;
-                }
+            const activeBlock = document.getElementById(`input-block-${select.value}`);
+            if (activeBlock) {
+                activeBlock.classList.add('active');
             }
             
-            document.getElementById('res-det').innerText = Number(det.toFixed(3));
-            document.getElementById('res-rank').innerText = rank;
-        }
-
-        // Draw coordinate grid for visualizer
-        function drawGrid(t = 1.0) {
-            if (matrixSize === 3) {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                ctx.font = '12px Inter';
-                ctx.fillStyle = document.body.classList.contains('dark-mode') ? '#ffffff' : '#000000';
-                ctx.fillText("3D проекция отображается на 2D плоскость", 30, 180);
-                return;
+            if (select.value === 'ortho') {
+                rebuildOrthoInputs();
+            } else if (select.value === 'poly') {
+                renderLivePolynomials();
             }
-            
-            const mat = getMatrixValues();
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            const cx = canvas.width / 2;
-            const cy = canvas.height / 2;
-            
-            ctx.strokeStyle = document.body.classList.contains('dark-mode') ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)';
-            ctx.lineWidth = 1;
-            
-            const gridSize = 8;
-            
-            const a11 = 1 + (mat[0][0] - 1)*t;
-            const a12 = (mat[0][1])*t;
-            const a21 = (mat[1][0])*t;
-            const a22 = 1 + (mat[1][1] - 1)*t;
-            
-            for (let i = -gridSize; i <= gridSize; i++) {
-                ctx.beginPath();
-                let start = transformPoint(i, -gridSize, a11, a12, a21, a22);
-                let end = transformPoint(i, gridSize, a11, a12, a21, a22);
-                ctx.moveTo(cx + start.x * currentScale, cy - start.y * currentScale);
-                ctx.lineTo(cx + end.x * currentScale, cy - end.y * currentScale);
-                ctx.stroke();
-                
-                ctx.beginPath();
-                start = transformPoint(-gridSize, i, a11, a12, a21, a22);
-                end = transformPoint(gridSize, i, a11, a12, a21, a22);
-                ctx.moveTo(cx + start.x * currentScale, cy - start.y * currentScale);
-                ctx.lineTo(cx + end.x * currentScale, cy - end.y * currentScale);
-                ctx.stroke();
-            }
-            
-            ctx.strokeStyle = document.body.classList.contains('dark-mode') ? 'rgba(255,255,255,0.25)' : 'rgba(0,0,0,0.15)';
-            ctx.lineWidth = 2;
-            ctx.beginPath();
-            ctx.moveTo(0, cy); ctx.lineTo(canvas.width, cy);
-            ctx.moveTo(cx, 0); ctx.lineTo(cx, canvas.height);
-            ctx.stroke();
-            
-            // Draw base vectors
-            ctx.strokeStyle = '#ef4444'; // Red
-            ctx.lineWidth = 3;
-            ctx.beginPath();
-            ctx.moveTo(cx, cy);
-            ctx.lineTo(cx + a11 * currentScale, cy - a21 * currentScale);
-            ctx.stroke();
-            
-            ctx.strokeStyle = '#3b82f6'; // Blue
-            ctx.beginPath();
-            ctx.moveTo(cx, cy);
-            ctx.lineTo(cx + a12 * currentScale, cy - a22 * currentScale);
-            ctx.stroke();
-        }
-
-        function transformPoint(x, y, a11, a12, a21, a22) {
-            return {
-                x: a11 * x + a12 * y,
-                y: a21 * x + a22 * y
-            };
-        }
-
-        function animateTransform() {
-            let start = null;
-            const duration = 1200; // ms
-            
-            function step(timestamp) {
-                if (!start) start = timestamp;
-                let progress = (timestamp - start) / duration;
-                if (progress > 1) progress = 1;
-                
-                let ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
-                
-                drawGrid(ease);
-                
-                if (progress < 1) {
-                    animationFrameId = requestAnimationFrame(step);
-                }
-            }
-            if (animationFrameId) cancelAnimationFrame(animationFrameId);
-            animationFrameId = requestAnimationFrame(step);
-        }
-
-        // Show detailed Gauss reduction steps
-        function showGaussSteps() {
-            const container = document.getElementById('gauss-steps');
-            const list = document.getElementById('gauss-steps-list');
-            container.style.display = 'block';
-            list.innerHTML = '';
-            
-            const mat = getMatrixValues();
-            
-            if (matrixSize === 2) {
-                list.innerHTML += `
-                    <div class="gauss-step">
-                        <strong>Шаг 1: Исходная система</strong><br>
-                        $$\begin{pmatrix} ${mat[0][0]} & ${mat[0][1]} \\ ${mat[1][0]} & ${mat[1][1]} \\end{pmatrix}$$
-                    </div>
-                `;
-                
-                if (mat[0][0] === 0 && mat[1][0] !== 0) {
-                    list.innerHTML += `
-                        <div class="gauss-step">
-                            <strong>Шаг 2: Поменять строки местами (ведущий элемент равен 0)</strong><br>
-                            $$\begin{pmatrix} ${mat[1][0]} & ${mat[1][1]} \\ 0 & ${mat[0][1]} \\end{pmatrix}$$
-                        </div>
-                    `;
-                } else if (mat[0][0] !== 0) {
-                    let coef = mat[1][0] / mat[0][0];
-                    let next_1 = mat[1][1] - coef * mat[0][1];
-                    list.innerHTML += `
-                        <div class="gauss-step">
-                            <strong>Шаг 2: Из 2-й строки вычитаем 1-ю строку, умноженную на ${coef.toFixed(2)}</strong><br>
-                            $$\begin{pmatrix} ${mat[0][0]} & ${mat[0][1]} \\ 0 & ${next_1.toFixed(2)} \\end{pmatrix}$$
-                        </div>
-                    `;
-                }
-            } else {
-                list.innerHTML += `
-                    <div class="gauss-step">
-                        <strong>Шаг 1: Исходная матрица $3 \\times 3$</strong><br>
-                        $$\begin{pmatrix} ${mat[0][0]} & ${mat[0][1]} & ${mat[0][2]} \\ ${mat[1][0]} & ${mat[1][1]} & ${mat[1][2]} \\ ${mat[2][0]} & ${mat[2][1]} & ${mat[2][2]} \\end{pmatrix}$$
-                    </div>
-                    <div class="gauss-step">
-                        <strong>Шаг 2: Обнуление элементов под ведущим элементом первого столбца</strong><br>
-                        Матрица преобразуется путем вычитания строк с соответствующими коэффициентами.
-                    </div>
-                `;
-            }
-            
-            MathJax.typesetPromise([list]);
         }
 
         // Quiz Database and dynamic engine
@@ -3731,7 +3281,6 @@ angle$ в $\mathbb{R}^3$:</p>
         }
 
         // Initialize script
-        setMatrixSize(2);
         rebuildOrthoInputs();
         loadQuestion();
     </script>
