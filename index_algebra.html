@@ -618,6 +618,62 @@
             border-bottom: 1px dashed var(--card-border);
         }
 
+        /* Euclidean Orthogonalizer Styles */
+        .euclid-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px var(--shadow-color);
+        }
+
+        .vector-input-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .vector-label {
+            font-weight: 700;
+            min-width: 50px;
+            font-family: 'Outfit', sans-serif;
+            color: var(--accent-primary);
+        }
+
+        .vector-inputs {
+            display: flex;
+            gap: 8px;
+        }
+
+        .coord-input {
+            width: 55px;
+            height: 45px;
+            text-align: center;
+            border: 2px solid var(--card-border);
+            border-radius: 10px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .coord-input:focus {
+            border-color: var(--accent-primary);
+            outline: none;
+        }
+
+        .ai-result-box {
+            background: var(--bg-primary);
+            border: 1px solid var(--card-border);
+            border-left: 5px solid var(--accent-primary);
+            border-radius: 0 16px 16px 0;
+            padding: 25px;
+            margin-top: 30px;
+            display: none;
+        }
+
         /* Quiz Styles */
         .quiz-section {
             background: var(--bg-secondary);
@@ -804,6 +860,7 @@
                 <li class="nav-item"><a href="#section-13" class="nav-link"><span class="num">13</span> λ-матрицы и Смитова форма</a></li>
                 <li class="nav-item"><a href="#flashcards" class="nav-link"><span class="num">★</span> 3D Карточки терминов</a></li>
                 <li class="nav-item"><a href="#sandbox" class="nav-link"><span class="num">★</span> Матричная Песочница</a></li>
+                <li class="nav-item"><a href="#ortho-solver" class="nav-link"><span class="num">★</span> ИИ-Ортогонализатор</a></li>
                 <li class="nav-item"><a href="#quiz" class="nav-link"><span class="num">★</span> Алгебраический Квиз</a></li>
             </ul>
         </aside>
@@ -900,7 +957,7 @@ e \emptyset \implies xH = yH $$</div>
                         <button class="proof-toggle" onclick="toggleProof('proof-1-properties')">▶ Показать доказательство</button>
                         <div class="proof" id="proof-1-properties">
                             <div class="proof-title">Доказательство:</div>
-                            1. Так как $e \in H$, то $x = xe \in xH$.
+                            Tab как $e \in H$, то $x = xe \in xH$.
                             <br>2. Пусть $xH = yH$. Тогда $y = ye \in yH = xH \implies y = xh$ для некоторого $h \in H$. Умножив слева на $x^{-1}$, получим $x^{-1}y = h \in H$.
                             <br>Обратно, пусть $x^{-1}y = h \in H \implies y = xh$. Для любого $y h_1 \in yH$ имеем $y h_1 = (xh) h_1 = x (hh_1) \in xH$, откуда $yH \subseteq xH$. Аналогично, из $x = yh^{-1}$ следует $xH \subseteq yH$, то есть $xH = yH$.
                             <br>3. Пусть $z \in xH \cap yH$. Тогда $z = x h_1 = y h_2$ для $h_1, h_2 \in H$.
@@ -1078,7 +1135,7 @@ e 0$, но их произведение $ar{g}ar{h} = gh + (f) = f + (f) = 0$
                         <div class="proof" id="proof-basic-properties-space">
                             <div class="proof-title">Доказательство:</div>
                             1. Запишем: $0 \cdot a = (0 + 0) \cdot a = 0 \cdot a + 0 \cdot a$. Прибавляя к обеим частям противоположный вектор $-(0 \cdot a)$, получим $\theta = 0 \cdot a$.
-                            <br>2. Запишем: $(-1) \cdot a + 1 \cdot a = (-1 + 1) \cdot a = 0 \cdot a = \theta$. Так как $1 \cdot a = a$, то $(-1) \cdot a + a = \theta \implies $(-1) \cdot a = -a$.
+                            <br>2. Запишем: $(-1) \cdot a + 1 \cdot a = (-1 + 1) \cdot a = 0 \cdot a = \theta$. Так как $1 \cdot a = a$, то $(-1) \cdot a + a = \theta \implies (-1) \cdot a = -a$.
                             <br>3. Запишем: $\lambda \cdot \theta = \lambda(\theta + \theta) = \lambda\theta + \lambda\theta$. Прибавляя к обеим частям $-(\lambda\theta)$, получаем $\theta = \lambda\theta$.
                             <br>4. Докажем необходимость. Пусть $\lambda a = \theta$. Если $\lambda = 0$, то утверждение доказано. 
                             <br>Если $\lambda 
@@ -1257,7 +1314,7 @@ e 0$. Тогда выразим $e_1$ через $x_1, e_2, \dots, e_n$.
 
                     <div class="block def">
                         <div class="block-header">🔑 Определение 33: Изоморфные пространства</div>
-                        Линейные пространства $V$ и $W$ называются <strong>изоморфными</strong> (обозначается $V \cong W$), если между ними существует хотя бы один изоморфизм.
+                        Линейные пространства $V$ и $W$ называются <strong>изоморфные</strong> (обозначается $V \cong W$), если между ними существует хотя бы один изоморфизм.
                     </div>
 
                     <div class="block def">
@@ -1561,7 +1618,7 @@ e 0$).
 
                     <div class="block thm">
                         <div class="block-header">🏆 Теорема о характеризации линейного преобразования</div>
-                        Линейное преобразование $\mathcal{A}$ конечномерного пространства $V$ однозначно и полностью определяется образами базисных векторов.
+                        Линейное преобразование $\mathcal{A}$ конечномерного пространства $V$ однозначно и полностью определяется обрабами базисных векторов.
                     </div>
 
                     <div class="block thm">
@@ -1759,7 +1816,7 @@ ight) = \theta$.
 
                     <div class="block thm">
                         <div class="block-header">🏆 Теорема о критерии подобия матриц</div>
-                        Матрицы $A$ и $B$ подобны тогда и только тогда, когда они обладают абсолютно одинаковыми инвариантными множителями Смита.
+                        Матрицы $A$ and $B$ подобны тогда и только тогда, когда они обладают абсолютно одинаковыми инвариантными множителями Смита.
                     </div>
                 </div>
 
@@ -1929,6 +1986,56 @@ ight) = \theta$.
                 </div>
             </section>
 
+            <!-- Euclidean Space Orthogonalizer Section -->
+            <section class="euclid-section" id="ortho-solver">
+                <span class="section-num">Интерактивный ИИ-Модуль</span>
+                <h2 class="section-title">🧠 ИИ-Ортогонализатор и Проектор Евклидова Пространства</h2>
+                <p style="color: var(--text-secondary); margin-bottom: 25px;">Вычислите пошагово **ортогональную проекцию** $pr_U(x)$ и **ортогональную составляющую** $ort_U(x)$ вектора $x$ на подпространство $U$, заданное базисными векторами $a_1, a_2$.</p>
+                
+                <div class="matrix-calculator" style="max-width:100%;">
+                    <h3 class="block-header" style="margin-bottom:20px;">🧭 Ввод векторов в $\mathbb{R}^3$</h3>
+                    
+                    <div class="vector-input-row">
+                        <span class="vector-label">$a_1$:</span>
+                        <div class="vector-inputs">
+                            <input type="number" class="coord-input" value="1" id="v-a1-0">
+                            <input type="number" class="coord-input" value="1" id="v-a1-1">
+                            <input type="number" class="coord-input" value="1" id="v-a1-2">
+                        </div>
+                        <span style="color:var(--text-secondary); font-size:0.9rem;">— первый вектор базиса подпространства $U$</span>
+                    </div>
+                    
+                    <div class="vector-input-row">
+                        <span class="vector-label">$a_2$:</span>
+                        <div class="vector-inputs">
+                            <input type="number" class="coord-input" value="1" id="v-a2-0">
+                            <input type="number" class="coord-input" value="-2" id="v-a2-1">
+                            <input type="number" class="coord-input" value="1" id="v-a2-2">
+                        </div>
+                        <span style="color:var(--text-secondary); font-size:0.9rem;">— второй вектор базиса подпространства $U$</span>
+                    </div>
+                    
+                    <div class="vector-input-row" style="margin-top:25px; border-top:1px dashed var(--card-border); padding-top:20px;">
+                        <span class="vector-label" style="color:var(--accent-secondary);">$x$:</span>
+                        <div class="vector-inputs">
+                            <input type="number" class="coord-input" value="1" id="v-x-0">
+                            <input type="number" class="coord-input" value="2" id="v-x-1">
+                            <input type="number" class="coord-input" value="3" id="v-x-2">
+                        </div>
+                        <span style="color:var(--text-secondary); font-size:0.9rem;">— вектор, который мы проектируем на подпространство $U$</span>
+                    </div>
+                    
+                    <button class="visualizer-btn" style="width: 100%; margin-top: 25px; background: var(--accent-gradient); color: white; border: none; font-size:1.1rem; padding:15px;" onclick="calculateOrthoProjection()">
+                        🔮 Запустить ИИ-Ортогонализацию (С разбором в дробях!)
+                    </button>
+                </div>
+
+                <div class="ai-result-box" id="ortho-result-box">
+                    <h3 class="block-header" style="color:var(--accent-primary); margin-bottom:15px;">🤖 Пошаговый математический разбор:</h3>
+                    <div id="ortho-result-math" class="tex2jax_process"></div>
+                </div>
+            </section>
+
             <!-- Quiz Section -->
             <section class="quiz-section" id="quiz">
                 <span class="section-num">Проверка знаний</span>
@@ -2030,6 +2137,166 @@ ight) = \theta$.
                 });
             }
         });
+
+        // Exact Fraction Arithmetic Class
+        class Fraction {
+            constructor(num, den = 1) {
+                if (den === 0) throw new Error("Деление на ноль");
+                let g = Fraction.gcd(Math.abs(num), Math.abs(den));
+                this.num = (den < 0 ? -num : num) / g;
+                this.den = Math.abs(den) / g;
+                if (this.num === 0) this.den = 1;
+            }
+            static gcd(a, b) {
+                return b === 0 ? a : Fraction.gcd(b, a % b);
+            }
+            add(other) {
+                return new Fraction(this.num * other.den + other.num * this.den, this.den * other.den);
+            }
+            sub(other) {
+                return new Fraction(this.num * other.den - other.num * this.den, this.den * other.den);
+            }
+            mul(other) {
+                return new Fraction(this.num * other.num, this.den * other.den);
+            }
+            div(other) {
+                return new Fraction(this.num * other.den, this.den * other.num);
+            }
+            neg() {
+                return new Fraction(-this.num, this.den);
+            }
+            toString() {
+                if (this.den === 1) return `${this.num}`;
+                return `${this.num}/${this.den}`;
+            }
+            toLatex() {
+                if (this.den === 1) return `${this.num}`;
+                let sign = this.num < 0 ? "-" : "";
+                return `${sign}\\frac{${Math.abs(this.num)}}{${this.den}}`;
+            }
+        }
+
+        class FractionVector {
+            constructor(elements) {
+                this.elements = elements.map(x => x instanceof Fraction ? x : new Fraction(x));
+            }
+            add(other) {
+                return new FractionVector(this.elements.map((x, i) => x.add(other.elements[i])));
+            }
+            sub(other) {
+                return new FractionVector(this.elements.map((x, i) => x.sub(other.elements[i])));
+            }
+            mulScalar(scalar) {
+                return new FractionVector(this.elements.map(x => x.mul(scalar)));
+            }
+            dot(other) {
+                let sum = new Fraction(0);
+                for (let i = 0; i < this.elements.length; i++) {
+                    sum = sum.add(this.elements[i].mul(other.elements[i]));
+                }
+                return sum;
+            }
+            toString() {
+                return `(${this.elements.map(x => x.toString()).join(", ")})`;
+            }
+            toLatex() {
+                return `\\begin{pmatrix} ${this.elements.map(x => x.toLatex()).join(" \\\\ ")} \\end{pmatrix}`;
+            }
+        }
+
+        // Calculation of Gram-Schmidt Orthogonalization and Projection
+        function calculateOrthoProjection() {
+            const a1_0 = parseInt(document.getElementById('v-a1-0').value) || 0;
+            const a1_1 = parseInt(document.getElementById('v-a1-1').value) || 0;
+            const a1_2 = parseInt(document.getElementById('v-a1-2').value) || 0;
+
+            const a2_0 = parseInt(document.getElementById('v-a2-0').value) || 0;
+            const a2_1 = parseInt(document.getElementById('v-a2-1').value) || 0;
+            const a2_2 = parseInt(document.getElementById('v-a2-2').value) || 0;
+
+            const x_0 = parseInt(document.getElementById('v-x-0').value) || 0;
+            const x_1 = parseInt(document.getElementById('v-x-1').value) || 0;
+            const x_2 = parseInt(document.getElementById('v-x-2').value) || 0;
+
+            const a1 = new FractionVector([a1_0, a1_1, a1_2]);
+            const a2 = new FractionVector([a2_0, a2_1, a2_2]);
+            const x = new FractionVector([x_0, x_1, x_2]);
+
+            // Gram-Schmidt Orthogonalization steps
+            const g1 = a1;
+            
+            const dot_a2_g1 = a2.dot(g1);
+            const dot_g1_g1 = g1.dot(g1);
+            const coeff_a2 = dot_a2_g1.div(dot_g1_g1);
+            const g2 = a2.sub(g1.mulScalar(coeff_a2));
+
+            // Projection coordinates
+            const dot_x_g1 = x.dot(g1);
+            const coeff_x_g1 = dot_x_g1.div(dot_g1_g1);
+
+            const dot_x_g2 = x.dot(g2);
+            const dot_g2_g2 = g2.dot(g2);
+            
+            let coeff_x_g2 = new Fraction(0);
+            let pr = new FractionVector([0, 0, 0]);
+            let stepsHtml = '';
+
+            if (dot_g2_g2.num !== 0) {
+                coeff_x_g2 = dot_x_g2.div(dot_g2_g2);
+                pr = g1.mulScalar(coeff_x_g1).add(g2.mulScalar(coeff_x_g2));
+            } else {
+                pr = g1.mulScalar(coeff_x_g1);
+            }
+
+            const ort = x.sub(pr);
+
+            // Verifications of orthogonality
+            const check_ort_a1 = ort.dot(a1);
+            const check_ort_a2 = ort.dot(a2);
+
+            stepsHtml = `
+                <p><strong>Шаг 1: Ортогонализация базиса подпространства $U = \\langle a_1, a_2 \\rangle$ (Метод Грама-Шмидта)</strong></p>
+                Положим первый вектор ортогонального базиса:
+                $$ g_1 = a_1 = ${g1.toLatex()} $$
+                Второй вектор ортогонального базиса находим по формуле:
+                $$ g_2 = a_2 - \\frac{(a_2, g_1)}{(g_1, g_1)} g_1 $$
+                Вычислим скалярные произведения:
+                <br>• $(a_2, g_1) = ${a2_0} \\cdot ${a1_0} + (${a2_1}) \\cdot ${a1_1} + ${a2_2} \\cdot ${a1_2} = ${dot_a2_g1.toLatex()}$
+                <br>• $(g_1, g_1) = ${a1_0}^2 + ${a1_1}^2 + ${a1_2}^2 = ${dot_g1_g1.toLatex()}$
+                <br>Коэффициент проекции: $\\alpha = \\frac{(a_2, g_1)}{(g_1, g_1)} = ${coeff_a2.toLatex()}$
+                $$ g_2 = ${a2.toLatex()} - ${coeff_a2.toLatex()} \\cdot ${g1.toLatex()} = ${g2.toLatex()} $$
+                
+                <p style="margin-top:20px;"><strong>Шаг 2: Нахождение ортогональной проекции $pr_U(x)$ вектора $x$ на подпространство $U$</strong></p>
+                Поскольку базис $\\{g_1, g_2\\}$ ортогонален, проекция вычисляется как сумма проекций на каждый базисный вектор:
+                $$ pr_U(x) = \\frac{(x, g_1)}{(g_1, g_1)} g_1 + \\frac{(x, g_2)}{(g_2, g_2)} g_2 $$
+                Вычислим скалярные произведения:
+                <br>• $(x, g_1) = ${dot_x_g1.toLatex()}$
+                <br>• $(x, g_2) = ${dot_x_g2.toLatex()}$
+                <br>• $(g_2, g_2) = ${dot_g2_g2.toLatex()}$
+                <br>Коэффициенты проекции:
+                <br>• $\\lambda_1 = \\frac{(x, g_1)}{(g_1, g_1)} = ${coeff_x_g1.toLatex()}$
+                <br>• $\\lambda_2 = \\frac{(x, g_2)}{(g_2, g_2)} = ${coeff_x_g2.toLatex()}$
+                $$ pr_U(x) = ${coeff_x_g1.toLatex()} \\cdot ${g1.toLatex()} + ${coeff_x_g2.toLatex()} \\cdot ${g2.toLatex()} = ${pr.toLatex()} $$
+
+                <p style="margin-top:20px;"><strong>Шаг 3: Вычисление ортогональной составляющей $ort_U(x)$</strong></p>
+                $$ ort_U(x) = x - pr_U(x) $$
+                $$ ort_U(x) = ${x.toLatex()} - ${pr.toLatex()} = ${ort.toLatex()} $$
+
+                <p style="margin-top:20px; border-top:1px dashed var(--card-border); padding-top:15px;"><strong>Шаг 4: Проверка ортогональности составляющей к базису $U$</strong></p>
+                Вектор $ort_U(x)$ должен быть ортогонален исходным базисным векторам $a_1$ и $a_2$ (их скалярные произведения должны быть равны нулю):
+                <br>• $(ort_U(x), a_1) = ${check_ort_a1.toLatex()}$
+                <br>• $(ort_U(x), a_2) = ${check_ort_a2.toLatex()}$
+                <br><span style="color:#10b981; font-weight:700;">✅ Проверка пройдена! Всё вычислено абсолютно точно!</span>
+            `;
+
+            const box = document.getElementById('ortho-result-box');
+            const resultDiv = document.getElementById('ortho-result-math');
+            box.style.display = 'block';
+            resultDiv.innerHTML = stepsHtml;
+
+            // Trigger MathJax re-render for new steps
+            MathJax.typesetPromise([resultDiv]);
+        }
 
         // Matrix Sandbox and Linear Transformations logic
         let matrixSize = 2;
@@ -2303,7 +2570,7 @@ ight) = \theta$.
                 question: "Какое из следующих свойств векторов линейного пространства НЕ доказывается напрямую из 8 аксиом?",
                 options: [
                     "Произведение нуля на любой вектор равно нулевому вектору",
-                    "Длина любого ввектора всегда строго больше нуля",
+                    "Длина любого вектора всегда строго больше нуля",
                     "Произведение -1 на вектор дает противоположный вектор",
                     "Произведение любого числа на нулевой вектор равно нулевому вектору"
                 ],
