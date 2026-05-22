@@ -1,0 +1,1961 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Теория Графов - Конспект</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$', '$$'], ['\\[', '\\]']]
+        }
+      };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #fdfdfd;
+            --text-color: #2c3e50;
+            --container-bg: #ffffff;
+            --primary-color: #3498db;
+            --secondary-color: #e74c3c;
+            --card-bg: rgba(255, 255, 255, 0.7);
+            --card-border: rgba(0, 0, 0, 0.1);
+            --shadow-color: rgba(0, 0, 0, 0.05);
+            --accent-pink: #d63384;
+            --accent-yellow: #f39c12;
+            --math-bg: #f8f9fa;
+            
+            /* Old blocks */
+            --def-bg: #e3f2fd;
+            --def-border: #1e88e5;
+            --thm-bg: #f3e5f5;
+            --thm-border: #8e24aa;
+            --lem-bg: #e8f5e9;
+            --lem-border: #43a047;
+            --cor-bg: #fff3e0;
+            --cor-border: #fb8c00;
+            --rem-bg: #f5f5f5;
+            --rem-border: #9e9e9e;
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body.dark-mode {
+            --bg-color: #0f172a;
+            --text-color: #e2e8f0;
+            --container-bg: #1e293b;
+            --primary-color: #38bdf8;
+            --secondary-color: #f43f5e;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --shadow-color: rgba(0, 0, 0, 0.3);
+            --accent-pink: #f472b6;
+            --accent-yellow: #fbbf24;
+            --math-bg: #1e293b;
+            
+            /* Old blocks DARK MODE FIX */
+            --def-bg: #0f2942;
+            --def-border: #38bdf8;
+            --thm-bg: #301738;
+            --thm-border: #f472b6;
+            --lem-bg: #0f361d;
+            --lem-border: #4ade80;
+            --cor-bg: #42250d;
+            --cor-border: #fbbf24;
+            --rem-bg: #1e293b;
+            --rem-border: #94a3b8;
+        }
+
+        body {
+            font-family: var(--font-family);
+            line-height: 1.7;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: transparent;
+            box-shadow: none;
+        }
+        
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+        
+        h1 { font-size: 2.8rem; background: linear-gradient(90deg, var(--primary-color), var(--accent-pink)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-align: center; margin-bottom: 3rem; }
+        h2 { font-size: 2rem; margin-top: 3.5rem; margin-bottom: 1.5rem; border-bottom: 2px solid var(--card-border); padding-bottom: 0.5rem; }
+        h3 { font-size: 1.3rem; margin-top: 2rem; color: var(--primary-color); }
+        
+        /* Note cards styling */
+        .note-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2.5rem 0;
+            box-shadow: 0 10px 30px var(--shadow-color);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+        }
+        .note-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px var(--shadow-color);
+        }
+        
+        .note-title {
+            font-size: 1.3rem;
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .note-divider {
+            border: 0;
+            height: 1px;
+            background: var(--card-border);
+            margin: 1.5rem 0;
+        }
+        
+        .highlight-pink { color: var(--accent-pink); font-weight: 600; }
+        .highlight-yellow { color: var(--accent-yellow); font-weight: 600; }
+        
+        .math-box {
+            background: var(--math-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--primary-color);
+            box-shadow: inset 0 2px 4px var(--shadow-color);
+        }
+        
+        /* Old original blocks fixed */
+        .block {
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 12px 12px 0;
+            border-left: 5px solid;
+            box-shadow: 0 4px 15px var(--shadow-color);
+            page-break-inside: avoid;
+            background-color: var(--card-bg);
+            border-top: 1px solid var(--card-border);
+            border-right: 1px solid var(--card-border);
+            border-bottom: 1px solid var(--card-border);
+        }
+        .block.def { background-color: var(--def-bg); border-left-color: var(--def-border); }
+        .block.def::before { content: "Определение: "; font-weight: 700; color: var(--def-border); display: block; margin-bottom: 0.5rem; text-transform: uppercase; font-size: 0.85em; letter-spacing: 0.5px; }
+        
+        .block.thm { background-color: var(--thm-bg); border-left-color: var(--thm-border); }
+        .block.thm::before { content: "Теорема: "; font-weight: 700; color: var(--thm-border); display: block; margin-bottom: 0.5rem; text-transform: uppercase; font-size: 0.85em; letter-spacing: 0.5px; }
+        
+        .block.lem { background-color: var(--lem-bg); border-left-color: var(--lem-border); }
+        .block.lem::before { content: "Лемма: "; font-weight: 700; color: var(--lem-border); display: block; margin-bottom: 0.5rem; text-transform: uppercase; font-size: 0.85em; letter-spacing: 0.5px; }
+        
+        .block.cor { background-color: var(--cor-bg); border-left-color: var(--cor-border); }
+        .block.cor::before { content: "Следствие: "; font-weight: 700; color: var(--cor-border); display: block; margin-bottom: 0.5rem; text-transform: uppercase; font-size: 0.85em; letter-spacing: 0.5px; }
+
+        .block.rem { background-color: var(--rem-bg); border-left-color: var(--rem-border); }
+        .block.rem::before { content: "Замечание / Свойство: "; font-weight: 700; color: var(--rem-border); display: block; margin-bottom: 0.5rem; text-transform: uppercase; font-size: 0.85em; letter-spacing: 0.5px; }
+
+        .example { background-color: var(--card-bg); border: 1px solid var(--card-border); border-left: 5px solid var(--primary-color); padding: 1rem 1.5rem; margin: 1.5rem 0; border-radius: 4px; }
+        .example::before { content: "Пример: "; font-weight: 700; color: var(--primary-color); display: block; margin-bottom: 0.5rem; text-transform: uppercase; font-size: 0.85em; letter-spacing: 0.5px; }
+
+        .proof { font-style: italic; margin-left: 1rem; border-left: 2px solid var(--card-border); padding-left: 1rem; margin-bottom: 1.5rem; color: var(--text-color); opacity: 0.8; }
+        .proof::before { content: "Доказательство: "; font-weight: 700; font-style: normal; display: block; margin-bottom: 0.5rem; color: var(--text-color); opacity: 1; }
+        
+        ul, ol { margin-left: 1.5rem; margin-bottom: 1rem; }
+        li { margin-bottom: 0.4rem; }
+        p { margin-bottom: 1rem; }
+        
+        .toc { background-color: var(--math-bg); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; border: 1px solid var(--card-border); }
+        .toc h3 { margin-top: 0; color: var(--primary-color); }
+        .toc ul { list-style-type: none; padding-left: 0; }
+        .toc li { margin-bottom: 0.5rem; }
+        .toc a { text-decoration: none; color: var(--primary-color); font-weight: 500; }
+        .toc a:hover { text-decoration: underline; }
+    
+        /* Quiz & Interactive Styles */
+        #quiz-section {
+            margin-top: 50px;
+            padding: 30px;
+            background: var(--math-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px var(--shadow-color);
+            border: 1px solid var(--card-border);
+        }
+        #quiz-section h2 {
+            text-align: center;
+            color: var(--text-color);
+            margin-bottom: 20px;
+        }
+        #quiz-dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .topic-card {
+            background: var(--card-bg);
+            border: 2px solid var(--card-border);
+            border-radius: 12px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px var(--shadow-color);
+        }
+        .topic-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(52, 152, 219, 0.2);
+        }
+        .topic-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 10px;
+        }
+        .topic-progress-bar {
+            height: 8px;
+            background: var(--card-border);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .topic-progress-fill {
+            height: 100%;
+            background: var(--primary-color);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        #quiz-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        .quiz-content {
+            background: var(--bg-color);
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        .close-btn {
+            position: absolute;
+            top: 15px; right: 15px;
+            background: none; border: none;
+            font-size: 1.5rem; cursor: pointer; color: var(--text-color);
+        }
+        
+        /* Glassmorphism for the interactive canvas area */
+        #sandbox {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px var(--shadow-color);
+        }
+        canvas {
+            border-radius: 8px;
+            border: 1px solid var(--card-border);
+            background-color: var(--container-bg);
+        }
+    
+        /* Theme toggle button styling */
+        .features-panel {
+            position: fixed;
+            top: 25px;
+            right: 25px;
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+        }
+        .feature-btn {
+            background: var(--card-bg);
+            border: 2px solid var(--card-border);
+            border-radius: 50%;
+            width: 56px;
+            height: 56px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px var(--shadow-color);
+            font-size: 1.6rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        .feature-btn:hover {
+            transform: scale(1.15) rotate(15deg);
+            border-color: var(--primary-color);
+            box-shadow: 0 6px 20px var(--shadow-color);
+        }
+        .feature-btn:active {
+            transform: scale(0.95);
+        }
+        
+        /* Dark mode overrides for feature-btn */
+        body.dark-mode .feature-btn {
+            background: var(--card-bg);
+            border-color: var(--card-border);
+            color: #fff;
+        }
+        
+        /* Interactive stats dark mode fixes */
+        body.dark-mode .canvas-area {
+            background: #1e293b;
+            border-color: var(--card-border);
+        }
+        body.dark-mode .flashcard-front {
+            background: #0f2942;
+            color: #38bdf8;
+        }
+        body.dark-mode .flashcard-back {
+            background: #0f361d;
+            color: #4ade80;
+        }
+        body.dark-mode .quiz-option:hover {
+            background: #1e293b;
+        }
+        body.dark-mode .quiz-option.selected {
+            background: #1e3a8a !important;
+            border-color: #3b82f6 !important;
+        }
+    
+        /* Flashcards Styling */
+        .flashcard-container {
+            perspective: 1000px;
+            width: 100%;
+            height: 220px;
+            margin: 20px 0;
+            cursor: pointer;
+        }
+        .flashcard {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        .flashcard.is-flipped {
+            transform: rotateY(180deg);
+        }
+        .flashcard-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px var(--shadow-color);
+            font-size: 1.25rem;
+            font-weight: 500;
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            transition: border-color 0.3s ease;
+        }
+        .flashcard-front {
+            background: var(--def-bg);
+            color: var(--def-border);
+            font-weight: bold;
+        }
+        .flashcard-back {
+            background: var(--lem-bg);
+            color: var(--lem-border);
+            transform: rotateY(180deg);
+        }
+        
+        /* Dark mode overrides for flashcards */
+        body.dark-mode .flashcard-front {
+            background: #0f2942;
+            color: #38bdf8;
+            border-color: rgba(56, 189, 248, 0.2);
+        }
+        body.dark-mode .flashcard-back {
+            background: #0f361d;
+            color: #4ade80;
+            border-color: rgba(74, 222, 128, 0.2);
+        }
+    </style>
+
+
+\n</head>
+<body>
+
+    <div class="features-panel">
+        <a class="feature-btn" href="index.html" title="На главную" style="text-decoration: none;">🏠</a>
+                <a class="feature-btn" href="index_algebra.html" title="Высшая Алгебра" style="text-decoration: none;">🌌</a>
+        <button class="feature-btn" id="theme-toggle" title="Темная тема">🌙</button>
+        <button class="feature-btn" id="print-mode" title="Шпаргалка (Печать)" onclick="window.print()">🖨️</button>
+    </div>
+
+    <h1>Теория Графов</h1>
+    <p style="text-align: center; color: #666; font-size: 1.1em; margin-top: -1.5rem; margin-bottom: 2rem;">Итоговый конспект для подготовки к сессии</p>
+
+    <div class="toc">
+        <h3>Оглавление</h3>
+        <ul>
+            <li><a href="#intro">1. Основные понятия графов</a></li>
+            <li><a href="#degrees">2. Степени вершин и Лемма о рукопожатиях</a></li>
+            <li><a href="#matrices">3. Матричные способы задания графов</a></li>
+            <li><a href="#types">4. Специальные типы графов</a></li>
+            <li><a href="#isomorphism">5. Изоморфизм графов</a></li>
+            <li><a href="#connectivity">6. Связность графов, компоненты и мосты</a></li>
+            <li><a href="#operations">7. Операции над графами</a></li>
+            <li><a href="#euler_hamilton">8. Эйлеровы и Гамильтоновы графы</a></li>
+            <li><a href="#trees">9. Деревья, леса и остовные деревья</a></li>
+            <li><a href="#encoding">10. Кодирование деревьев</a></li>
+            <li><a href="#planar">11. Плоские и планарные графы</a></li>
+            <li><a href="#distances">12. Расстояния в графах</a></li>
+        <li><a href="#coloring">13. Раскрашивание графов</a></li>
+        </ul>
+    </div>
+
+    <h2 id="intro">1. Основные понятия графов</h2>
+    
+    <div class="block def">
+        <strong>Граф</strong> $G$ — это пара множеств $G = (V, E)$, где $V$ — непустое конечное множество вершин (узлов), а $E$ — множество ребер (связей между вершинами).
+    </div>
+
+    <div class="block def">
+        <strong>Простой граф</strong> — граф, в котором нет петель (ребер, соединяющих вершину саму с собой) и кратных ребер (нескольких ребер между одной и той же парой вершин).
+    </div>
+
+    <div class="block def">
+        <strong>Псевдограф</strong> — граф, допускающий наличие как петель, так и кратных ребер. <strong>Мультиграф</strong> допускает кратные ребра, но не петли.
+    </div>
+
+    
+    <div class="block thm note-card">
+        <h3 class="note-title">📝 Заметки: Теория графов</h3>
+        <p><strong>Определение:</strong> Графом $G$ будем называть пару $G = \langle V, E 
+angle$, где:</p>
+        <ul>
+            <li>$V = \{v_1, v_2, \dots, v_n\}$ — множество вершин;</li>
+            <li>$E = \{e_1, e_2, \dots, e_m\}$ — множество ребер.</li>
+        </ul>
+        <p>Изображать графы удобно на плоскости:</p>
+        <ul>
+            <li><strong>вершинами</strong> становятся помеченные точки плоскости;</li>
+            <li><strong>ребрами</strong> — связь этих точек (попарная).</li>
+        </ul>
+        
+        <p><strong>Определение:</strong> Граф $G$ будем называть <strong class="highlight-pink">неориентированным</strong>, если все его ребра не имеют направления.</p>
+        <p><strong>Определение:</strong> Граф $G$ будем называть <strong class="highlight-pink">ориентированным</strong>, если все его ребра имеют направление.</p>
+        <ul>
+            <li>Ребра ориентированного графа называются <strong>дугами</strong>.</li>
+        </ul>
+        
+        <p><strong>Определение:</strong> Ребром $e_k$ неориентированного графа $G$ будем называть неупорядоченную пару вершин $\{v_i, v_j\} = e_k$.<br>
+        Дугой $e_k$ ориентированного графа $G$ называют упорядоченную пару $(v_i, v_j) = e_k$.</p>
+    </div>
+    <div class="block def">
+        <strong>Граф $G$ (лекционное определение)</strong> — упорядоченная пара $G = \langle V, E \rangle$, где $V = \{v_1, v_2, \dots, v_n\}$ — непустое множество вершин, $E = \{e_1, e_2, \dots, e_m\}$ — множество ребер.
+    </div>
+    <div class="block def">
+        <strong>Неориентированный граф</strong> — граф $G$, все ребра которого не имеют заданного направления.
+    </div>
+    <div class="block def">
+        <strong>Ориентированный граф (орграф)</strong> — граф $G$, все ребра которого имеют заданное направление (являются упорядоченными парами вершин).
+    </div>
+    <div class="block def">
+        <strong>Ребро</strong> неориентированного графа — неупорядоченная пара вершин $\{v_i, v_j\} = e_k$.
+    </div>
+    <div class="block def">
+        <strong>Дуга</strong> ориентированного графа — упорядоченная пара вершин $(v_i, v_j) = e_k$.
+    </div>
+
+    
+    </div>
+
+    <div class="block def">
+        Вершины $u$ и $v$ называются <strong>смежными</strong>, если они соединены ребром $e = (u, v)$. В этом случае вершина $u$ и ребро $e$ называются <strong>инцидентными</strong>.
+    </div>
+
+    <div class="block def">
+        <strong>Маршрутом</strong> в графе $G$ называется последовательность вершин $v_1, v_2, \dots, v_s$, в которой любые две соседние вершины смежные.
+        <ul>
+            <li><strong>Реберный маршрут</strong> — последовательность ребер, в которой любые два соседних ребра инцидентны одной вершине.</li>
+            <li>Маршрут называется <strong>циклическим</strong>, если его начало совпадает с концом ($v_1 = v_s$).</li>
+            <li>Циклический маршрут называется <strong>циклом</strong>, если все его вершины (кроме первой и последней) различны.</li>
+            <li>Маршрут называется <strong>цепью</strong>, если ни одна из вершин не повторяется.</li>
+        </ul>
+    </div>
+
+    <h2 id="degrees">2. Степени вершин и Лемма о рукопожатиях</h2>
+
+    <div class="block def">
+        <strong>Степень вершины</strong> $v$, обозначаемая $\deg(v)$, — это количество ребер, инцидентных этой вершине. Петля дает вклад равный 2 в степень вершины.
+    </div>
+    
+    <ul>
+        <li>Вершина степени 0 называется <strong>изолированной</strong>.</li>
+        <li>Вершина степени 1 называется <strong>висячей</strong>.</li>
+    </ul>
+
+    <div class="block lem">
+        <strong>Лемма о рукопожатиях:</strong> В любом графе $G = (V, E)$ сумма степеней всех его вершин равна удвоенному количеству ребер:
+        $$ \sum_{v \in V} \deg(v) = 2|E| $$
+    </div>
+
+    <div class="proof">
+        Каждое ребро $e = (u, v)$ имеет ровно два конца. При подсчете суммы степеней вершин, каждое ребро вносит вклад ровно 1 в $\deg(u)$ и ровно 1 в $\deg(v)$. Таким образом, каждое ребро посчитано ровно дважды, отсюда сумма степеней равна $2|E|$.
+    </div>
+
+    <div class="block cor">
+        В любом графе количество вершин нечетной степени всегда чётно.
+    </div>
+
+    
+    <div class="block thm note-card">
+        <h3 class="note-title">📝 Заметки: Петли, кратность и Лемма о рукопожатиях</h3>
+        <p><strong>Определение:</strong> <strong>Петлей</strong> неориентированного графа $G$ называется ребро $e_k = \{v_i, v_i\}$.</p>
+        <p>Ребра $e_k$ и $e_s$ называются <strong class="highlight-pink">кратными</strong> в графе $G$, если $e_k = \{v_i, v_j\} = e_s$.</p>
+        
+        <p><strong>Определение:</strong> Вершина $v_i$ и ребро $e_k$ называются <strong class="highlight-pink">инцидентными</strong>, если вершина входит в описание ребра $e_k = \{v_i, v_j\}$.</p>
+        <ul>
+            <li>Вершины $v_i$ и $v_j$ называются <strong class="highlight-pink">смежными</strong>, если $\exists e_k \in E : e_k = \{v_i, v_j\}$.</li>
+        </ul>
+        
+        <p><strong>Определение:</strong> Граф называется <strong class="highlight-pink">простым</strong>, если он не содержит петель и кратных ребер. Иначе — мультиграф.</p>
+    <div class="block def">
+        <strong>Петля</strong> — ребро неориентированного графа $G$, соединяющее вершину саму с собой: $e_k = \{v_i, v_i\}$.
+    </div>
+    <div class="block def">
+        <strong>Инцидентность</strong> — вершина $v_i$ и ребро $e_k$ называются инцидентными, если вершина является одним из концов этого ребра: $v_i \in e_k$.
+    </div>
+    <div class="block def">
+        <strong>Смежность вершин</strong> — вершины $v_i$ и $v_j$ называются смежными, если они соединены общим ребром: $\{v_i, v_j\} \in E$.
+    </div>
+    <div class="block def">
+        <strong>Простой граф</strong> — граф, не содержащий петель и кратных ребер.
+    </div>
+    <div class="block def">
+        <strong>Кратные ребра</strong> — ребра $e_k$ и $e_s$ называются кратными (параллельными), если они соединяют одну и ту же пару вершин: $e_k = \{v_i, v_j\} = e_s$.
+    </div>
+
+        
+        <hr class="note-divider">
+        
+        <h4 class="highlight-yellow">Лемма (о рукопожатиях)</h4>
+        <p>Пусть $G = \langle V, E 
+angle$ — неориентированный граф.<br>
+        $d(v_i)$ — степень вершины $v_i$, равная числу инцидентных с $v_i$ ребер.<br>
+        Тогда:</p>
+        <div class="math-box">$$ \sum_{i=1}^n d(v_i) = 2|E| $$</div>
+        
+        <p><strong>Доказательство:</strong><br>
+        Любое ребро $e_k$ соединяет две вершины: $e_k = \{v_i, v_j\}$, следовательно добавление ребра $e_k$ увеличивает $\sum_{i=1}^n d(v_i)$ на 2. Другого способа увеличить степень вершины нет.</p>
+
+        <hr class="note-divider">
+        <h4 class="highlight-yellow">Следствие из Леммы о рукопожатиях</h4>
+        <p>Число вершин нечетной степени в графе $G$ — всегда четно.</p>
+        <p><strong>Доказательство:</strong> Из леммы о рукопожатиях $\sum_{i=1}^n d(v_i) \mathbin{dots} 2$ всегда. Если $\exists$ вершина нечетной степени, то обязательно найдется вторая вершина нечетной степени для сохранения четности суммы.</p>
+
+        <hr class="note-divider">
+        <h4 class="highlight-yellow">Теорема (о числе ребер в полном графе)</h4>
+        <p>Пусть $K_n$ — полный граф на $n$ вершинах, тогда:</p>
+        <div class="math-box">$$ |E(K_n)| = \frac{1}{2} n(n-1) $$</div>
+        <p><strong>Доказательство:</strong></p>
+        <ol>
+            <li>Из ЛОР: $|E| = \frac{1}{2} \sum_{i=1}^n d(v_i)$. Так как $d(v_i) = n-1, \forall v_i \in K_n$ и $|V| = n \Rightarrow \sum d(v_i) = n(n-1)$.</li>
+            <li>Альтернативно: $\forall e_k$ — сочетание 2 вершин $\Rightarrow |E|$ — число 2-сочетаний без повторений из $V \Rightarrow C_n^2 = \frac{n!}{2 \cdot (n-2)!} = \frac{1}{2} n(n-1)$.</li>
+        </ol>
+    </div>
+    
+    </div>
+
+    <h2 id="matrices">3. Матричные способы задания графов</h2>
+
+    <div class="block def">
+        <strong>Матрица смежности</strong> графа $G$ с $n$ вершинами — это квадратная матрица $A$ размера $n \times n$, в которой элемент $a_{ij}$ равен числу ребер, соединяющих вершину $v_i$ с вершиной $v_j$.
+    </div>
+    
+    <div class="block rem">
+        Для простого неориентированного графа матрица смежности симметрична относительно главной диагонали ($a_{ij} = a_{ji}$), а на главной диагонали стоят нули ($a_{ii} = 0$).
+    </div>
+
+    <div class="block def">
+        <strong>Матрица инцидентности</strong> графа $G$ без петель с $n$ вершинами и $m$ ребрами — это матрица $B$ размера $n \times m$, где:
+        <ul>
+            <li>$b_{ij} = 1$, если вершина $v_i$ инцидентна ребру $e_j$;</li>
+            <li>$b_{ij} = 0$ в противном случае.</li>
+        </ul>
+    </div>
+
+    
+    <div class="block thm note-card">
+        <h3 class="note-title">📝 Заметки: Матрицы смежности и инцидентности</h3>
+        <h4 class="highlight-pink">Матрица смежности $A(G)$</h4>
+        <p>Квадратная матрица $n \times n$, в которой:</p>
+        <div class="math-box">
+            $$ a_{ij} = \begin{cases} 1, & \text{если } \{v_i, v_j\} = e_k \in E \\ 0, & \text{если } \{v_i, v_j\} \notin E \end{cases} $$
+        </div>
+        
+        <p><strong>Свойства матрицы смежности:</strong></p>
+        <ol>
+            <li>Симметрична относительно главной диагонали.</li>
+            <li>Если $G$ простой, то главная диагональ состоит из 0.</li>
+            <li>Если $G$ содержит кратные ребра, то число соответствует кратности.</li>
+            <li>Сумма единиц в строке/столбце равна степени соответствующей вершины.</li>
+        </ol>
+        
+        <hr class="note-divider">
+        
+        <h4 class="highlight-pink">Матрица инцидентности $B(G)$</h4>
+        <p>Матрица размера $n \times m$, где $n$ — вершины, $m$ — ребра:</p>
+        <div class="math-box">
+            $$ b_{ij} = \begin{cases} 1, & \text{если } \exists e_j = \{v_i, v_k\} \in E \\ 0, & \text{если } \nexists e_j = \{v_i, v_k\} \in E \end{cases} $$
+        </div>
+        
+        <p><strong>Свойства матрицы инцидентности:</strong></p>
+        <ol>
+            <li>В общем случае не квадратная.</li>
+            <li>Не симметричная.</li>
+            <li>Сумма единиц в строке $i$ равна степени вершины $v_i$.</li>
+        </ol>
+    </div>
+    
+    </div>
+
+    <h2 id="types">4. Специальные типы графов</h2>
+
+    <div class="block def">
+        <strong>Пустой граф</strong> (нуль-граф) $O_n$ — граф из $n$ вершин, не содержащий ни одного ребра ($|E| = 0$).
+    </div>
+
+    <div class="block def">
+        <strong>Полный граф</strong> $K_n$ — простой граф, в котором каждая пара различных вершин соединена ровно одним ребром.
+    </div>
+    
+    <div class="block thm">
+        <strong>Теорема (О числе ребер в полном графе):</strong> Количество ребер в полном графе $K_n$ равно $|E| = \frac{n(n-1)}{2}$.
+    </div>
+    <div class="proof">
+        По лемме о рукопожатиях $2|E| = \sum d(v_i)$. В полном графе степень каждой из $n$ вершин равна $n-1$. Следовательно, $2|E| = n(n-1)$, откуда $|E| = \frac{n(n-1)}{2}$. Альтернативно: любое ребро — это сочетание 2 вершин из $n$, то есть $C_n^2 = \frac{n(n-1)}{2}$.
+    </div>
+
+    <div class="block def">
+        <strong>Двудольный граф</strong> — граф, множество вершин которого можно разбить на два непересекающихся множества $V_1$ и $V_2$ так, что каждое ребро соединяет вершину из $V_1$ с вершиной из $V_2$.
+    </div>
+
+    <div class="block def">
+        <strong>Полный двудольный граф</strong> $K_{n,m}$ — двудольный граф, в котором каждая вершина из $V_1$ (размера $n$) соединена с каждой вершиной из $V_2$ (размера $m$). Количество ребер в нем равно $n \cdot m$.
+    </div>
+    
+    <div class="block def">
+        <strong>Граф-цикл</strong> $C_n$ ($n \ge 3$) — граф, состоящий из единственного цикла длины $n$.
+    </div>
+
+    
+    <div class="block thm note-card">
+        <h3 class="note-title">📝 Заметки: Полные и двудольные графы</h3>
+        <p>Изображения полных графов $K_n$ и двудольных $K_{n_1, n_2}$ размерностью до 6:</p>
+        <ul>
+            <li>$|V| = 1$: $K_1$ (одна точка)</li>
+            <li>$|V| = 2$: $K_2$, $K_{1,1}$ (две соединенные точки)</li>
+            <li>$|V| = 3$: $K_3$ (треугольник), $K_{2,1}$ (звезда)</li>
+            <li>$|V| = 4$: $K_4$ (тетраэдр/полный), $K_{2,2}$, $K_{3,1}$ (звезда)</li>
+            <li>$|V| = 5$: $K_5$ (пентаграмма), $K_{3,2}$, $K_{4,1}$ (звезда)</li>
+            <li>$|V| = 6$: $K_6$, $K_{3,3}$, $K_{4,2}$, $K_{5,1}$</li>
+        </ul>
+        
+        <hr class="note-divider">
+        <h4 class="highlight-yellow">Теорема (Екатерины)</h4>
+        <p>Если $K_{n_1, n_2}$ — полный двудольный граф, тогда количество его ребер равно:</p>
+        <div class="math-box">$$ |E| = n_1 \times n_2 $$</div>
+    </div>
+    
+    </div>
+
+    <h2 id="isomorphism">5. Изоморфизм графов</h2>
+
+    <div class="block def">
+        Два графа $G_1 = (V_1, E_1)$ и $G_2 = (V_2, E_2)$ называются <strong>изоморфными</strong> ($G_1 \cong G_2$), если существует биекция $f: V_1 \to V_2$ такая, что вершины $u$ и $v$ смежны в $G_1$ тогда и только тогда, когда вершины $f(u)$ и $f(v)$ смежны в $G_2$.
+    </div>
+
+    <div class="block rem">
+        <strong>Графовые инварианты:</strong> характеристики графа, которые сохраняются при изоморфизме. Если инварианты двух графов различаются, то они не изоморфны. К основным инвариантам относятся:
+        <ol>
+            <li>Количество вершин $|V|$ и количество ребер $|E|$.</li>
+            <li>Сумма степеней вершин $\sum d(v_i)$.</li>
+            <li>Упорядоченный вектор степеней вершин.</li>
+            <li>Число циклов заданной длины.</li>
+            <li>Число мостов и число компонент связности.</li>
+        </ol>
+    </div>
+
+    <div class="block def">
+        <strong>Подграфом</strong> $G'$ графа $G = (V, E)$ называется граф $G' = (V', E')$, такой что $V' \subseteq V$, а $E' \subseteq E$ и все ребра из $E'$ соединяют вершины из $V'$.
+    </div>
+
+    
+    <div class="block thm note-card">
+        <h3 class="note-title">📝 Заметки: Практика по изоморфизму</h3>
+        <h4 class="highlight-pink">Задание: Проверка на изоморфизм</h4>
+        <p>Даны три графа с 6 вершинами: $G_1$, $K_{3,3}$, $K_6$. Необходимо попарно проверить их на изоморфизм.</p>
+        <ul>
+            <li>Количество вершин: $|V(G_1)| = 6 = |V(K_{3,3})| = |V(K_6)|$.</li>
+            <li>Количество ребер: $|E(G_1)| = 9$, $|E(K_{3,3})| = 9$.</li>
+            <li>Степени вершин $G_1$: $(3, 3, 3, 3, 3, 3) \Rightarrow$ последовательность степеней $d(G_1) = d(K_{3,3})$.</li>
+        </ul>
+        <p><strong>Вывод:</strong> Граф $K_6$ имеет другое количество ребер и степеней, следовательно $K_6 \ncong G_1$ и $K_6 \ncong K_{3,3}$. Графы $G_1$ и $K_{3,3}$ изоморфны.</p>
+        
+        <hr class="note-divider">
+        <h4 class="highlight-pink">Задание: Пересечение графов</h4>
+        <p>Найти $(K_n \cap C_n)$, $(K_{n_1, n_2} \cap K_n)$ и $(C_n \cap K_{n_1, n_2})$ и диагонали.</p>
+        <p>Для $K_3, C_3$ с вершинами $v_1, v_2, v_3$:<br>
+        $e_1 = \{v_2, v_3\}$, $e_2 = \{v_1, v_3\}$, $e_3 = \{v_1, v_2\}$.<br>
+        $d(v_1) = 2, d(v_2) = 2, d(v_3) = 2$.</p>
+        <p>Граф $G = \langle V, E \rangle$ <strong>полный</strong>, если $\forall v_i, v_j (i \ne j) \exists e_k = \{v_i, v_j\} \in E$.<br>
+        Граф <strong>циклический</strong>, если $\forall v_i : d(v_i) = 2$.</p>
+    </div>
+    \n\n    <h2 id="connectivity">6. Связность графов, компоненты и мосты</h2>
+
+    <div class="block def">
+        Граф называется <strong>связным</strong>, если для любых двух его вершин существует путь, соединяющий их.
+    </div>
+
+    <div class="block def">
+        <strong>Компонента связности</strong> — это максимальный по включению связный подграф графа. Граф $G$ называется <strong>$k$-связным</strong>, если он имеет в точности $k$ компонент связности.
+    </div>
+
+    <div class="block def">
+        Ребро называется <strong>мостом</strong>, если его удаление увеличивает количество компонент связности графа.
+    </div>
+
+    
+    </div>
+
+    <h2 id="operations">7. Операции над графами</h2>
+    
+    Пусть заданы простые графы $G_1 = (V_1, E_1)$ и $G_2 = (V_2, E_2)$.
+    <ul>
+        <li><strong>Объединение:</strong> $G_1 \cup G_2 = (V_1 \cup V_2, E_1 \cup E_2)$.</li>
+        <li><strong>Пересечение:</strong> $G_1 \cap G_2 = (V_1 \cap V_2, E_1 \cap E_2)$.</li>
+        <li><strong>Разность:</strong> $G_1 \setminus G_2 = (V_1 \setminus V_2, E')$, где $E'$ содержит ребра из $E_1$, соединяющие вершины из $V_1 \setminus V_2$.</li>
+        <li><strong>Дополнение:</strong> $\overline{G_1} = (V_1, U \setminus E_1)$, где $U$ — множество всех возможных ребер на $V_1$.</li>
+        <li><strong>Соединение (Произведение):</strong> $G_1 * G_2 = (V_1 \cup V_2, E_1 \cup E_2 \cup E')$, где $E'$ — все ребра, соединяющие каждую вершину из $V_1$ с каждой из $V_2$ (определено, если $V_1 \cap V_2 = \emptyset$).</li>
+    </ul>
+
+    
+    <h2 id="euler_hamilton">8. Эйлеровы и Гамильтоновы графы</h2>
+    <div class="block def">
+        <strong>Определение:</strong> Маршрут (цепь), содержащий все ребра графа, называется <strong>эйлеровым путем</strong>. Если маршрут замкнутый (цикл), он называется <strong>эйлеровым циклом</strong>. Граф называется <strong>эйлеровым</strong>, если в нем существует эйлеров цикл, и <strong>полуэйлеровым</strong>, если существует эйлеров путь.
+    </div>
+    <div class="block lem">
+        <strong>Лемма (О циклах в графе):</strong> Если степень каждой вершины в графе $G$ не менее 2, то $G$ содержит цикл.
+    </div>
+    <div class="proof">
+        Выбираем произвольную вершину $v_0$. Строим маршрут, переходя в смежную вершину, но не возвращаясь в предыдущую. Так как степень каждой вершины $\ge 2$, такой шаг всегда возможен. В силу конечности графа маршрут рано или поздно придет в уже посещенную вершину. Часть маршрута между двумя посещениями одной вершины образует цикл.
+    </div>
+    <div class="block thm">
+        <strong>Теорема (Критерий Эйлеровости):</strong> Связный граф $G$ является эйлеровым $\iff$ степени всех вершин графа $G$ четные.
+    </div>
+    <div class="block thm">
+        <strong>Следствие (Критерий полуэйлеровости):</strong> Связный граф $G$ является полуэйлеровым $\iff$ в графе не более двух вершин имеют нечетную степень (в точности две, если это путь, а не цикл).
+    </div>
+    <div class="block def">
+        <strong>Определение:</strong> Граф $G$ называется <strong>гамильтоновым</strong>, если в нем существует цикл, проходящий через каждую вершину ровно один раз. Граф называется <strong>полугамильтоновым</strong>, если существует цепь, проходящая через все вершины графа.
+    </div>
+    <div class="block thm">
+        <strong>Теорема Дирака (Достаточное условие гамильтоновости):</strong> Если $G$ — связный граф на $n \ge 3$ вершинах, и для любой $v \in V(G)$ выполняется $d(v) \ge n/2$, то граф $G$ является гамильтоновым.
+    </div>
+    <div class="block rem">
+        <strong>Замечание:</strong> Эйлеров маршрут $\to$ эйлеров цикл. Полуэйлеров маршрут $\to$ эйлеров путь. Гамильтонов маршрут $\to$ гамильтонов цикл. Полугамильтонов маршрут $\to$ гамильтонов путь.
+    </div>
+    
+    <h2 id="trees">9. Деревья, леса и остовные деревья</h2>
+
+    <div class="block def">
+        <strong>Дерево</strong> — связный граф без циклов. <strong>Лес</strong> — граф без циклов (его компонентами связности являются деревья).
+    </div>
+
+    <div class="block cor">
+        Если $G$ — лес с $n$ вершинами и $k$ компонентами связности, то количество ребер $|E| = n - k$. 
+        В частности, для дерева ($k=1$): $|E| = n - 1$.
+    </div>
+
+    <div class="block def">
+        <strong>Цикломатическое число</strong> графа $G$ определяется как $\gamma(G) = m - n + k$, где $m$ - число ребер, $n$ - число вершин, $k$ - число компонент связности. 
+    </div>
+
+    <div class="block rem">
+        Цикломатическое число характеризует степень отклонения графа от леса:
+        <ul>
+            <li>$\gamma(G) = 0 \iff G$ — лес.</li>
+            <li>$\gamma(G) > 0 \iff G$ имеет циклы (содержит хотя бы один цикл).</li>
+            <li>$\gamma(G)$ — это минимальное число ребер, которые нужно удалить, чтобы граф стал лесом (или деревом, если он связен).</li>
+        </ul>
+    </div>
+
+    <div class="block def">
+        <strong>Остовное дерево</strong> связного графа $G$ — это его связный подграф, содержащий все вершины графа и являющийся деревом.
+    </div>
+
+    
+    <div class="block lem">
+        <strong>Лемма:</strong> Любое дерево является двудольным графом.
+    </div>
+    <div class="block thm">
+        <strong>Теорема (Об эквивалентности для деревьев):</strong> Следующие утверждения эквивалентны:
+        <ol>
+            <li>Граф $G$ — дерево;</li>
+            <li>Любые 2 вершины в $G$ соединены единственной цепью;</li>
+            <li>$G$ не содержит циклов, но добавление к нему любого ребра (между существующими вершинами) всегда порождает ровно 1 цикл;</li>
+            <li>$G$ — связный, и число ребер в нем ровно на 1 меньше числа вершин ($m = n - 1$).</li>
+        </ol>
+    </div>
+    <div class="block def">
+        <strong>Определение:</strong> Цикломатическое число графа $\gamma(G) = m - n + k$, где $m$ — число ребер, $n$ — вершин, $k$ — число компонент связности. Характеризует степень отклонения графа от леса (число ребер, которые необходимо удалить, чтобы получить лес).
+    </div>
+    
+    <h2 id="encoding">10. Кодирование деревьев</h2>
+
+    <div class="block def">
+        Для кодирования дерева необходим его полный обход. Выбирается "корень", остальные вершины распределяются по слоям. Обход выбирается левосторонним (всегда выбирается левая непройденная ветка).
+    </div>
+
+    <div class="block rem">
+        <strong>Алгоритм:</strong>
+        <ol>
+            <li>При прохождении ребра вниз (впервые) в код записывается <code>0</code>.</li>
+            <li>При прохождении ребра вверх (повторно) в код записывается <code>1</code>.</li>
+            <li>Движение вверх означает отсутствие непройденных вниз веток.</li>
+            <li>Обход завершается в корне, когда все ветки пройдены.</li>
+        </ol>
+        Длина вектора кода дерева всегда равна $2m = 2n - 2$.
+    </div>
+
+    
+    <div class="block thm note-card">
+        <h3 class="note-title">📝 Заметки: Кодирование деревьев</h3>
+        <h4 class="highlight-pink">Алгоритм кодирования:</h4>
+        <ol>
+            <li>Для кодирования дерева необходим его полный обход, причем началом обхода фиксируется корень.</li>
+            <li>При прохождении ребра <strong>вверх</strong> (первичном) в код заносится <code>0</code>, при <strong>вниз</strong> (повторном) — <code>1</code>.</li>
+            <li>Обход дерева выбирается левосторонним (всегда выбирается левая непройденная ветка).</li>
+            <li>Движение вниз означает отсутствие непройденных вверх веток.</li>
+            <li>Обход завершается в корне, если непройденные ветки закончились.</li>
+        </ol>
+        
+        <p><strong>Пример кода дерева:</strong> <code>000101110011</code></p>
+        
+        <hr class="note-divider">
+        <h4 class="highlight-yellow">Замечание:</h4>
+        <ol>
+            <li>Длина вектора кода дерева всегда равна $2m = 2n - 2$.</li>
+            <li>Чтобы логический вектор являлся кодом некоторого дерева, необходимо, чтобы число <code>0</code> и <code>1</code> было одинаково, и любой начальный отрезок вектора содержал единиц не более, чем нулей (правильная скобочная последовательность).</li>
+        </ol>
+    </div>
+    
+    </div>
+
+    <h2 id="planar">11. Плоские и планарные графы</h2>
+
+    <div class="block def">
+        Граф называется <strong>плоским</strong>, если он изображен на плоскости без пересечений ребер. Граф называется <strong>планарным</strong>, если он изоморфен плоскому графу (т.е. его <em>можно</em> нарисовать на плоскости без пересечения ребер).
+    </div>
+
+    <div class="block def">
+        <strong>Гранью</strong> плоского графа называется область плоскости, ограниченная ребрами графа и не содержащая внутри себя вершин и ребер. Одна из граней бесконечна (внешняя грань).
+    </div>
+
+    <div class="block thm">
+        <strong>Теорема Эйлера:</strong> Для любого связного плоского графа $G$ с $n$ вершинами, $m$ ребрами и $f$ гранями справедливо соотношение:
+        $$ n + f = m + 2 $$
+    </div>
+
+    <div class="proof">
+        Доказательство проводится индукцией по числу ребер $m$. При $m=0$, граф состоит из 1 вершины ($n=1$) и 1 бесконечной грани ($f=1$). Тогда $1 + 1 = 0 + 2$, верно. Добавление ребра между существующими вершинами увеличивает число граней на 1 ($f+1$ и $m+1$), равенство сохраняется.
+    </div>
+
+    
+    <div class="block thm note-card">
+        <h3 class="note-title">📝 Заметки: Плоские графы и Теорема Эйлера</h3>
+        <p><strong>Определение:</strong> Граф $G$ называется <strong class="highlight-pink">плоским</strong>, если он изображен на плоскости без пересечений ребер.<br>
+        <strong>Планарный</strong> — изоморфный плоскому.</p>
+        
+        <p><strong>Определение:</strong> <strong class="highlight-pink">Гранью</strong> плоского графа $G$, содержащей точку $x$, будем называть множество точек плоскости, которые могут быть соединены с $x$ кривой, не пересекающей ребра графа.<br>
+        Точка снаружи графа определяет <em>бесконечную грань</em>, а точка внутри цикла — <em>внутреннюю грань</em>.</p>
+    <div class="block def">
+        <strong>Плоский граф</strong> — граф, изображенный на плоскости так, что его ребра пересекаются только в вершинах.
+    </div>
+    <div class="block def">
+        <strong>Планарный граф</strong> — граф, изоморфный некоторому плоскому графу (допускающий плоскую укладку).
+    </div>
+    <div class="block def">
+        <strong>Грань плоского графа</strong> — область плоскости, ограниченная ребрами графа и не содержащая внутри себя ни вершин, ни ребер графа.
+    </div>
+    <div class="block def">
+        <strong>Бесконечная (внешняя) грань</strong> — неограниченная область плоскости, лежащая снаружи плоского графа.
+    </div>
+    <div class="block def">
+        <strong>Внутренняя грань</strong> — ограниченная область плоскости, лежащая внутри некоторого цикла в плоском графе.
+    </div>
+
+        
+        <hr class="note-divider">
+        <h4 class="highlight-yellow">Теорема Эйлера</h4>
+        <p>Пусть $G$ — связный плоский граф, $|V(G)| = n$, $|E(G)| = m$, число граней $G$ обозначим $f$. Тогда:</p>
+        <div class="math-box">$$ n + f = m + 2 $$</div>
+        
+        <p><strong>Доказательство (индукцией по $m$):</strong></p>
+        <ul>
+            <li>При $m = 0$, в силу связности $G$, единственный вариант $n=1$, тогда для $G$ существует единственная бесконечная грань $f = 1 \Rightarrow 1 + 1 = 0 + 2$ (верно).</li>
+            <li>Предположим, утверждение теоремы верно для $(m-1)$. Добавим к $G$ ребро. Если $m$-тое ребро соединяет 2 несмежные вершины из $V(G)$, тогда число граней увеличится ровно на 1, так как между 2-мя несмежными вершинами одна текущая грань (в ином случае пересекаются грани), в которой задано новое ребро. Имеем $n + (f+1) = (m+1) + 2$ (верно).</li>
+        </ul>
+    </div>
+    
+    </div>
+
+    
+    <div class="block thm">
+        <strong>Следствия из формулы Эйлера:</strong>
+        <ul>
+            <li>Для несвязного плоского графа с $k$ компонентами: $n - m + f = k + 1$.</li>
+            <li>Признак непланарности: В любом связном планарном графе $G$ при $n \ge 3$: $m \le 3n - 6$.</li>
+            <li>Графы $K_5$ и $K_{3,3}$ не планарны.</li>
+            <li>В любом планарном графе найдется вершина степени не больше 5.</li>
+        </ul>
+    </div>
+
+    <div class="block def">
+        Графы $G_1$ и $G_2$ называются <strong>гомеоморфными</strong>, если они могут быть получены из некоторого графа $G_3$ добавлением на ребрах конечного числа вершин степени 2.
+        <br>Граф $G_1$ называется <strong>стягиваемым</strong> к $G_2$, если $G_2$ получен из $G_1$ удалением вершин степени 2 с отождествлением ("склеиванием") инцидентных им ребер.
+    </div>
+
+    <div class="block thm">
+        <strong>Теорема (Критерий планарности Понтрягина-Куратовского):</strong>
+        <ol>
+            <li>Граф $G$ планарен $\iff$ он не содержит подграфов, гомеоморфных $K_5$ или $K_{3,3}$.</li>
+            <li>Граф $G$ планарен $\iff$ он не содержит подграфов, стягиваемых к $K_5$ или $K_{3,3}$.</li>
+        </ol>
+    </div>
+
+    <div class="block thm">
+        <strong>Теорема (3-й критерий планарности):</strong> Граф $G$ планарен $\iff$ он может быть уложен на сфере без пересечения ребер.
+    </div>
+    <div class="proof">
+        Доказывается через стереографическую проекцию сферы на плоскость. При стереографической проекции любой плоский граф на сфере остается плоским на плоскости, и наоборот.
+    </div>
+
+    <div class="block rem">
+        <strong>Платоновы тела:</strong> Любое платоново тело (правильный многогранник: тетраэдр, куб, октаэдр, додекаэдр, икосаэдр) является планарным графом (его граф можно уложить на плоскости). Любой граф можно уложить в трехмерном пространстве без пересечения ребер.
+    </div>
+
+    <div class="block def">
+        <strong>Определение:</strong> Граф $G^*$ называется <strong>двойственным</strong> графом для плоского графа $G$, если каждой грани $G$ соответствует вершина $G^*$, а каждому ребру $G$, разделяющему две грани, соответствует ребро $G^*$, соединяющее соответствующие вершины.
+    </div>
+    <div class="block lem">
+        <strong>Свойства двойственных графов:</strong>
+        <ol>
+            <li>Если $G$ связный и плоский, то $G^*$ тоже связный и плоский.</li>
+            <li>Соотношение инвариантов: $n^* = f$, $m^* = m$, $f^* = n$.</li>
+            <li>Если $G$ связный и плоский, то $G^{**} \cong G$ (обращение двойственности).</li>
+        </ol>
+    </div>
+    
+    
+    <h2 id="distances">12. Расстояния в графах</h2>
+    <div class="block def">
+        <strong>Определение:</strong> Расстоянием $d(u, v)$ между вершинами $u$ и $v$ в графе $G$ называется минимальная длина маршрута (цепи) из $u$ в $v$.
+    </div>
+    <div class="block def">
+        <strong>Аксиомы функции расстояния:</strong>
+        <ol>
+            <li>$d(u, v) \ge 0$</li>
+            <li>$d(u, v) = d(v, u)$</li>
+            <li>$d(u, w) \le d(u, v) + d(v, w)$ (неравенство треугольника)</li>
+        </ol>
+    </div>
+    <div class="block def">
+        <strong>Определение:</strong>
+        <ul>
+            <li><strong>Диаметром</strong> графа $G$ называется число $D(G) = \max_{u,v \in V(G)} d(u,v)$.</li>
+            <li><strong>Максимальное удаление</strong> от вершины $u$ в графе $G$: $r(u) = \max_{v \in V(G)} d(u, v)$.</li>
+            <li><strong>Радиусом</strong> графа $G$ называется $\min r(u)$.</li>
+            <li>Вершина $u$ называется <strong>центром</strong> графа $G$, если ее максимальное удаление принимает минимальное значение в графе (равно радиусу).</li>
+        </ul>
+    </div>
+    
+    <h2 id="coloring">13. Раскрашивание графов</h2>
+
+    <div class="block def">
+        Граф называется <strong>$k$-раскрашиваемым</strong>, если его вершинам можно назначить $k$ цветов так, чтобы любые две смежные вершины имели разные цвета.
+    </div>
+
+    <div class="block def">
+        <strong>Хроматическое число</strong> $\chi(G)$ — это минимальное $k$, при котором граф $G$ является $k$-раскрашиваемым.
+    </div>
+
+    <div class="block lem">
+        Свойства хроматического числа:
+        <ol>
+            <li>$\chi(G) = 1 \iff G$ — пустой граф.</li>
+            <li>$\chi(G) = 2 \iff G$ — двудольный граф (отличный от пустого). В частности, деревья и четные циклы.</li>
+            <li>$\chi(G) = 3 \iff G$ содержит нечетные циклы.</li>
+            <li>Для полного графа $K_n$: $\chi(K_n) = n$.</li>
+            <li>Если граф содержит подграф $K_n$, то $\chi(G) \ge n$.</li>
+        </ol>
+    </div>
+
+    
+    <div class="block thm note-card">
+        <h3 class="note-title">📝 Заметки: Хроматическое число</h3>
+        <p><strong>Определение:</strong> $\chi(G)$ (хроматическое число) графа $G$ — это наименьшее число цветов $k$, для которого граф является $k$-раскрашиваемым (но не $(k-1)$-раскрашиваемым).</p>
+    <div class="block def">
+        <strong>Хроматическое число $\chi(G)$ (лекционное определение)</strong> — наименьшее число цветов $k$, при котором вершины графа $G$ можно правильно раскрасить в $k$ цветов.
+    </div>
+    <div class="block def">
+        <strong>$k$-раскрашиваемость</strong> — свойство графа $G$, при котором его вершинам можно сопоставить цвета из множества $\{1, 2, \dots, k\}$ так, чтобы смежные вершины имели разные цвета.
+    </div>
+
+        
+        <hr class="note-divider">
+        <h4 class="highlight-yellow">Лемма:</h4>
+        <ol>
+            <li>$\chi(G) \ge 1$ и $\chi(G) = 1 \iff G$ — пустой граф.</li>
+            <li>$\chi(G) = 2 \iff G$ — двудольный, отличный от пустого (в частности, если $G$ — дерево или цикл $C_n$ для четного $n$).</li>
+            <li>$\chi(G) = 3 \iff G$ содержит нечетный цикл.</li>
+            <li>$\chi(K_n) = n$.</li>
+            <li>$\chi(G) \le n$, если $n = |V(G)|$.</li>
+            <li>Если $G$ содержит подграф $K_n$, то $\chi(G) \ge n$.</li>
+        </ol>
+    </div>
+    
+    </div>
+
+    
+    
+    <h2 id="flashcards-ref">🎓 Справочник ключевых понятий из карточек (Flashcards)</h2>
+    <div class="block def">
+        <strong>Что такое граф?</strong> — Совокупность непустого множества вершин $V$ и множества ребер $E$.
+    </div>
+    <div class="block def">
+        <strong>Что такое мультиграф?</strong> — Граф, в котором допускаются кратные ребра, но отсутствуют петли.
+    </div>
+    <div class="block def">
+        <strong>Лемма о рукопожатиях</strong> — Сумма степеней всех вершин любого графа равна удвоенному количеству его ребер: $\sum \deg(v) = 2|E|$.
+    </div>
+    <div class="block def">
+        <strong>Следствие о нечетных вершинах</strong> — В любом графе количество вершин нечетной степени всегда чётно.
+    </div>
+    <div class="block def">
+        <strong>Что такое мост?</strong> — Ребро, удаление которого увеличивает количество компонент связности графа.
+    </div>
+    <div class="block def">
+        <strong>Что такое дерево?</strong> — Связный граф, не содержащий циклов.
+    </div>
+    <div class="block def">
+        <strong>Критерий Эйлерова графа</strong> — Связный граф является эйлеровым тогда и только тогда, когда степени всех его вершин чётные.
+    </div>
+    <div class="block def">
+        <strong>Формула Эйлера</strong> — Для любого связного плоского графа справедливо соотношение: $n - m + f = 2$, где $n$ — число вершин, $m$ — число ребер, $f$ — число граней.
+    </div>
+    <div class="block def">
+        <strong>Критерий Понтрягина-Куратовского</strong> — Граф является планарным тогда и только тогда, когда он не содержит подграфов, гомеоморфных или стягиваемых к полному графу $K_5$ или полному двудольному графу $K_{3,3}$.
+    </div>
+    <div class="block def">
+        <strong>Что такое инвариант графа?</strong> — Числовая или структурная характеристика графа, которая сохраняется при любом изоморфизме.
+    </div>
+
+    <footer style="margin-top: 3rem; text-align: center; color: #95a5a6; border-top: 1px solid #eaeaea; padding-top: 1rem;">
+        &copy; Конспект составлен по лекциям для подготовки к сессии. Удачи на экзамене!
+    </footer>
+
+
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    
+
+    
+    <div id="interactive-tools">
+        <h2>🛠️ Интерактивная песочница и карточки</h2>
+        
+        <h3>🗂️ Карточки для запоминания (Flashcards)</h3>
+        <div class="flashcard-container" onclick="flipCard()">
+            <div class="flashcard" id="flashcard">
+                <div class="flashcard-face flashcard-front" id="fc-front">Что такое граф?</div>
+                <div class="flashcard-face flashcard-back" id="fc-back">Совокупность множества вершин и множества ребер.</div>
+            </div>
+        </div>
+        <div class="fc-controls">
+            <button class="quiz-btn" onclick="prevCard()" style="width:auto; padding: 5px 15px;">⬅ Назад</button>
+            <span id="fc-counter" style="line-height: 35px; font-weight: bold;">1 / 10</span>
+            <button class="quiz-btn" onclick="nextCard()" style="width:auto; padding: 5px 15px;">Вперед ➡</button>
+        </div>
+
+        <h3>🕹️ Песочница графов</h3>
+        <p>Кликай по пустой области, чтобы добавить вершину. Кликай по двум вершинам подряд, чтобы соединить их ребром.</p>
+        <div class="playground-container">
+            <canvas id="graph-canvas" width="500" height="400" class="canvas-area"></canvas>
+            <div class="graph-stats">
+                <h4>Характеристики:</h4>
+                <p><strong>Вершин:</strong> <span id="stat-v">0</span></p>
+                <p><strong>Ребер:</strong> <span id="stat-e">0</span></p>
+                <p><strong>Степени:</strong> <span id="stat-deg">-</span></p>
+                <p><strong>Эйлеров:</strong> <span id="stat-euler">-</span></p>
+                <button class="quiz-btn" onclick="clearGraph()" style="width:100%; margin-top: 10px; background: #e74c3c;">Очистить</button>
+                <button class="quiz-btn" onclick="randomGraph()" style="width:100%; margin-top: 10px; background: #27ae60;">Случайный граф</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="quiz-section">
+        <h2>🧠 Интерактивные тесты по разделам</h2>
+        
+        <div id="quiz-dashboard">
+            <!-- Topics injected here -->
+        </div>
+
+        <div id="quiz-interface" style="display: none;">
+            <div id="quiz-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h3 id="quiz-topic-title" style="margin: 0; color: #2c3e50;"></h3>
+                <button class="quiz-btn" onclick="returnToDashboard()" style="padding: 5px 15px; font-size: 0.9rem; width: auto;">⬅ В меню</button>
+            </div>
+            
+            <div id="quiz-container">
+                <!-- Questions injected here -->
+            </div>
+            <div id="quiz-results"></div>
+            
+            <div id="quiz-controls">
+                <span id="quiz-progress" style="font-weight: bold; color: #7f8c8d;"></span>
+                <button id="next-btn" class="quiz-btn" onclick="nextQuestion()" disabled>Проверить</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                id: "basics",
+                title: "1. Основные понятия и операции",
+                questions: [
+                    {
+                        question: "Что называется графом в дискретной математике?",
+                        options: [
+                            "Множество чисел и их отношений",
+                            "Совокупность двух множеств: множества вершин и множества пар вершин (ребер)",
+                            "Геометрическая фигура без самопересечений",
+                            "Матрица, состоящая из нулей и единиц"
+                        ],
+                        correct: 1
+                    },
+                    {
+                        question: "Какой граф называется мультиграфом?",
+                        options: [
+                            "Граф, содержащий и петли, и кратные ребра",
+                            "Граф, в котором допускаются петли, но нет кратных ребер",
+                            "Граф, в котором допускаются кратные ребра, но нет петель",
+                            "Граф, который можно разбить на несколько компонент связности"
+                        ],
+                        correct: 2
+                    },
+                    {
+                        question: "Что представляет собой ориентированный граф (орграф)?",
+                        options: [
+                            "Граф, в котором все ребра имеют заданное направление (являются упорядоченными парами вершин)",
+                            "Граф с петлями и кратными ребрами",
+                            "Граф, который можно нарисовать без пересечения ребер",
+                            "Связный граф без циклов"
+                        ],
+                        correct: 0
+                    },
+                    {
+                        question: "Что такое петля в теории графов?",
+                        options: [
+                            "Ребро, соединяющее вершину саму с собой",
+                            "Цикл длины 3",
+                            "Ребро, соединяющее две висячие вершины",
+                            "Путь, проходящий по всем ребрам ровно один раз"
+                        ],
+                        correct: 0
+                    },
+                    {
+                        question: "Какие ребра называются кратными (параллельными)?",
+                        options: [
+                            "Ребра, соединяющие одну и ту же пару вершин",
+                            "Ребра, имеющие одинаковую длину",
+                            "Ребра, выходящие из одной вершины",
+                            "Ребра, не имеющие общих вершин"
+                        ],
+                        correct: 0
+                    },
+                    {
+                        question: "Какие вершины называются смежными?",
+                        options: [
+                            "Вершины, соединенные ребром",
+                            "Вершины, имеющие одинаковую степень",
+                            "Вершины, находящиеся на максимальном расстоянии друг от друга",
+                            "Вершины, принадлежащие разным долям двудольного графа"
+                        ],
+                        correct: 0
+                    },
+                    {
+                        question: "Когда ребро и вершина называются инцидентными?",
+                        options: [
+                            "Когда вершина является одним из концов данного ребра",
+                            "Когда ребро и вершина не пересекаются",
+                            "Когда степень вершины равна единице",
+                            "Когда это ребро является петлей"
+                        ],
+                        correct: 0
+                    }
+                ]
+            },
+            {
+                id: "degrees_bipartite",
+                title: "2. Степени, Полные и Двудольные графы",
+                questions: [
+                    {
+                        question: "В чем суть леммы о рукопожатиях?",
+                        options: [
+                            "Сумма степеней всех вершин графа равна количеству ребер",
+                            "Количество нечетных вершин в графе всегда нечетно",
+                            "Сумма степеней всех вершин графа равна удвоенному количеству ребер",
+                            "В любом графе есть хотя бы две вершины одинаковой степени"
+                        ],
+                        correct: 2
+                    },
+                    {
+                        question: "Сколько ребер содержит полный граф $K_n$?",
+                        options: [
+                            "n",
+                            "n - 1",
+                            "n(n - 1)",
+                            "n(n - 1) / 2"
+                        ],
+                        correct: 3
+                    },
+                    {
+                        question: "Что такое двудольный граф?",
+                        options: [
+                            "Граф, состоящий ровно из двух компонент связности",
+                            "Граф, вершины которого можно разбить на два множества так, что каждое ребро соединяет вершины из разных множеств",
+                            "Граф, в котором максимальная степень вершины равна 2",
+                            "Граф, который можно уложить на плоскости двумя способами"
+                        ],
+                        correct: 1
+                    },
+                    {
+                        question: "Какая вершина называется висячей?",
+                        options: [
+                            "Вершина степени 0",
+                            "Вершина степени 1",
+                            "Вершина степени 2",
+                            "Вершина, удаление которой делает граф несвязным"
+                        ],
+                        correct: 1
+                    },
+                    {
+                        question: "Какой граф называется регулярным (однородным)?",
+                        options: [
+                            "Граф, у которого степени всех вершин равны",
+                            "Граф, не содержащий циклов",
+                            "Граф, который можно правильно раскрасить в 2 цвета",
+                            "Полный граф"
+                        ],
+                        correct: 0
+                    },
+                    {
+                        question: "Какая вершина называется изолированной?",
+                        options: [
+                            "Вершина степени 0",
+                            "Вершина степени 1",
+                            "Вершина, не принадлежащая ни одному циклу",
+                            "Вершина, удаление которой делает граф связным"
+                        ],
+                        correct: 0
+                    },
+                    {
+                        question: "Что такое пустой граф (нуль-граф) $O_n$?",
+                        options: [
+                            "Граф из $n$ вершин, не содержащий ни одного ребра ($|E| = 0$)",
+                            "Граф, в котором нет ни вершин, ни ребер",
+                            "Связный граф с одной вершиной",
+                            "Двудольный граф, у которого одна доля пуста"
+                        ],
+                        correct: 0
+                    },
+                    {
+                        question: "Какое количество ребер содержится в циклическом графе $C_n$ при $n \ge 3$?",
+                        options: [
+                            "n",
+                            "n - 1",
+                            "2n",
+                            "n(n-1)/2"
+                        ],
+                        correct: 0
+                    }
+                ]
+            },
+            {
+                id: "matrices",
+                title: "3. Матричные способы задания графов",
+                questions: [
+                    {
+                        question: "Что представляет собой матрица смежности простого графа?",
+                        options: [
+                            "Квадратная матрица $A$ размера $n \times n$, где $a_{ij}=1$, если вершины $v_i$ и $v_j$ смежны, и $0$ в противном случае",
+                            "Матрица размера $n \times m$, где строки соответствуют вершинам, а столбцы — ребрам",
+                            "Диагональная матрица со степенями вершин",
+                            "Симметричная матрица, содержащая только отрицательные числа"
+                        ],
+                        correct: 0
+                    },
+                    {
+                        question: "Каковы размеры матрицы инцидентности неориентированного графа без петель с $n$ вершинами и $m$ ребрами?",
+                        options: [
+                            "n x m",
+                            "n x n",
+                            "m x m",
+                            "2n x m"
+                        ],
+                        correct: 0
+                    },
+                    {
+                        question: "Чему равна сумма элементов в любом столбце матрицы инцидентности неориентированного графа без петель?",
+                        options: [
+                            "Ровно 2",
+                            "Степени соответствующей вершины",
+                            "Общему числу вершин n",
+                            "Элементу матрицы смежности"
+                        ],
+                        correct: 0
+                    }
+                ]
+            },
+            {
+                id: "isomorphism",
+                title: "4. Изоморфизм и операции над графами",
+                questions: [
+                    {
+                        question: "Что называется инвариантом графа?",
+                        options: [
+                            "Уникальное числовое значение, которое можно присвоить графу",
+                            "Характеристика графа, которая сохраняется при изоморфизме",
+                            "Минимальное число ребер, которое нужно удалить для потери связности",
+                            "Свойство графа, которое меняется при удалении вершины"
+                        ],
+                        correct: 1
+                    },
+                    {
+                        question: "Что представляет собой операция «Дополнение графа» $\overline{G}$?",
+                        options: [
+                            "Добавление к графу всех возможных петель",
+                            "Граф на том же множестве вершин, ребра которого — это те и только те ребра, которых не было в исходном графе",
+                            "Объединение графа с его двойственным графом",
+                            "Удаление всех вершин нечетной степени"
+                        ],
+                        correct: 1
+                    },
+                    {
+                        question: "Какое множество вершин и ребер имеет пересечение графов $(G_1 \cap G_2)$?",
+                        options: [
+                            "Вершины: $V_1 \cap V_2$, ребра: $E_1 \cap E_2$",
+                            "Вершины: $V_1 \cup V_2$, ребра: $E_1 \cap E_2$",
+                            "Вершины: $V_1 \cap V_2$, ребра: $E_1 \cup E_2$",
+                            "Только общие изолированные вершины"
+                        ],
+                        correct: 0
+                    },
+                    {
+                        question: "Что означает, что графы $G_1$ и $G_2$ изоморфны?",
+                        options: [
+                            "Существует взаимно однозначное соответствие между их вершинами, сохраняющее отношение смежности",
+                            "Они имеют одинаковое число вершин и ребер",
+                            "Их матрицы смежности содержат одинаковое количество единиц",
+                            "Один из них является подграфом другого"
+                        ],
+                        correct: 0
+                    }
+                ]
+            },
+            {
+                id: "paths",
+                title: "5. Маршруты, цепи и связность",
+                questions: [
+                    {
+                        question: "Что такое цепь в графе?",
+                        options: [
+                            "Замкнутый маршрут, проходящий по всем ребрам",
+                            "Маршрут, в котором ни одна из вершин не повторяется",
+                            "Кратчайший путь между двумя самыми удаленными вершинами",
+                            "Последовательность инцидентных ребер, где могут повторяться вершины"
+                        ],
+                        correct: 1
+                    },
+                    {
+                        question: "Что такое мост в графе?",
+                        options: [
+                            "Ребро, которое соединяет две висячие вершины",
+                            "Ребро, удаление которого увеличивает количество компонент связности графа",
+                            "Вершина, удаление которой делает граф несвязным",
+                            "Самое длинное ребро в графе"
+                        ],
+                        correct: 1
+                    },
+                    {
+                        question: "О чем гласит лемма о циклах в графе?",
+                        options: [
+                            "В любом связном графе есть хотя бы один цикл",
+                            "Если степень каждой вершины в графе $\ge 2$, то граф обязательно содержит цикл",
+                            "Количество циклов всегда четно",
+                            "Дерево содержит ровно один цикл"
+                        ],
+                        correct: 1
+                    },
+                    {
+                        question: "Какой граф называется $k$-связным?",
+                        options: [
+                            "Тот, из которого нужно удалить $k$ ребер, чтобы он перестал быть связным",
+                            "Тот, который имеет в точности $k$ компонент связности",
+                            "Тот, в котором длина каждого цикла равна $k$",
+                            "Тот, в котором степень каждой вершины равна $k$"
+                        ],
+                        correct: 0
+                    },
+                    {
+                        question: "Что такое простая цепь в теории графов?",
+                        options: [
+                            "Цепь, в которой все вершины (и, следовательно, ребра) различны",
+                            "Цепь, проходящая по всем ребрам ровно один раз",
+                            "Замкнутый путь",
+                            "Кратчайший путь между вершинами"
+                        ],
+                        correct: 0
+                    },
+                    {
+                        question: "Что такое простой цикл?",
+                        options: [
+                            "Замкнутая простая цепь",
+                            "Цикл, содержащий ровно 3 вершины",
+                            "Путь, обходящий весь граф",
+                            "Дерево с одним дополнительным ребром"
+                        ],
+                        correct: 0
+                    }
+                ]
+            },
+            {
+                id: "euler",
+                title: "6. Эйлеровы и Гамильтоновы графы",
+                questions: [
+                    {
+                        question: "Какой граф называется Эйлеровым?",
+                        options: [
+                            "Граф, содержащий цикл, проходящий через каждую вершину ровно 1 раз",
+                            "Граф, содержащий замкнутый маршрут, проходящий по всем ребрам ровно 1 раз",
+                            "Связный плоский граф",
+                            "Граф без циклов"
+                        ],
+                        correct: 1
+                    },
+                    {
+                        question: "Каков критерий эйлеровости связного графа?",
+                        options: [
+                            "Степени всех его вершин четные",
+                            "Граф содержит не более двух вершин нечетной степени",
+                            "Сумма степеней всех вершин равна числу ребер",
+                            "Граф является полным"
+                        ],
+                        correct: 0
+                    },
+                    {
+                        question: "Что гласит Теорема Дирака (о гамильтоновых графах)?",
+                        options: [
+                            "Если сумма степеней любых двух несмежных вершин больше n, граф гамильтонов",
+                            "Если граф связен и имеет только вершины четной степени, он гамильтонов",
+                            "Если для любой вершины v выполняется $d(v) \ge n/2$, то граф гамильтонов",
+                            "Любой двудольный граф является гамильтоновым"
+                        ],
+                        correct: 2
+                    }
+                ]
+            },
+            {
+                id: "trees",
+                title: "7. Деревья и кодирование",
+                questions: [
+                    {
+                        question: "Какое из следующих свойств НЕ является критерием того, что граф — дерево?",
+                        options: [
+                            "Любые 2 вершины соединены единственной цепью",
+                            "Граф связный, и число ребер $m = n - 1$",
+                            "Граф содержит эйлеров путь, но не содержит циклов",
+                            "Граф не содержит циклов, но добавление любого ребра порождает ровно 1 цикл"
+                        ],
+                        correct: 2
+                    },
+                    {
+                        question: "Сколько ребер в лесу с $n$ вершинами и $k$ компонентами связности?",
+                        options: [
+                            "n - k",
+                            "n - 1",
+                            "n + k",
+                            "n(n-1)/2"
+                        ],
+                        correct: 0
+                    },
+                    {
+                        question: "Правда ли, что любое дерево является двудольным графом?",
+                        options: [
+                            "Да, любое дерево двудольное, так как не имеет циклов (в т.ч. нечетной длины)",
+                            "Нет, только полные деревья являются двудольными",
+                            "Нет, деревья являются трехдольными графами",
+                            "Да, но только если число вершин четно"
+                        ],
+                        correct: 0
+                    },
+                    {
+                        question: "Какова длина вектора (кода Прюфера) при кодировании дерева с $n$ вершинами?",
+                        options: [
+                            "n - 2",
+                            "n - 1",
+                            "n",
+                            "2n - 2"
+                        ],
+                        correct: 0
+                    },
+                    {
+                        question: "С чего начинается алгоритм декодирования кода Прюфера длиной $n-2$?",
+                        options: [
+                            "Выписывается список всех вершин от $1$ до $n$, и ищется наименьшая вершина, отсутствующая в векторе",
+                            "Берется первый элемент вектора и соединяется со всеми остальными",
+                            "Строится пустой граф из $n-2$ вершин",
+                            "Вычисляются степени всех вершин как элементы вектора"
+                        ],
+                        correct: 0
+                    }
+                ]
+            },
+            {
+                id: "planarity",
+                title: "8. Планарные графы",
+                questions: [
+                    {
+                        question: "Какое условие гарантирует, что граф НЕ планарен (согласно следствиям из формулы Эйлера при $n \ge 3$)?",
+                        options: [
+                            "$m > 3n - 6$",
+                            "$m < 3n - 6$",
+                            "$n - m + f = 2$",
+                            "Наличие вершины степени 5"
+                        ],
+                        correct: 0
+                    },
+                    {
+                        question: "Какой из критериев планарности (по Понтрягину-Куратовскому) верен?",
+                        options: [
+                            "Граф планарен, если он не содержит подграфов, гомеоморфных $K_5$ или $K_{3,3}$",
+                            "Граф планарен, только если он является деревом",
+                            "Граф планарен, если степени всех его вершин не превышают 5",
+                            "Граф планарен, если он двудольный"
+                        ],
+                        correct: 0
+                    },
+                    {
+                        question: "Какое соотношение инвариантов верно для двойственного графа $G^*$?",
+                        options: [
+                            "$n^* = m, m^* = f, f^* = n$",
+                            "$n^* = f, m^* = m, f^* = n$",
+                            "$n^* = n, m^* = m, f^* = f$",
+                            "$n^* = f, m^* = n, f^* = m$"
+                        ],
+                        correct: 1
+                    }
+                ]
+            },
+            {
+                id: "coloring",
+                title: "9. Раскраска и метрики",
+                questions: [
+                    {
+                        question: "Что такое радиус графа?",
+                        options: [
+                            "Максимальное расстояние между любыми двумя вершинами",
+                            "Минимальное из максимальных удалений вершин (минимальный эксцентриситет)",
+                            "Количество ребер в самом длинном простом цикле",
+                            "Расстояние от самой удаленной вершины до центра"
+                        ],
+                        correct: 1
+                    },
+                    {
+                        question: "Чему равно хроматическое число $\chi(G)$ двудольного графа (не пустого)?",
+                        options: [
+                            "1",
+                            "2",
+                            "3",
+                            "4"
+                        ],
+                        correct: 1
+                    },
+                    {
+                        question: "Что утверждает Теорема о четырех красках?",
+                        options: [
+                            "Любой граф можно правильно раскрасить не более чем в 4 цвета",
+                            "Хроматическое число любого планарного графа $\le 4$",
+                            "Для раскраски полного графа $K_n$ достаточно 4 цветов",
+                            "Каждая грань планарного графа ограничена максимум 4 ребрами"
+                        ],
+                        correct: 1
+                    }
+                ]
+            }
+        ];
+
+        let userProgress = JSON.parse(localStorage.getItem('graph_quiz_progress')) || {};
+        let currentTopicId = null;
+        let currentQuestion = 0;
+        let score = 0;
+        let hasAnswered = false;
+        
+        const dashboardDiv = document.getElementById('quiz-dashboard');
+        const interfaceDiv = document.getElementById('quiz-interface');
+        const container = document.getElementById('quiz-container');
+        const resultsDiv = document.getElementById('quiz-results');
+        const nextBtn = document.getElementById('next-btn');
+        const progressText = document.getElementById('quiz-progress');
+        const topicTitleElement = document.getElementById('quiz-topic-title');
+
+        function initDashboard() {
+            dashboardDiv.innerHTML = '';
+            quizData.forEach(topic => {
+                const topicScore = userProgress[topic.id] !== undefined ? userProgress[topic.id] : 0;
+                const totalQ = topic.questions.length;
+                const percent = Math.round((topicScore / totalQ) * 100);
+                
+                let statusText = userProgress[topic.id] !== undefined ? `${topicScore}/${totalQ} (${percent}%)` : 'Не начато';
+                
+                const card = document.createElement('div');
+                card.className = 'topic-card';
+                card.onclick = () => startTopic(topic.id);
+                
+                card.innerHTML = `
+                    <div class="topic-title">${topic.title}</div>
+                    <div class="topic-progress-bar">
+                        <div class="topic-progress-fill" style="width: ${userProgress[topic.id] !== undefined ? percent : 0}%"></div>
+                    </div>
+                    <div class="topic-status">${statusText}</div>
+                `;
+                dashboardDiv.appendChild(card);
+            });
+        }
+
+        function startTopic(id) {
+            currentTopicId = id;
+            currentQuestion = 0;
+            score = 0;
+            dashboardDiv.style.display = 'none';
+            interfaceDiv.style.display = 'block';
+            resultsDiv.style.display = 'none';
+            document.getElementById('quiz-controls').style.display = 'flex';
+            
+            const topic = quizData.find(t => t.id === id);
+            topicTitleElement.innerText = topic.title;
+            
+            renderQuestion();
+        }
+
+        function returnToDashboard() {
+            interfaceDiv.style.display = 'none';
+            dashboardDiv.style.display = 'grid';
+            initDashboard();
+        }
+
+        function renderQuestion() {
+            hasAnswered = false;
+            nextBtn.disabled = true;
+            nextBtn.innerText = 'Проверить';
+            container.innerHTML = '';
+            
+            const topic = quizData.find(t => t.id === currentTopicId);
+            const q = topic.questions[currentQuestion];
+            
+            progressText.innerText = `Вопрос ${currentQuestion + 1} из ${topic.questions.length}`;
+
+            const qElem = document.createElement('div');
+            qElem.className = 'quiz-question';
+            qElem.innerHTML = q.question; // MathJax will process this
+            container.appendChild(qElem);
+
+            q.options.forEach((opt, index) => {
+                const optElem = document.createElement('div');
+                optElem.className = 'quiz-option';
+                optElem.innerHTML = opt;
+                optElem.onclick = () => selectOption(optElem, index);
+                container.appendChild(optElem);
+            });
+            
+            if (window.MathJax && typeof MathJax.typesetPromise === 'function') {
+                MathJax.typesetPromise([container]);
+            }
+        }
+
+        function selectOption(element, index) {
+            if (hasAnswered) return;
+            
+            const options = document.querySelectorAll('.quiz-option');
+            options.forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            
+            nextBtn.disabled = false;
+            nextBtn.dataset.selectedIndex = index;
+        }
+
+        function nextQuestion() {
+            const topic = quizData.find(t => t.id === currentTopicId);
+            const q = topic.questions[currentQuestion];
+
+            if (!hasAnswered) {
+                hasAnswered = true;
+                const selectedIndex = parseInt(nextBtn.dataset.selectedIndex);
+                const options = document.querySelectorAll('.quiz-option');
+
+                if (selectedIndex === q.correct) {
+                    options[selectedIndex].classList.add('correct');
+                    score++;
+                } else {
+                    options[selectedIndex].classList.add('wrong');
+                    options[q.correct].classList.add('correct');
+                }
+
+                nextBtn.innerText = currentQuestion < topic.questions.length - 1 ? 'Следующий вопрос' : 'Завершить';
+            } else {
+                currentQuestion++;
+                if (currentQuestion < topic.questions.length) {
+                    renderQuestion();
+                } else {
+                    showResults();
+                }
+            }
+        }
+
+        function showResults() {
+            const topic = quizData.find(t => t.id === currentTopicId);
+            container.innerHTML = '';
+            document.getElementById('quiz-controls').style.display = 'none';
+            resultsDiv.style.display = 'block';
+            
+            // Save progress
+            if (!userProgress[currentTopicId] || score > userProgress[currentTopicId]) {
+                userProgress[currentTopicId] = score;
+                localStorage.setItem('graph_quiz_progress', JSON.stringify(userProgress));
+            }
+            
+            let message = "";
+            if (score === topic.questions.length) message = "Идеально! 🎉";
+            else if (score >= topic.questions.length * 0.7) message = "Хороший результат! 👍";
+            else message = "Нужно еще повторить теорию. 📚";
+            
+            resultsDiv.innerHTML = `Ваш результат: ${score} из ${topic.questions.length}<br><br><span style="font-size:1.2rem; color:#34495e">${message}</span>`;
+            
+            const restartBtn = document.createElement('button');
+            restartBtn.className = 'quiz-btn';
+            restartBtn.style.marginTop = '20px';
+            restartBtn.innerText = 'Пройти заново';
+            restartBtn.onclick = () => startTopic(currentTopicId);
+            
+            resultsDiv.appendChild(restartBtn);
+        }
+
+        // Initialize dashboard on load
+        initDashboard();
+    </script>
+
+    
+<script>
+
+        // --- NEW FEATURES JS ---
+        // 1. Dark Mode
+        const themeBtn = document.getElementById('theme-toggle');
+        themeBtn.onclick = () => {
+            document.body.classList.toggle('dark-mode');
+            themeBtn.innerText = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+            localStorage.setItem('dark_mode', document.body.classList.contains('dark-mode'));
+            drawGraph(); // redraw canvas with correct colors
+        };
+        if(localStorage.getItem('dark_mode') === 'true') {
+            document.body.classList.add('dark-mode');
+            themeBtn.innerText = '☀️';
+        }
+
+        // 2. Flashcards
+        const cards = [
+            { front: "Что такое граф?", back: "Совокупность множества вершин V и множества ребер E." },
+            { front: "Что такое мультиграф?", back: "Граф с кратными ребрами, но без петель." },
+            { front: "Лемма о рукопожатиях", back: "Сумма степеней всех вершин графа равна удвоенному количеству ребер." },
+            { front: "Следствие о нечетных вершинах", back: "В любом графе количество вершин нечетной степени всегда четно." },
+            { front: "Что такое мост?", back: "Ребро, удаление которого увеличивает количество компонент связности." },
+            { front: "Что такое дерево?", back: "Связный граф без циклов." },
+            { front: "Критерий Эйлерова графа", back: "Связный граф является эйлеровым <=> степени всех вершин четные." },
+            { front: "Формула Эйлера", back: "Для связного плоского графа: n - m + f = 2" },
+            { front: "Критерий Понтрягина-Куратовского", back: "Граф планарен <=> не содержит подграфов, гомеоморфных/стягиваемых к K_5 или K_3,3" },
+            { front: "Что такое инвариант графа?", back: "Характеристика, которая сохраняется при изоморфизме." }
+        ];
+        let currentCard = 0;
+        function updateCard() {
+            document.getElementById('fc-front').innerText = cards[currentCard].front;
+            document.getElementById('fc-back').innerText = cards[currentCard].back;
+            document.getElementById('fc-counter').innerText = `${currentCard + 1} / ${cards.length}`;
+            document.getElementById('flashcard').classList.remove('is-flipped');
+        }
+        function flipCard() {
+            document.getElementById('flashcard').classList.toggle('is-flipped');
+        }
+        function nextCard() {
+            currentCard = (currentCard + 1) % cards.length;
+            updateCard();
+        }
+        function prevCard() {
+            currentCard = (currentCard - 1 + cards.length) % cards.length;
+            updateCard();
+        }
+        updateCard();
+
+        // 3. Interactive Playground
+        const cvs = document.getElementById('graph-canvas');
+        const ctx = cvs.getContext('2d');
+        let vertices = [];
+        let edges = [];
+        let selectedVertex = null;
+
+        function drawGraph() {
+            ctx.clearRect(0, 0, cvs.width, cvs.height);
+            const isDark = document.body.classList.contains('dark-mode');
+            
+            // Draw edges
+            ctx.strokeStyle = isDark ? '#888' : '#333';
+            ctx.lineWidth = 2;
+            edges.forEach(e => {
+                ctx.beginPath();
+                ctx.moveTo(vertices[e.u].x, vertices[e.u].y);
+                ctx.lineTo(vertices[e.v].x, vertices[e.v].y);
+                ctx.stroke();
+            });
+
+            // Draw vertices
+            vertices.forEach((v, i) => {
+                ctx.beginPath();
+                ctx.arc(v.x, v.y, 12, 0, 2 * Math.PI);
+                ctx.fillStyle = (i === selectedVertex) ? '#e74c3c' : (isDark ? '#3498db' : '#2980b9');
+                ctx.fill();
+                ctx.strokeStyle = isDark ? '#fff' : '#fff';
+                ctx.stroke();
+                
+                // Label
+                ctx.fillStyle = '#fff';
+                ctx.font = '10px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(i, v.x, v.y);
+            });
+            updateStats();
+        }
+
+        cvs.addEventListener('mousedown', (e) => {
+            const rect = cvs.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            // Check if clicked on vertex
+            let clicked = -1;
+            for(let i = 0; i < vertices.length; i++) {
+                const dx = vertices[i].x - x;
+                const dy = vertices[i].y - y;
+                if(dx*dx + dy*dy < 144) { clicked = i; break; }
+            }
+
+            if(clicked === -1) {
+                // Add vertex
+                vertices.push({x, y});
+                selectedVertex = null;
+            } else {
+                if(selectedVertex === null) {
+                    selectedVertex = clicked;
+                } else {
+                    if(selectedVertex !== clicked) {
+                        // Add edge if doesn't exist
+                        const exists = edges.some(edge => (edge.u === selectedVertex && edge.v === clicked) || (edge.u === clicked && edge.v === selectedVertex));
+                        if(!exists) edges.push({u: selectedVertex, v: clicked});
+                    }
+                    selectedVertex = null;
+                }
+            }
+            drawGraph();
+        });
+
+        function updateStats() {
+            document.getElementById('stat-v').innerText = vertices.length;
+            document.getElementById('stat-e').innerText = edges.length;
+            
+            let degrees = new Array(vertices.length).fill(0);
+            edges.forEach(e => { degrees[e.u]++; degrees[e.v]++; });
+            document.getElementById('stat-deg').innerText = degrees.length ? degrees.join(', ') : '-';
+            
+            let isEuler = degrees.length > 0 && degrees.every(d => d > 0 && d % 2 === 0); // simplistic check
+            document.getElementById('stat-euler').innerText = isEuler ? 'Да (все степени четные)' : 'Нет';
+        }
+
+        function clearGraph() {
+            vertices = [];
+            edges = [];
+            selectedVertex = null;
+            drawGraph();
+        }
+
+        function randomGraph() {
+            clearGraph();
+            const n = Math.floor(Math.random() * 4) + 4; // 4 to 7 vertices
+            for(let i = 0; i < n; i++) {
+                vertices.push({
+                    x: 50 + Math.random() * (cvs.width - 100),
+                    y: 50 + Math.random() * (cvs.height - 100)
+                });
+            }
+            for(let i = 0; i < n; i++) {
+                for(let j = i+1; j < n; j++) {
+                    if(Math.random() > 0.5) edges.push({u: i, v: j});
+                }
+            }
+            drawGraph();
+        }
+        
+        // Initial draw
+        drawGraph();
+
+</script>
+</body>
+</html>
