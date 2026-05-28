@@ -658,13 +658,33 @@
             background: rgba(16, 185, 129, 0.15) !important;
             border-color: #10b981 !important;
             color: #10b981 !important;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
             font-weight: 700;
         }
 
-        .quiz-option.incorrect {
+        .quiz-option.incorrect, .quiz-option.wrong {
             background: rgba(239, 68, 68, 0.15) !important;
             border-color: #ef4444 !important;
             color: #ef4444 !important;
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
+            animation: shake 0.4s ease-in-out;
+        }
+
+        .quiz-option.selected {
+            background: rgba(16, 184, 255, 0.15);
+            border-color: var(--accent-primary);
+            box-shadow: inset 0 0 10px rgba(16, 184, 255, 0.2), 0 0 15px rgba(16, 184, 255, 0.4);
+            transform: scale(1.02);
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+            100% { transform: translateX(0); }
         }
 
         .quiz-feedback {
@@ -674,6 +694,37 @@
             background: var(--bg-secondary);
             border-left: 4px solid var(--accent-primary);
             display: none;
+        }
+
+        .quiz-btn {
+            background: var(--accent-gradient);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 1.05rem;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .quiz-btn:hover:not(:disabled) {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 25px rgba(99, 102, 241, 0.6);
+            background: linear-gradient(135deg, #818cf8, #a855f7);
+        }
+
+        .quiz-btn:disabled {
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+            opacity: 0.6;
         }
 
         .quiz-next-btn {
