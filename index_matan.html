@@ -3122,8 +3122,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // Quiz Database and dynamic engine
                                                                                                                                                                         const quizData = [
     {
-        id: "topic_1",
-        title: "1. Неопределенный интеграл. Теорема Чебышева",
+        id: "module_1",
+        title: "📚 Модуль 1: Неопределенные интегралы",
         questions: [
             {
                 question: "Неопределенным интегралом от функции f(x) называется совокупность всех ее первообразных...",
@@ -3135,12 +3135,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 ],
                 correct: 3
             },
-        ]
-    },
-    {
-        id: "topic_2",
-        title: "2. Интегрирование трансцендентных функций",
-        questions: [
             {
                 question: "Любой интеграл вида $\\int R(\\sin x...$",
                 options: [
@@ -3151,11 +3145,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 ],
                 correct: 0
             },
+            {
+                question: "Если $x = \\phi(t)$ имеет непрерывную производную и отображает $[\\alpha...$",
+                options: [
+                    "\\beta]$ на $[a, b]$, то $\\int_a^b f(x)dx = \\int_{\\alpha}^{\\beta} f(\\phi(t))\\phi'(t)dt$.$",
+                    "Для того чтобы ограниченная функция была интегрируема по Риману, необходимо и достаточно, чтобы предел разности верхней ...",
+                    "Функция $\\Phi(x) = \\int_a^x f(t)dt$ называется интегралом с переменным верхним пределом.",
+                    "Неопределенным интегралом от функции f(x) называется совокупность всех ее первообразных, то есть выражений вида F(x) + C...",
+                ],
+                correct: 0
+            },
         ]
     },
     {
-        id: "topic_3",
-        title: "3. Определенный интеграл Римана. Основные понятия",
+        id: "module_2",
+        title: "📐 Модуль 2: Определенный интеграл Римана",
         questions: [
             {
                 question: "Определенным интегралом Римана $\\int_a^b f(x)dx$ называется предел интегральных сумм $\\sum f(\\xi_i)\\Delta x_i$ при стремлении ранга разбиения к нулю...",
@@ -3177,12 +3181,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 ],
                 correct: 0
             },
-        ]
-    },
-    {
-        id: "topic_4",
-        title: "4. Верхние и нижние суммы Дарбу. Критерий существования",
-        questions: [
             {
                 question: "Нижней суммой Дарбу называется сумма $s = \\sum m_i \\Delta x_i$...",
                 options: [
@@ -3203,12 +3201,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 ],
                 correct: 2
             },
-        ]
-    },
-    {
-        id: "topic_5",
-        title: "5. Интегрируемые функции по Риману",
-        questions: [
             {
                 question: "Всякая непрерывная на отрезке [a...",
                 options: [
@@ -3229,12 +3221,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 ],
                 correct: 1
             },
-        ]
-    },
-    {
-        id: "topic_6",
-        title: "6. Свойства определенного интеграла. Первая теорема о среднем",
-        questions: [
             {
                 question: "Если функция f(x) непрерывна на [a...",
                 options: [
@@ -3245,12 +3231,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 ],
                 correct: 2
             },
-        ]
-    },
-    {
-        id: "topic_7",
-        title: "7. Вторая теорема о среднем",
-        questions: [
             {
                 question: "Если функция f(x) интегрируема...",
                 options: [
@@ -3264,8 +3244,8 @@ document.addEventListener('DOMContentLoaded', () => {
         ]
     },
     {
-        id: "topic_8",
-        title: "8. Интеграл с переменным верхним пределом. Формула Ньютона-Лейбница",
+        id: "module_3",
+        title: "🚀 Модуль 3: Приложения и несобственные интегралы",
         questions: [
             {
                 question: "Если функция f(x) непрерывна на [a...",
@@ -3277,28 +3257,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 ],
                 correct: 3
             },
-        ]
-    },
-    {
-        id: "topic_9",
-        title: "9. Замена переменных и интегрирование по частям",
-        questions: [
-            {
-                question: "Если $x = \\phi(t)$ имеет непрерывную производную и отображает $[\\alpha...$",
-                options: [
-                    "\\beta]$ на $[a, b]$, то $\\int_a^b f(x)dx = \\int_{\\alpha}^{\\beta} f(\\phi(t))\\phi'(t)dt$.$",
-                    "Для того чтобы ограниченная функция была интегрируема по Риману, необходимо и достаточно, чтобы предел разности верхней ...",
-                    "Функция $\\Phi(x) = \\int_a^x f(t)dt$ называется интегралом с переменным верхним пределом.",
-                    "Неопределенным интегралом от функции f(x) называется совокупность всех ее первообразных, то есть выражений вида F(x) + C...",
-                ],
-                correct: 0
-            },
-        ]
-    },
-    {
-        id: "topic_11",
-        title: "11. Приложения интеграла. Площадь",
-        questions: [
             {
                 question: "Площадь криволинейной трапеции...",
                 options: [
@@ -3309,12 +3267,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 ],
                 correct: 0
             },
-        ]
-    },
-    {
-        id: "topic_12",
-        title: "12. Спрямляемые кривые. Длина кривой",
-        questions: [
             {
                 question: "Если кривая задана гладкой функцией $y = f(x)$ на отрезке [a...",
                 options: [
@@ -3325,12 +3277,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 ],
                 correct: 3
             },
-        ]
-    },
-    {
-        id: "topic_13",
-        title: "13. Объемы тел вращения",
-        questions: [
             {
                 question: "Объем тела...",
                 options: [
@@ -3344,8 +3290,8 @@ document.addEventListener('DOMContentLoaded', () => {
         ]
     },
     {
-        id: "topic_14",
-        title: "14. Числовые ряды. Сходимость и сумма",
+        id: "module_4",
+        title: "🔢 Модуль 4: Числовые ряды",
         questions: [
             {
                 question: "Числовым рядом называется бесконечная сумма $a_1 + a_2 + ...$",
@@ -3357,12 +3303,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 ],
                 correct: 2
             },
-        ]
-    },
-    {
-        id: "topic_15",
-        title: "15. Критерий Коши и необходимое условие",
-        questions: [
             {
                 question: "Для сходимости ряда необходимо и достаточно, чтобы $\\forall \\varepsilon &gt; 0 \\; \\exists N \\; \\forall n &gt; N \\; \\forall p &gt; 0: |a_{n+1} + ...$",
                 options: [
@@ -3383,12 +3323,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 ],
                 correct: 3
             },
-        ]
-    },
-    {
-        id: "topic_16",
-        title: "16. Ряды с неотрицательными членами",
-        questions: [
             {
                 question: "Если $0 \\le a_n \\le b_n$ начиная с некоторого номера...",
                 options: [
@@ -3399,12 +3333,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 ],
                 correct: 0
             },
-        ]
-    },
-    {
-        id: "topic_17",
-        title: "17. Признаки Д'Аламбера и Коши",
-        questions: [
             {
                 question: "Пусть $\\lim_{n \\to \\infty} \\sqrt[n]{a_n} = q$.",
                 options: [
@@ -3425,12 +3353,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 ],
                 correct: 3
             },
-        ]
-    },
-    {
-        id: "topic_18",
-        title: "18. Абсолютная сходимость ряда",
-        questions: [
             {
                 question: "Ряд $\\sum a_n$ называется абсолютно сходящимся...",
                 options: [
@@ -3441,12 +3363,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 ],
                 correct: 2
             },
-        ]
-    },
-    {
-        id: "topic_19",
-        title: "19. Условная сходимость. Признак Лейбница",
-        questions: [
             {
                 question: "Знакочередующийся ряд $\\sum (-1)^{n-1} b_n$ ($b_n \\ge 0$) сходится...",
                 options: [
@@ -3467,12 +3383,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 ],
                 correct: 0
             },
-        ]
-    },
-    {
-        id: "topic_20",
-        title: "20. Перестановки членов. Теорема Римана",
-        questions: [
             {
                 question: "Если ряд сходится условно...",
                 options: [
@@ -3486,8 +3396,8 @@ document.addEventListener('DOMContentLoaded', () => {
         ]
     },
     {
-        id: "topic_21",
-        title: "21. Функциональные последовательности и ряды",
+        id: "module_5",
+        title: "📈 Модуль 5: Функциональные и степенные ряды",
         questions: [
             {
                 question: "Функциональным рядом называется ряд вида $\\sum_{n=1}^\\infty u_n(x)$, члены которого являются функциями.",
@@ -3499,12 +3409,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 ],
                 correct: 3
             },
-        ]
-    },
-    {
-        id: "topic_22",
-        title: "22. Равномерная сходимость. Признак Вейерштрасса",
-        questions: [
             {
                 question: "Ряд равномерно сходится к $S(x)$ на множестве X...",
                 options: [
@@ -3525,12 +3429,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 ],
                 correct: 3
             },
-        ]
-    },
-    {
-        id: "topic_23",
-        title: "23. Предельный переход в функциональных рядах",
-        questions: [
             {
                 question: "Если функции $u_n(x)$ непрерывны...",
                 options: [
@@ -3541,12 +3439,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 ],
                 correct: 3
             },
-        ]
-    },
-    {
-        id: "topic_24",
-        title: "24. Непрерывность и интегрируемость",
-        questions: [
             {
                 question: "Равномерно сходящийся на отрезке [a...",
                 options: [
@@ -3557,12 +3449,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 ],
                 correct: 3
             },
-        ]
-    },
-    {
-        id: "topic_25",
-        title: "25. Степенные ряды. Радиус сходимости",
-        questions: [
             {
                 question: "Если степенной ряд сходится при $x = x_1 \\neq 0$...",
                 options: [
@@ -3573,12 +3459,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 ],
                 correct: 0
             },
-        ]
-    },
-    {
-        id: "topic_27",
-        title: "27. Ряд Тейлора. Аналитические функции",
-        questions: [
             {
                 question: "Функция называется аналитической в точке $x_0$...",
                 options: [
@@ -3592,8 +3472,8 @@ document.addEventListener('DOMContentLoaded', () => {
         ]
     },
     {
-        id: "topic_28",
-        title: "28. Тригонометрические ряды Фурье",
+        id: "module_6",
+        title: "🌊 Модуль 6: Тригонометрические ряды Фурье",
         questions: [
             {
                 question: "Тригонометрическим рядом Фурье функции f(x) с периодом $2\\pi$ называется ряд $\\frac{a_0}{2} + \\sum_{n=1}^\\infty (a_n \\cos nx + b_n \\sin nx)$...",
@@ -3605,12 +3485,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 ],
                 correct: 1
             },
-        ]
-    },
-    {
-        id: "topic_29",
-        title: "29. Ядра Дирихле и Фейера",
-        questions: [
             {
                 question: "Ядром Дирихле $D_n(x)$ называется тригонометрический многочлен...",
                 options: [
@@ -3621,12 +3495,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 ],
                 correct: 2
             },
-        ]
-    },
-    {
-        id: "topic_30",
-        title: "30. Теорема о локализации",
-        questions: [
             {
                 question: "Сходимость или расходимость ряда Фурье интегрируемой функции в точке $x_0$...",
                 options: [
@@ -3637,12 +3505,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 ],
                 correct: 3
             },
-        ]
-    },
-    {
-        id: "topic_31",
-        title: "31. Сходимость рядов Фурье для кусочно-непрерывных функций",
-        questions: [
             {
                 question: "Если функция f(x) кусочно-гладкая на отрезке $[-\\pi...$",
                 options: [
@@ -3653,12 +3515,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 ],
                 correct: 1
             },
-        ]
-    },
-    {
-        id: "topic_32",
-        title: "32. Сходимость рядов Фурье для гладких функций",
-        questions: [
             {
                 question: "Если функция f(x) непрерывна и имеет кусочно-непрерывную производную на $[-\\pi...$",
                 options: [
@@ -3669,12 +3525,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 ],
                 correct: 2
             },
-        ]
-    },
-    {
-        id: "topic_33",
-        title: "33. Теорема Вейерштрасса о приближении многочленами",
-        questions: [
             {
                 question: "Любую непрерывную на отрезке [a...",
                 options: [
@@ -3685,12 +3535,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 ],
                 correct: 0
             },
-        ]
-    },
-    {
-        id: "topic_34",
-        title: "34. Дифференцирование и интегрирование рядов Фурье",
-        questions: [
             {
                 question: "Ряд Фурье любой интегрируемой по Риману функции можно интегрировать почленно на любом отрезке...",
                 options: [
