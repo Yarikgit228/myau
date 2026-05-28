@@ -826,6 +826,76 @@
             to { transform: translateX(120%); opacity: 0; }
         }
 
+    
+        #quiz-dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .topic-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .topic-card:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.2);
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        .topic-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .topic-progress-bar {
+            height: 6px;
+            background: var(--card-border);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .topic-progress-fill {
+            height: 100%;
+            background: var(--accent-gradient);
+            width: 0%;
+            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 3px;
+        }
+
+        .topic-status {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+        
+        .poop-emoji {
+            position: fixed;
+            font-size: 3rem;
+            pointer-events: none;
+            z-index: 9999;
+            animation: fall 3s linear forwards;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+            80% { opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+
     </style>
 </head>
 <body>
@@ -3695,6 +3765,24 @@ let userProgress = JSON.parse(localStorage.getItem('matan_quiz_progress')) || {}
             initDashboard();
         }
 
+        
+        function showPoopShower() {
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const poop = document.createElement('div');
+                    poop.innerText = '💩';
+                    poop.className = 'poop-emoji';
+                    poop.style.left = Math.random() * 100 + 'vw';
+                    poop.style.top = '-50px';
+                    document.body.appendChild(poop);
+                    
+                    setTimeout(() => {
+                        poop.remove();
+                    }, 3000);
+                }, Math.random() * 500); // Stagger the poops slightly
+            }
+        }
+
         function renderQuestion() {
             hasAnswered = false;
             nextBtn.disabled = true;
@@ -3749,6 +3837,7 @@ let userProgress = JSON.parse(localStorage.getItem('matan_quiz_progress')) || {}
                     score++;
                 } else {
                     options[selectedIndex].classList.add('wrong');
+                    showPoopShower();
                     options[q.correct].classList.add('correct');
                 }
 
@@ -4269,7 +4358,77 @@ let userProgress = JSON.parse(localStorage.getItem('matan_quiz_progress')) || {}
 .modal {
     z-index: 100000;
 }
-</style>
+
+        #quiz-dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .topic-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .topic-card:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.2);
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        .topic-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .topic-progress-bar {
+            height: 6px;
+            background: var(--card-border);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .topic-progress-fill {
+            height: 100%;
+            background: var(--accent-gradient);
+            width: 0%;
+            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 3px;
+        }
+
+        .topic-status {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+        
+        .poop-emoji {
+            position: fixed;
+            font-size: 3rem;
+            pointer-events: none;
+            z-index: 9999;
+            animation: fall 3s linear forwards;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+            80% { opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+
+    </style>
 
 <script>
 function openTicketsModal() {
